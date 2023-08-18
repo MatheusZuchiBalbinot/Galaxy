@@ -12,7 +12,7 @@ const getUserByEmail = require("./routes/getUserByEmail")
 const app = express();
 const port = 3000;
 
-const uri = "mongodb+srv://matheusbalbinotzuchi:wYo5DDkrix5NkjUP@cluster0.ub3ovh1.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://matheusbalbinotzuchi:<password>@cluster0.ub3ovh1.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
 
 app.use(express.json());
