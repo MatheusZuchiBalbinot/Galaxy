@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
+require('dotenv').config();
 const validator = require('validator');
 
 const { MongoClient } = require('mongodb');
@@ -8,30 +9,23 @@ const { MongoClient } = require('mongodb');
 const insertOneInRegister = require('./routes/insertOneInRegister');
 const getUserByEmail = require("./routes/getUserByEmail")
 
-require('dotenv').config()
-
 const app = express();
 const port = 3000;
 
-const PASSWORD_DB = process.env.PASSWORD_DB;
-const USER_DB = process.env.USER_DB;
-const CLUSTER_DB = process.env.CLUSTER_DB;
+const uri = "mongodb+srv://matheusbalbinotzuchi:<password>@cluster0.ub3ovh1.mongodb.net/?retryWrites=true&w=majority";
+const client = new MongoClient(uri);
 
 app.use(express.json());
 app.use(cors());
 
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
  
-const uri = `mongodb+srv://${USER_DB}:${PASSWORD_DB}@${CLUSTER_DB}.ub3ovh1.mongodb.net/?retryWrites=true&w=majority`;
-
-const client = new MongoClient(uri);
-
 const connectingToDatabase = async () => {
 
     if(await client.connect()) {
         console.log("Successfully connected!")
 
-        app.post('/user/register', async (req, res) => {
+        app.post('user/register', async (req, res) => {
             try {
                 const isEmailValid = validator.isEmail(req.body.email);
                 const isPasswordValid = validator.isLength(req.body.password, { min: 6 });
@@ -69,22 +63,8 @@ const connectingToDatabase = async () => {
                         nickName, 
                         password: hashedPassword,
                     }
-                    try {
-                        await insertOneInRegister(client, data, email, nickName);
-                        res.status(201).json({ message: "Success" });
-                    } catch (error) {
-                        if (typeof error === "object") {
-                            if (error.emailExists && error.nickNameExists) {
-                                res.status(400).json({ emailExistsAndnickNameExists: true });
-                            } else if (error.emailExists) {
-                                res.status(400).json({ emailExists: true });
-                            } else if (error.nickNameExists) {
-                                res.status(400).json({ nickNameExists: true });
-                            }
-                        } else {
-                            res.status(400).json({ error: error.message });
-                        }
-                    }
+                    await insertOneInRegister(client, data);
+                    res.status(201).json({message: "Sucess"})
                 }
         
             } catch (e) {
@@ -98,6 +78,7 @@ const connectingToDatabase = async () => {
                 const {userEmail, userPassword} = req.body
                 const usersCursor = await getUserByEmail(client, userEmail);
                 const {email: databaseEmail, nickName, password: hashedPassword} = usersCursor;
+                // console.log(databaseEmail, nickName, hashedPassword, userPassword)
                 const passwordsMatch = await bcrypt.compare(userPassword, hashedPassword);
 
                 res.status(200).json({
