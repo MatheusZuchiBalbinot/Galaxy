@@ -34,6 +34,9 @@ export default function Login() {
     const [passwordVisible, setPasswordVisible] = useState(true)
     const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(true)
 
+    const [emailAlreadyExists, setEmailAlreadyExists] = useState(false)
+    const [nickNameAlreadyExists, setNickNameAlreadyExists] = useState(false)
+
     const navigate = useNavigate()
 
     const actualPage = window.location.href
@@ -47,13 +50,20 @@ export default function Login() {
     }
 
     const handleErrorsResponse = (errors) => {
-        const { isEmailValid, isPasswordValid, isNicknameValid, isPasswordsEqual } = errors.response.data.errors;
-
-        setEmailHasError(!isEmailValid);
-        setPasswordHasError(!isPasswordValid);
-        setNickNameHasError(!isNicknameValid);
-        setNotEqualPasswords(!isPasswordsEqual);
-    }
+        const error = errors.response.data;
+        if(error.errors) {
+            if (error.isEmailValid || error.isPasswordValid || error.isNicknameValid || error.isPasswordsEqual) {
+                setEmailHasError(error.isEmailValid !== true);
+                setPasswordHasError(error.isPasswordValid !== true);
+                setNickNameHasError(error.isNicknameValid !== true);
+                setNotEqualPasswords(error.isPasswordsEqual !== true);
+            }
+        }
+        else {
+            console.log(errors.response.data)
+        }
+    
+    };
 
     const resetForm = () => {
         setEmail('');
@@ -195,6 +205,7 @@ export default function Login() {
                             {confirmPasswordVisible ? <AiFillEyeInvisible /> : <AiFillEye />}
                         </div>
                     </div>
+                    {notEqualPasswords && <p className={styles.errorMessage}>As senhas não correspondem.</p>}
                     <h1 className={styles.formBodyTitle}> Nickname: </h1>
                     <div className={styles.formInputDiv}>
                         <div className={styles.formIcon}>
@@ -203,6 +214,7 @@ export default function Login() {
                         <input className={styles.formInput} id="nickname" placeholder='Ex: MatheusZin' value={nickName} onChange={(e) => handleNickName(e)}></input>
                     </div>
                     {nickNameHasError && <p className={styles.errorMessage}> O NickName deve ter no mínimo seis caracteres.</p>}
+                    {nickNameAlreadyExists && <p className={styles.errorMessage}> O NickName já existe!!</p>}
 
                 </>
             )
@@ -246,7 +258,6 @@ export default function Login() {
                                 </div>
                             </div>
                             {passwordHasError && <p className={styles.errorMessage}>A senha deve ter pelo menos 6 caracteres.</p>}
-                            {notEqualPasswords && <p className={styles.errorMessage}>As senhas não correspondem.</p>}
                             {checkPageInput()}
                         </div>
                         <div className={styles.formButton}>
