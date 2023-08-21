@@ -17,7 +17,12 @@ import {BsFillPersonFill, BsFillLockFill} from 'react-icons/bs';
 import {MdEmail} from 'react-icons/md'
 import {AiFillEye, AiFillEyeInvisible} from 'react-icons/ai'
 
+import { useContext } from 'react';
+import { userContext} from '../../context/userContext'
+
 export default function Login() {
+
+    const {setIsLogged} = useContext(userContext)
 
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
@@ -60,8 +65,28 @@ export default function Login() {
             }
         }
         else {
-            console.log(errors.response.data)
-        }
+            const errorResult = errors.response.data
+
+            console.log(errorResult)
+
+            const { emailExists, nickNameExists} = error
+
+            if(emailExists && nickNameExists) {
+                setNickNameAlreadyExists(true)
+                setEmailAlreadyExists(true)
+                document.getElementById("email").style.borderBottom = '3px solid red'
+                document.getElementById("nickname").style.borderBottom = '3px solid red'
+            } else if (emailExists && !nickNameExists) {
+                setNickNameAlreadyExists(false)
+                setEmailAlreadyExists(true)
+                document.getElementById("email").style.borderBottom = '3px solid red'
+            } else if (!emailExists && nickNameExists) {
+                setNickNameAlreadyExists(true)
+                setEmailAlreadyExists(false)
+                document.getElementById("nickname").style.borderBottom = '3px solid red'
+
+            }
+    }
     
     };
 
@@ -74,6 +99,8 @@ export default function Login() {
         setNickNameHasError(false);
         setPasswordHasError(false);
         setNotEqualPasswords(false);
+        setNickNameAlreadyExists(false);
+        setEmailAlreadyExists(false);
     };
 
     const handleSuccessResponse = () => {
@@ -126,7 +153,8 @@ export default function Login() {
                 userPassword: password,
             }
             const result = await axios.post("http://localhost:3000/user/login", data);
-            console.log(result.data)
+            setIsLogged(result.data)
+            return navigate('/home')
             
         } catch (error) {
             console.error(error);
@@ -159,7 +187,7 @@ export default function Login() {
 
     const handleConfirmPassword = (e) => {
         setConfirmPassword(e.target.value)
-        document.getElementById("passorwdConfirm").style.borderBottom = '3px solid yellow'
+        document.getElementById("passorwdConfirm").style.borderBottom = '3px solid green'
     }
 
     const handleNickName = (e) => {
@@ -184,10 +212,10 @@ export default function Login() {
 
     const checkPageTitle = () => {
         if(actualPage != 'http://localhost:5173/register') {
-            return <h1>Formulário de Login</h1>
+            return <h1 className={styles.formTitleH1}>Formulário de Login</h1>
         }
         else {
-            return <h1>Formulário de Registro</h1>
+            return <h1 className={styles.formTitleH1}>Formulário de Registro</h1>
         }
     }
 
@@ -214,7 +242,7 @@ export default function Login() {
                         <input className={styles.formInput} id="nickname" placeholder='Ex: MatheusZin' value={nickName} onChange={(e) => handleNickName(e)}></input>
                     </div>
                     {nickNameHasError && <p className={styles.errorMessage}> O NickName deve ter no mínimo seis caracteres.</p>}
-                    {nickNameAlreadyExists && <p className={styles.errorMessage}> O NickName já existe!!</p>}
+                    {nickNameAlreadyExists && <p className={styles.errorMessage}> Nickname já existente.</p>}
 
                 </>
             )
@@ -247,6 +275,7 @@ export default function Login() {
                                 <input className={styles.formInput} id="email" placeholder='Ex: matheus@gmail.com' value={email} onChange={(e) => handleEmail(e)} type='text'></input>
                             </div>
                             {emailHasError && <p className={styles.errorMessage}>O email é inválido.</p>}
+                            {emailAlreadyExists && <p className={styles.errorMessage}>Email já existente.</p>}
                             <h1 className={styles.formBodyTitle}>Senha: </h1>
                             <div className={styles.formInputDiv}>
                                 <div className={styles.formIcon}>

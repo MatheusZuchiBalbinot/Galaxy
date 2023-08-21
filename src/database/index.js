@@ -17,7 +17,6 @@ const PASSWORD_DB = process.env.PASSWORD_DB;
 const USER_DB = process.env.USER_DB;
 const CLUSTER_DB = process.env.CLUSTER_DB;
 
-
 app.use(express.json());
 app.use(cors());
 
@@ -76,11 +75,11 @@ const connectingToDatabase = async () => {
                     } catch (error) {
                         if (typeof error === "object") {
                             if (error.emailExists && error.nickNameExists) {
-                                res.status(400).json({ emailExistsAndnickNameExists: true });
+                                res.status(400).json({ emailExists: true, nickNameExists: true });
                             } else if (error.emailExists) {
-                                res.status(400).json({ emailExists: true });
+                                res.status(400).json({ emailExists: true, nickNameExists: false });
                             } else if (error.nickNameExists) {
-                                res.status(400).json({ nickNameExists: true });
+                                res.status(400).json({ nickNameExists: true, emailExists: false });
                             }
                         } else {
                             res.status(400).json({ error: error.message });

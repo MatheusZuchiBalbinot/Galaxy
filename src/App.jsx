@@ -1,14 +1,15 @@
 import { useRoutes } from "react-router-dom";
+import { useState } from "react";
 
 import Login from './pages/Login/Login.jsx'
 import Register from './pages/Register/Register.jsx'
-import { useState } from "react";
+import Home from './pages/Home/Home.jsx'
 
 import {userContext} from './context/userContext.jsx'
 
 function App() {
 
-  const [isLogged, setIsLogged] = useState(false)
+  const [isLogged, setIsLogged] = useState({passwordsMatch: false, nickName: ''})
 
   const routes = useRoutes([
     {
@@ -22,6 +23,10 @@ function App() {
     {
       path: '*',
       element: <Login />
+    }, 
+    {
+      path: '/home',
+      element: <Home />
     }
   ])
 
