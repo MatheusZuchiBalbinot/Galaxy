@@ -1,0 +1,176 @@
+.mainContainer {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 0.8fr 6fr 0.5fr;
+    grid-template-areas: 
+    "header"
+    "main"
+    "footer";
+    width: 100vw;
+    height: 100vh;
+    background-image: linear-gradient(to right bottom, #232022, #232023, #232024, #222026, #202027, #1d1f27, #1a1d26, #171c26, #131823, #0f1421, #0a0e1e, #05071c);
+}
+
+.header {
+    grid-area: header;
+    display: grid;
+    grid-template-areas: "leftLogo midSearchBar rightIcons";
+}
+
+.leftLogo {
+    grid-area: leftLogo;
+    margin: auto;
+}
+
+.midSearchBar {
+    grid-area: midSearchBar;
+    margin: auto;
+    width: 80%;
+}
+
+.searchBarDiv {
+    display: flex;
+    margin: 1rem;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.userDivAvatar {
+    display: flex;
+    width: 8%;
+}
+
+.avatarImage {
+    border-radius: 50%;
+}
+
+.searchBarInput {
+    width: 90%;
+    padding: 0.5rem;
+    outline: none;
+    color: white;
+    background-color: transparent;
+}
+
+.inputDiv {
+    display: flex;
+    color: white;
+    width: 80%;
+    background-color: #282b36; 
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+}
+
+.inputIcon {
+    margin: auto;
+    padding: 1rem;
+}
+
+.searchBarDivIcon svg {
+    color: white;
+}
+
+.rightIcons {
+    grid-area: rightIcons;
+    display: flex;
+    margin: auto;
+    gap: 1rem;
+}
+
+.rightIcons svg {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.personDivInfo {
+    display: flex;
+    gap: 0.5rem;
+    border: 1px solid white;
+    border-radius: 0.8rem;
+    padding: 0.3rem 0.5rem;
+}
+
+.logoutIcon {
+    margin: auto;
+}
+
+.nickNameTitle {
+    color: white;
+}
+
+.logoImage {
+    width: 5vw;
+    height: auto;
+}
+
+.main {
+    grid-area: main;
+    display: grid;
+    grid-template-columns: 15vw 85vw;
+    grid-template-areas: "aside main";
+}
+
+.aside {
+    grid-area: aside;
+    display: grid;
+    color: white;
+    grid-template-rows: 5vh auto;
+    grid-template-areas: 
+    "asideSelect"
+    "asideSelectedItem";
+}
+
+.asideSelect {
+    grid-area: asideSelect;
+    display: flex;
+    width: 100%;
+}
+
+.asideSelectedItem {
+    grid-area: asideSelectedItem;
+    margin: auto;
+}
+
+.selectAsideButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-bottom: 3px solid white;
+}
+
+.selectAsideButtons:hover {
+    background-color:#282b36;
+    color: whitesmoke;
+}
+
+.asideDivider {
+    width: 1;
+    background-color: red;
+}
+
+.asideDiv {
+    font-size: 1.2rem;
+    display: flex;
+    margin: auto;
+    gap: 1rem;
+    width: 100%;
+}
+
+.asideIconDiv {
+    display: flex;
+    margin: auto;
+}
+
+.asideText {
+    width: 80%;
+}
+
+.mainContent {
+    grid-area: main;
+    background-color: blue;
+}
+
+.footer {
+    grid-area: footer;
+}
