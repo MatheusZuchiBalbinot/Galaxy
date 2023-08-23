@@ -92,6 +92,14 @@
 
 .logoutIcon {
     margin: auto;
+    padding: 0.5rem;
+}
+
+.logoutIcon:hover {
+    background-color: rgb(66, 57, 57);
+    cursor: pointer;
+    box-shadow: rgb(211, 211, 224) 0px 3px 12px 0px;
+    color: black;
 }
 
 .nickNameTitle {
@@ -106,7 +114,7 @@
 .main {
     grid-area: main;
     display: grid;
-    grid-template-columns: 15vw 85vw;
+    grid-template-columns: 20vw 80vw;
     grid-template-areas: "aside main";
 }
 
@@ -120,18 +128,7 @@
     "asideSelectedItem";
 }
 
-.asideSelect {
-    grid-area: asideSelect;
-    display: flex;
-    width: 100%;
-}
-
-.asideSelectedItem {
-    grid-area: asideSelectedItem;
-    margin: auto;
-}
-
-.selectAsideButtons {
+.selectAsideButtons, .selectAsideButtonsBegin {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -139,31 +136,28 @@
     border-bottom: 3px solid white;
 }
 
-.selectAsideButtons:hover {
+.selectAsideButtonsBegin {
+    border-bottom: 3px solid green;
+}
+
+.selectAsideButtons:hover, .selectAsideButtonsBegin:hover {
     background-color:#282b36;
     color: whitesmoke;
 }
 
-.asideDivider {
-    width: 1;
-    background-color: red;
-}
-
-.asideDiv {
-    font-size: 1.2rem;
+.asideSelect {
+    grid-area: asideSelect;
     display: flex;
-    margin: auto;
-    gap: 1rem;
-    width: 100%;
 }
 
-.asideIconDiv {
+.asideSelectedItem {
+    grid-area: asideSelectedItem;
+    margin: 1rem;
     display: flex;
-    margin: auto;
-}
-
-.asideText {
-    width: 80%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 1.5rem;
 }
 
 .mainContent {

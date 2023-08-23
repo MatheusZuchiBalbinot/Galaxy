@@ -54,6 +54,10 @@ export default function Login() {
         return navigate('/login')
     }
 
+    const colorErrorOrCorrectInput = (id, color) => {
+        document.getElementById(id).style.borderBottom = `3px solid ${color}`
+    }
+
     const handleErrorsResponse = (errors) => {
         const error = errors.response.data;
         if(error.errors) {
@@ -74,17 +78,16 @@ export default function Login() {
             if(emailExists && nickNameExists) {
                 setNickNameAlreadyExists(true)
                 setEmailAlreadyExists(true)
-                document.getElementById("email").style.borderBottom = '3px solid red'
-                document.getElementById("nickname").style.borderBottom = '3px solid red'
+                colorErrorOrCorrectInput("email", "red")
+                colorErrorOrCorrectInput("nickname", "red")
             } else if (emailExists && !nickNameExists) {
                 setNickNameAlreadyExists(false)
                 setEmailAlreadyExists(true)
-                document.getElementById("email").style.borderBottom = '3px solid red'
+                colorErrorOrCorrectInput("email", "red")
             } else if (!emailExists && nickNameExists) {
                 setNickNameAlreadyExists(true)
                 setEmailAlreadyExists(false)
-                document.getElementById("nickname").style.borderBottom = '3px solid red'
-
+                colorErrorOrCorrectInput("nickname", "red")
             }
     }
     
@@ -167,10 +170,10 @@ export default function Login() {
         var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
         if(email.match(validRegex)) {
-            document.getElementById("email").style.borderBottom = '3px solid green'
+            colorErrorOrCorrectInput("email", "green")
         }
         else {
-            document.getElementById("email").style.borderBottom = '3px solid red'
+            colorErrorOrCorrectInput("email", "red")
         }
     }
 
@@ -178,26 +181,32 @@ export default function Login() {
         setPassword(e.target.value)
 
         if(password.length >= 6 - 1) {
-            document.getElementById("password").style.borderBottom = '3px solid green'
+            colorErrorOrCorrectInput("password", "green")
         }
         else {
-            document.getElementById("password").style.borderBottom = '3px solid red'
+            colorErrorOrCorrectInput("password", "red")
         }
     }
 
     const handleConfirmPassword = (e) => {
         setConfirmPassword(e.target.value)
-        document.getElementById("passorwdConfirm").style.borderBottom = '3px solid green'
+
+        if(confirmPassword.length >= 6 - 1) {
+            colorErrorOrCorrectInput("passorwdConfirm", "green")
+        }
+        else {
+            colorErrorOrCorrectInput("passorwdConfirm", "red")
+        }
     }
 
     const handleNickName = (e) => {
         setNickName(e.target.value)
 
         if(nickName.length >= 6 - 1) {
-            document.getElementById("nickname").style.borderBottom = '3px solid green'
+            colorErrorOrCorrectInput("nickname", "green")
         }
         else {
-            document.getElementById("nickname").style.borderBottom = '3px solid red'
+            colorErrorOrCorrectInput("nickname", "red")
         }
     }
 

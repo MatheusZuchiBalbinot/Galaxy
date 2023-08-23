@@ -1,0 +1,20 @@
+.asideDivider {
+    width: 1;
+    background-color: red;
+}
+
+.asideDiv {
+    font-size: 1.2rem;
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+}
+
+.asideIconDiv {
+    display: flex;
+    margin: auto;
+}
+
+.asideText {
+    width: 80%;
+}

@@ -12,12 +12,14 @@ import {CgRowFirst, CgRowLast} from 'react-icons/cg'
 import logo from '../../assets/logo.png'
 
 import styles from './Home.module.css'
+import ShowAsideTweets from '../../components/HomeComponents/AsideShowComponent/ShowAsideTweets';
+import ShowAsideFriend from '../../components/HomeComponents/AsideShowComponent/showAsideFriend';
 
 export default function Home() {
 
     const {isLogged, setIsLogged} = useContext(userContext)
 
-    const { nickName, passwordsMatch} = isLogged
+    const {nickName, passwordsMatch} = isLogged
 
     const [showFriendComponent, setShowFriendComponent] = useState(false)
     const [showTweetsComponent, setShowTweetsComponent] = useState(true)
@@ -31,8 +33,8 @@ export default function Home() {
         }
     }, [isLogged])
 
-    const changeAsideComponent = (to) => {
-        if(to == "friends") {
+    const changeAsideComponent = (selected) => {
+        if(selected == "friends") {
             setShowFriendComponent(true)
             setShowTweetsComponent(false)
             document.getElementById("friends").style.borderBottom = '3px solid green'
@@ -44,6 +46,10 @@ export default function Home() {
             document.getElementById("tweets").style.borderBottom = '3px solid green'
             document.getElementById("friends").style.borderBottom = '3px solid white'
         }
+    }
+
+    const handleLogout = () => {
+        setIsLogged({passwordsMatch: false, nickName: ''})
     }
 
     return (
@@ -70,7 +76,7 @@ export default function Home() {
                         <BsFillPersonFill />
                         <h2 className={styles.nickNameTitle}> {nickName} </h2>
                     </div>
-                    <div className={styles.logoutIcon}>
+                    <div className={styles.logoutIcon} onClick={handleLogout}>
                         <FiLogOut />
                     </div>
                 </div>
@@ -80,54 +86,16 @@ export default function Home() {
                 <div className={styles.aside}>
                     <div className={styles.asideSelect}>
                         <button className={styles.selectAsideButtons} id="friends" onClick={() => changeAsideComponent("friends")}>Amigos</button>
-                        <button className={styles.selectAsideButtons} id="tweets" onClick={() => changeAsideComponent("tweets")}>Tweets</button>
+                        <button className={styles.selectAsideButtonsBegin} id="tweets" onClick={() => changeAsideComponent("tweets")}>Tweets</button>
                     </div>
                     {showFriendComponent && (
                         <div className={styles.asideSelectedItem}>
-                            <div className={styles.asideDiv}>
-                                <div className={styles.asideIconDiv}>
-                                    <FaUserFriends />
-                                </div>
-                                <div className={styles.asideText}>
-                                    <h2>Adicionar amigo</h2>
-                                </div>
-                            </div>
+                            <ShowAsideFriend />
                         </div>
                     )}
                     {showTweetsComponent && (
                         <div className={styles.asideSelectedItem}>
-                            <div className={styles.asideDiv}>
-                                <div className={styles.asideIconDiv}>
-                                    <FaUserFriends />
-                                </div>
-                                <div className={styles.asideText}>
-                                    <h2>Amigos</h2>
-                                </div>
-                            </div>
-                            <div className={styles.asideDiv}>
-                                <div className={styles.asideIconDiv}>
-                                    <BsFilePerson />
-                                </div>
-                                <div className={styles.asideText}>
-                                    <h2>Meus Tweets</h2>
-                                </div>
-                            </div>
-                            <div className={styles.asideDiv}>
-                                <div className={styles.asideIconDiv}>
-                                    <CgRowFirst />
-                                </div>
-                                <div className={styles.asideText}>
-                                    <h2>Mais famosos</h2>
-                                </div>
-                            </div>
-                            <div className={styles.asideDiv}>
-                                <div className={styles.asideIconDiv}>
-                                    <CgRowLast />
-                                </div>
-                                <div className={styles.asideText}>
-                                    <h2>Menos famosos</h2>
-                                </div>
-                            </div>
+                            <ShowAsideTweets />
                         </div>
                     )}
                 </div>
