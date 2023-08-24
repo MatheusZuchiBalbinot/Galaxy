@@ -36,6 +36,13 @@ export default function Login() {
     const [nickNameHasError, setNickNameHasError] = useState(false)
     const [emailHasError, setEmailHasError] = useState(false)
 
+    // const [errorMessages, setErrorMessages] = useState({
+    //     email: '',
+    //     password: '',
+    //     confirmPassword: '',
+    //     nickName: '',
+    // });
+
     const [passwordVisible, setPasswordVisible] = useState(true)
     const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(true)
 

@@ -9,8 +9,8 @@ import logo from '../../assets/logo.png'
 
 import styles from './Home.module.css'
 
-import UserRightComponents from '../../components/HomeComponents/RightMenuComponent/RightUserMenu/UserRightComponent'
-import Menu from '../../components/HomeComponents/LeftMenuComponent/Menu'
+import UserRightComponents from '../../components/HomeComponents/AsideRightComponent/RightUserMenu/UserRightComponent'
+import Menu from '../../components/HomeComponents/AsideLeftComponent/Menu.jsx'
 
 export default function Home() {
 
