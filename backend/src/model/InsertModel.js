@@ -1,4 +1,4 @@
-async function insertOneInRegister(client, newListining, email, nickName) {
+async function InsertModel(client, newListining, email, nickName) {
     try {
         const usersCollection = client.db("cluster0").collection("users");
 
@@ -23,4 +23,4 @@ async function insertOneInRegister(client, newListining, email, nickName) {
     }
 }
 
-module.exports = insertOneInRegister;
+module.exports = InsertModel;
