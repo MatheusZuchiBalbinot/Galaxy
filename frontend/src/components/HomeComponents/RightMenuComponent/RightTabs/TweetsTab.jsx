@@ -1,4 +1,4 @@
-import styles from './showAside.module.css'
+import styles from './FriendTweetsTab.module.css'
 
 import {FaUserFriends} from 'react-icons/fa'
 import {BsFilePerson} from 'react-icons/bs'
@@ -7,7 +7,7 @@ import {MdOutlineWhatshot} from 'react-icons/md'
 import {AiFillLike} from 'react-icons/ai'
 
 
-export default function ShowAsideTweets() {
+export default function TweetsTab() {
     return (
         <>
             <div className={styles.asideDiv}>
@@ -15,7 +15,7 @@ export default function ShowAsideTweets() {
                     <FaUserFriends />
                 </div>
                 <div className={styles.asideText}>
-                    <h2>Amigos</h2>
+                    <h2>Tweets Amigos</h2>
                 </div>
             </div>
             <div className={styles.asideDiv}>

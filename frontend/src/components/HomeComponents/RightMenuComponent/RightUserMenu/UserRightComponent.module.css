@@ -1,0 +1,69 @@
+.rightIcons {
+    grid-area: rightIcons;
+    display: flex;
+    margin: auto;
+    gap: 1rem;
+}
+
+.rightIcons svg {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.personDivInfo {
+    display: flex;
+    gap: 0.5rem;
+    border: 1px solid white;
+    border-radius: 0.8rem;
+    padding: 0.3rem 0.5rem;
+}
+
+.logoutIcon {
+    margin: auto;
+    padding: 0.5rem;
+}
+
+.logoutIcon:hover {
+    background-color: rgb(66, 57, 57);
+    cursor: pointer;
+    box-shadow: rgb(211, 211, 224) 0px 3px 12px 0px;
+    color: black;
+}
+
+.nickNameTitle {
+    color: white;
+}
+
+.selectAsideButtons, .selectAsideButtonsBegin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    color: white;
+    border-bottom: 3px solid white;
+}
+
+.selectAsideButtonsBegin {
+    border-bottom: 3px solid green;
+}
+
+.selectAsideButtons:hover, .selectAsideButtonsBegin:hover {
+    background-color:#282b36;
+    color: whitesmoke;
+}
+
+.asideSelect {
+    grid-area: asideSelect;
+    display: flex;
+}
+
+.asideSelectedItem {
+    grid-area: asideSelectedItem;
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 1.5rem;
+    color: white;
+}

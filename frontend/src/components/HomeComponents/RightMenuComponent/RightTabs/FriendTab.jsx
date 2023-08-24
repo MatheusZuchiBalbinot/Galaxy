@@ -1,8 +1,8 @@
-import styles from './showAside.module.css'
+import styles from './FriendTweetsTab.module.css'
 
 import {FaUserFriends} from 'react-icons/fa'
 
-export default function ShowAsideFriend() {
+export default function FriendTab() {
     return (
         <>
             <div className={styles.asideDiv}>

@@ -1,0 +1,26 @@
+.menuNavigation {
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 1.5rem;
+    color: white;
+}
+
+.menuDiv {
+    color: white;
+    font-size: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+}
+
+.menuIconDiv {
+    display: flex;
+    margin: auto;
+}
+
+.menuIconText {
+    width: 80%;
+}

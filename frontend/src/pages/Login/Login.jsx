@@ -42,6 +42,12 @@ export default function Login() {
     const [emailAlreadyExists, setEmailAlreadyExists] = useState(false)
     const [nickNameAlreadyExists, setNickNameAlreadyExists] = useState(false)
 
+    const [emailHasEmpty, setEmailHasEmpty] = useState(false)
+    const [passwordHasEmpty, sePasswordHasEmpty] = useState(false)
+
+    const [loginNotFound, setLoginNotFound] = useState(false)
+    const [incorrectPassword, setIncorrectPassword] = useState(false)
+
     const navigate = useNavigate()
 
     const actualPage = window.location.href
@@ -160,7 +166,11 @@ export default function Login() {
             return navigate('/home')
             
         } catch (error) {
-            console.error(error);
+            const emptyForm = error.response.data
+            emptyForm.incorrectPassword ? setIncorrectPassword(true) : setIncorrectPassword(false) 
+            emptyForm.loginNotFound ? setLoginNotFound(true) : setLoginNotFound(false) 
+            emptyForm.userEmailEmpty ? setEmailHasEmpty(true) : setEmailHasEmpty(false)
+            emptyForm.userPasswordEmpty ? sePasswordHasEmpty(true) : sePasswordHasEmpty(false)
         }
     }
 
@@ -285,6 +295,7 @@ export default function Login() {
                             </div>
                             {emailHasError && <p className={styles.errorMessage}>O email é inválido.</p>}
                             {emailAlreadyExists && <p className={styles.errorMessage}>Email já existente.</p>}
+                            {emailHasEmpty && <p className={styles.errorMessage}>Campo vazio.</p>}
                             <h1 className={styles.formBodyTitle}>Senha: </h1>
                             <div className={styles.formInputDiv}>
                                 <div className={styles.formIcon}>
@@ -296,8 +307,11 @@ export default function Login() {
                                 </div>
                             </div>
                             {passwordHasError && <p className={styles.errorMessage}>A senha deve ter pelo menos 6 caracteres.</p>}
+                            {passwordHasEmpty && <p className={styles.errorMessage}>Campo vazio.</p>}
+                            {incorrectPassword && <p className={styles.errorMessage}>Senha incorreta.</p>}
                             {checkPageInput()}
                         </div>
+                        {loginNotFound && <p className={styles.errorMessage}> Conta não encontrada.</p>}
                         <div className={styles.formButton}>
                             <div className={styles.buttonDiv}>
                                 {submitButton()}
