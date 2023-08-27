@@ -40,15 +40,6 @@ export default function UserRightComponents() {
 
     return (
         <>
-            <div className={styles.rightIcons}>
-                <div className={styles.personDivInfo}>
-                    <BsFillPersonFill />
-                    <h2 className={styles.nickNameTitle}> {nickName} </h2>
-                </div>
-                <div className={styles.logoutIcon} onClick={handleLogout}>
-                    <FiLogOut />
-                </div>
-            </div>
             <div className={styles.asideSelect}>
                 <button className={styles.selectAsideButtons} id="friends" onClick={() => changeAsideComponent("friends")}>Amigos</button>
                 <button className={styles.selectAsideButtonsBegin} id="tweets" onClick={() => changeAsideComponent("tweets")}>Tweets</button>

@@ -1,9 +1,12 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { userContext} from '../../context/userContext'
 import { useNavigate } from 'react-router-dom';
 
 import {BsFillPersonFill, BsEmojiSmile} from 'react-icons/bs'
-import {HiOutlinePhotograph, HiOutlineVideoCamera} from 'react-icons/hi'
+import {HiOutlinePhotograph} from 'react-icons/hi'
+
+import EmojiPicker from 'emoji-picker-react';
+import { SkinTones } from 'emoji-picker-react';
 
 import logo from '../../assets/logo.png'
 
@@ -18,6 +21,12 @@ export default function Home() {
 
     const {nickName, passwordsMatch} = isLogged
 
+    const [tweetText, setTweetText] = useState('')
+
+    const [showEmojiScreen, setShowEmojiScreen] = useState(false)
+
+    const [uploadedFile, setUploadedFile] = useState(null);
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -26,6 +35,21 @@ export default function Home() {
             return navigate("/")
         }
     }, [isLogged])
+
+    const handleEmoji = (emoji) => {
+        setShowEmojiScreen(false)
+        setTweetText((prevState) => prevState + String.fromCodePoint(`0x${emoji.unified}`));
+
+        {/* <p> <span> &#x1F600; </span> </p> */}
+    }
+
+    const handleFileUpload = (file) => {
+        const selectedFile = file.target.files[0]
+
+        if(selectedFile) {
+            setUploadedFile(selectedFile)
+        }
+    }
 
     return (
         <div className={styles.mainContainer}>
@@ -52,13 +76,35 @@ export default function Home() {
                     <div className={styles.mainInputDiv}>
                         <div className={styles.inpuItemsDiv}>
                             <div className={styles.inputBar}>
-                                <input type='text' className={styles.mainInput} placeholder='No que está pensando?'></input>
+                                <input 
+                                    type='text' 
+                                    className={styles.mainInput} 
+                                    value={tweetText}
+                                    onChange={(e) => setTweetText(e.target.value)}
+                                    placeholder='No que está pensando?'
+                                />
+                                
                             </div>
                             <div className={styles.bottomTweetDiv}>
                                 <div className={styles.imageVideoEmojiIcons}>
-                                    <BsEmojiSmile />
-                                    <HiOutlinePhotograph />
-                                    <HiOutlineVideoCamera />
+                                    <BsEmojiSmile onClick={() => setShowEmojiScreen(true)}/>
+                                    {showEmojiScreen && (
+                                        <EmojiPicker 
+                                            skinTonesDisabled={true} 
+                                            autoFocusSearch={true} 
+                                            onEmojiClick={(emoji) => handleEmoji(emoji)}
+                                        />
+                                    )}
+                                    <HiOutlinePhotograph 
+                                        onClick={() => document.getElementById('inputFile').click()}
+                                    />
+                                    <input
+                                        type="file"
+                                        id="inputFile"
+                                        style={{ display: 'none' }}
+                                        onChange={handleFileUpload}
+                                    />
+                                    {uploadedFile && <p>Arquivo selecionado: {uploadedFile.name}</p>}
                                 </div>
                                 <div className={styles.tweetButton}>
                                     <button type='text'>Tweetar</button>

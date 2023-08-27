@@ -42,7 +42,6 @@
     grid-template-columns: auto;
     grid-template-rows: 10vh 7vh auto;
     grid-template-areas: 
-    "rightIcons"
     "asideSelect"
     "asideSelectedItem";
 }
