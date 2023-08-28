@@ -34,10 +34,6 @@ export default function UserRightComponents() {
         }
     }
 
-    const handleLogout = () => {
-        setIsLogged({passwordsMatch: false, nickName: ''})
-    }
-
     return (
         <>
             <div className={styles.asideSelect}>

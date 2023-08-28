@@ -6,7 +6,6 @@ import {BsFillPersonFill, BsEmojiSmile} from 'react-icons/bs'
 import {HiOutlinePhotograph} from 'react-icons/hi'
 
 import EmojiPicker from 'emoji-picker-react';
-import { SkinTones } from 'emoji-picker-react';
 
 import logo from '../../assets/logo.png'
 
@@ -25,7 +24,7 @@ export default function Home() {
 
     const [showEmojiScreen, setShowEmojiScreen] = useState(false)
 
-    const [uploadedFile, setUploadedFile] = useState(null);
+    const [uploadedFile, setUploadedFile] = useState({});
 
     const navigate = useNavigate()
 
@@ -44,10 +43,35 @@ export default function Home() {
     }
 
     const handleFileUpload = (file) => {
-        const selectedFile = file.target.files[0]
+        const inputFile = file.target;
 
-        if(selectedFile) {
-            setUploadedFile(selectedFile)
+        if (inputFile.files && inputFile.files[0]) {
+            const reader = new FileReader();
+    
+            reader.onload = function (e) {
+                const dataUrl = e.target.result;
+
+                const typeIndex = dataUrl.indexOf(':') + 1;
+                const typeEndIndex = dataUrl.indexOf(';');
+                const fileType = dataUrl.substring(typeIndex, typeEndIndex);
+    
+                if (fileType.includes('video/')) {
+                    setUploadedFile({
+                        video: true,
+                        url: dataUrl
+                    })
+                } else if (fileType.includes('image/png')) {
+                    setUploadedFile({
+                        file: true,
+                        url: dataUrl
+                    })
+                } 
+                else {
+                    console.log('Tipo de arquivo não suportado.');
+                }
+            };
+    
+            reader.readAsDataURL(inputFile.files[0]);
         }
     }
 
@@ -76,35 +100,54 @@ export default function Home() {
                     <div className={styles.mainInputDiv}>
                         <div className={styles.inpuItemsDiv}>
                             <div className={styles.inputBar}>
-                                <input 
-                                    type='text' 
+                                <textarea 
+                                    type='textarea' 
+                                    rows={6}
+                                    maxLength={280}
                                     className={styles.mainInput} 
                                     value={tweetText}
                                     onChange={(e) => setTweetText(e.target.value)}
                                     placeholder='No que está pensando?'
                                 />
-                                
+                                <div>
+                                    {uploadedFile.file && (
+                                        <img
+                                            src={uploadedFile.url}
+                                            alt="Uploaded"
+                                            className={styles.uploadedImageStyle}
+                                        />
+                                    )}
+                                    {uploadedFile.video && (
+                                        <video 
+                                            src={uploadedFile.url} 
+                                            controls autoplay 
+                                            className={styles.uploadedVideoStyle}
+                                        />
+                                    )}
+                                </div>
                             </div>
                             <div className={styles.bottomTweetDiv}>
                                 <div className={styles.imageVideoEmojiIcons}>
-                                    <BsEmojiSmile onClick={() => setShowEmojiScreen(true)}/>
-                                    {showEmojiScreen && (
-                                        <EmojiPicker 
-                                            skinTonesDisabled={true} 
-                                            autoFocusSearch={true} 
-                                            onEmojiClick={(emoji) => handleEmoji(emoji)}
+                                    <div className={styles.imageVideoEmojiIcons__div}>
+                                        <BsEmojiSmile onClick={() => setShowEmojiScreen(true)}/>
+                                        {showEmojiScreen && (
+                                            <EmojiPicker 
+                                                skinTonesDisabled={true} 
+                                                autoFocusSearch={true} 
+                                                onEmojiClick={(emoji) => handleEmoji(emoji)}
+                                            />
+                                        )}
+                                        <HiOutlinePhotograph 
+                                            onClick={() => document.getElementById('inputFile').click()}
                                         />
-                                    )}
-                                    <HiOutlinePhotograph 
-                                        onClick={() => document.getElementById('inputFile').click()}
-                                    />
-                                    <input
-                                        type="file"
-                                        id="inputFile"
-                                        style={{ display: 'none' }}
-                                        onChange={handleFileUpload}
-                                    />
-                                    {uploadedFile && <p>Arquivo selecionado: {uploadedFile.name}</p>}
+                                        <input
+                                            type="file"
+                                            id="inputFile"
+                                            style={{ display: 'none' }}
+                                            onChange={(file) => handleFileUpload(file)}
+                                        />
+                                    </div>
+                                    {console.log(uploadedFile)}
                                 </div>
                                 <div className={styles.tweetButton}>
                                     <button type='text'>Tweetar</button>
