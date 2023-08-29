@@ -55,7 +55,7 @@
 .main {
     grid-area: main;
     display: grid;
-    grid-template-rows: 24vh auto;
+    grid-template-rows: max-content;
     grid-template-areas: 
     "postDiv"
     "tweetsDiv";
@@ -81,6 +81,7 @@
     width: 100%;
     outline: none;
     padding: 0.5vw;
+    margin: 1vw;
     max-height: 10vh;
 }
 
@@ -113,16 +114,31 @@
     display: flex;
 }
 
+.inputBar__textarea {
+    width: 100%;
+    display: flex;
+    margin: auto;
+}
+
+.inputBar__videoAndImage {
+    margin: auto;
+    padding: 1vw;
+}
+
 .imageVideoEmojiIcons {
     display: flex;  
     color: white;
     font-size: 1.5rem;
 }
 
+.emojiPickerStyle {
+    position: absolute;
+    margin: 3vw;
+}
+
 .uploadedImageStyle {
     width: 10vw;
     height: 10vh;
-    padding-left: 1vw;
 }
 
 .uploadedVideoStyle {

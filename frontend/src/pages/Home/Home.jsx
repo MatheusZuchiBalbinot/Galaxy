@@ -1,6 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useRef } from 'react';
 import { userContext} from '../../context/userContext'
 import { useNavigate } from 'react-router-dom';
+
+import axios from "axios";
 
 import {BsFillPersonFill, BsEmojiSmile} from 'react-icons/bs'
 import {HiOutlinePhotograph} from 'react-icons/hi'
@@ -50,6 +52,7 @@ export default function Home() {
     
             reader.onload = function (e) {
                 const dataUrl = e.target.result;
+                console.log(dataUrl)
 
                 const typeIndex = dataUrl.indexOf(':') + 1;
                 const typeEndIndex = dataUrl.indexOf(';');
@@ -60,19 +63,58 @@ export default function Home() {
                         video: true,
                         url: dataUrl
                     })
-                } else if (fileType.includes('image/png')) {
+                } else if (fileType.includes('image/png') || fileType.includes('image/jng')) {
                     setUploadedFile({
                         file: true,
                         url: dataUrl
                     })
                 } 
                 else {
-                    console.log('Tipo de arquivo não suportado.');
+                    throw ('Tipo de arquivo não suportado.');
                 }
             };
     
             reader.readAsDataURL(inputFile.files[0]);
         }
+    }
+
+    const handleTweetSubmit = async () => {
+
+        const actualDate = new Date();
+        const hours = actualDate.getHours();
+        const minutes = actualDate.getMinutes();
+        const days = actualDate.getDate();
+        const month = actualDate.getMonth() + 1;
+        const year = actualDate.getFullYear();
+
+        const tweetData = {
+            nickName,
+            userId: '',
+            likes: 0,
+            content: {
+                text: tweetText,
+                image: uploadedFile.file ? uploadedFile.url : null,
+                video: uploadedFile.video ? uploadedFile.url : null,
+            }, 
+            actualDate: {
+                hours,
+                minutes,
+                days,
+                month,
+                year
+            },
+            comments: {}
+        }
+
+        try {
+            console.log(tweetData)
+            const result = await axios.post("http://localhost:3000/user/tweet", tweetData);
+            console.log(result)
+        } catch(error) {
+            console.log(error)
+        }
+ 
+        console.log(tweetData.content)
     }
 
     return (
@@ -100,16 +142,18 @@ export default function Home() {
                     <div className={styles.mainInputDiv}>
                         <div className={styles.inpuItemsDiv}>
                             <div className={styles.inputBar}>
-                                <textarea 
-                                    type='textarea' 
-                                    rows={6}
-                                    maxLength={280}
-                                    className={styles.mainInput} 
-                                    value={tweetText}
-                                    onChange={(e) => setTweetText(e.target.value)}
-                                    placeholder='No que está pensando?'
-                                />
-                                <div>
+                                <div className={styles.inputBar__textarea}>
+                                    <textarea 
+                                        type='textarea' 
+                                        rows={8}
+                                        maxLength={280}
+                                        className={styles.mainInput} 
+                                        value={tweetText}
+                                        onChange={(e) => setTweetText(e.target.value)}
+                                        placeholder='No que está pensando?'
+                                    />
+                                </div>
+                                <div className={styles.inputBar__videoAndImage}>
                                     {uploadedFile.file && (
                                         <img
                                             src={uploadedFile.url}
@@ -131,11 +175,14 @@ export default function Home() {
                                     <div className={styles.imageVideoEmojiIcons__div}>
                                         <BsEmojiSmile onClick={() => setShowEmojiScreen(true)}/>
                                         {showEmojiScreen && (
-                                            <EmojiPicker 
-                                                skinTonesDisabled={true} 
-                                                autoFocusSearch={true} 
-                                                onEmojiClick={(emoji) => handleEmoji(emoji)}
-                                            />
+                                            <div style={{position: 'absolute', margin: '3vw'}}>
+                                                <EmojiPicker 
+                                                    skinTonesDisabled={true} 
+                                                    autoFocusSearch={true} 
+                                                    className={styles.emojiPickerStyle}
+                                                    onEmojiClick={(emoji) => handleEmoji(emoji)}
+                                                />
+                                            </div>
                                         )}
                                         <HiOutlinePhotograph 
                                             onClick={() => document.getElementById('inputFile').click()}
@@ -147,10 +194,10 @@ export default function Home() {
                                             onChange={(file) => handleFileUpload(file)}
                                         />
                                     </div>
-                                    {console.log(uploadedFile)}
+                                    {/* {console.log(uploadedFile)} */}
                                 </div>
                                 <div className={styles.tweetButton}>
-                                    <button type='text'>Tweetar</button>
+                                    <button type='text' onClick={handleTweetSubmit}>Tweetar</button>
                                 </div>
                             </div>
                         </div>

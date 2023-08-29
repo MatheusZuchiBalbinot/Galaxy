@@ -1,4 +1,4 @@
-async function GetEmailModel(client, email) {
+async function CheckEmailModel(client, email) {
     try {
         const dbCollection = client.db("cluster0").collection("users")
         const user = await dbCollection.findOne({ email });
@@ -9,4 +9,4 @@ async function GetEmailModel(client, email) {
     }
 }
 
-module.exports = GetEmailModel
+module.exports = CheckEmailModel

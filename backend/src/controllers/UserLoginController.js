@@ -1,4 +1,4 @@
-const GetEmailModel = require("../model/GetEmailModel")
+const CheckEmailModel = require("../model/CheckEmailModel")
 
 const bcrypt = require('bcrypt');
 
@@ -12,7 +12,7 @@ const UserLoginController = async (client, req, res) => {
             return
         }
         else {
-            const usersCursor = await GetEmailModel(client, userEmail);
+            const usersCursor = await CheckEmailModel(client, userEmail);
 
             if(!usersCursor) {
                 res.status(400).json({loginNotFound: true})
