@@ -1,13 +1,15 @@
-.asideDivider {
-    width: 1;
-    background-color: red;
-}
-
 .asideDiv {
     font-size: 1.2rem;
     display: flex;
     gap: 1rem;
+    padding: 1vw;
     width: 100%;
+}
+
+.asideDiv:hover {
+    border: '2px solid gray';
+    padding-inline: 1vw;
+    cursor: pointer;
 }
 
 .asideIconDiv {

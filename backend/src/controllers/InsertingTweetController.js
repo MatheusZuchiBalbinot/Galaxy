@@ -6,9 +6,7 @@ const pako = require('pako')
 const UserTweetController = async (client, req, res) => {
     try {
 
-        console.log(req.body)
-
-        const { nickName, userId, content, actualDate } = req.body;
+        const { nickName, content, actualDate } = req.body;
         const { text, image, video } = content;
         const { hours, minutes, days, month, year } = actualDate;
 
@@ -16,10 +14,13 @@ const UserTweetController = async (client, req, res) => {
         let videoBuffer = null;
 
         if (image != null) {
-            imageBuffer = Buffer.from(image, 'base64');
+            const compressedImage = pako.deflate(image);
+            imageBuffer = Buffer.from(compressedImage);
         } else if (video != null) {
-            videoBuffer = Buffer.from(video, 'base64');
-        }
+            videoBuffer = video;
+}
+
+        // Repeti a estruturação do Componente de Tweet para melhor visualização.
 
         const tweetDocument = {
             nickName,
@@ -28,7 +29,10 @@ const UserTweetController = async (client, req, res) => {
             content: {
               text: text,
               image: imageBuffer,
-              video: videoBuffer,
+              video: videoBuffer, 
+              // Não vale a pena comprimir um vídeo, visto que os codecs 
+              // já fazem isso, e fazendo isso com o pako acabaria tendo pouco impacto no tamanho   
+              // e haveria uma redução signifcativa da qualidade.
             },
             actualDate: {
               hours,

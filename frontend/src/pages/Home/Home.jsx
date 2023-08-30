@@ -18,7 +18,9 @@ import Menu from '../../components/HomeComponents/AsideLeftComponent/Menu.jsx'
 
 export default function Home() {
 
-    const {isLogged, setIsLogged} = useContext(userContext)
+    const [tweets, setTweets] = useState([]);
+
+    const {isLogged, setIsLogged, actualTweetSeletor} = useContext(userContext)
 
     const {nickName, passwordsMatch} = isLogged
 
@@ -52,7 +54,6 @@ export default function Home() {
     
             reader.onload = function (e) {
                 const dataUrl = e.target.result;
-                console.log(dataUrl)
 
                 const typeIndex = dataUrl.indexOf(':') + 1;
                 const typeEndIndex = dataUrl.indexOf(';');
@@ -107,14 +108,52 @@ export default function Home() {
         }
 
         try {
-            console.log(tweetData)
-            const result = await axios.post("http://localhost:3000/user/tweet", tweetData);
-            console.log(result)
+            if(tweetText.length > 0) {
+                const result = await axios.post("http://localhost:3000/user/InsertTweet", tweetData);
+            } else {
+
+            }
         } catch(error) {
             console.log(error)
         }
- 
-        console.log(tweetData.content)
+    }
+
+    const handleTweetGet = async () => {
+
+        console.log("Getting in API")
+
+        try {
+            const actualSelector = actualTweetSeletor.actualSeletor
+            const response = await axios.get(`http://localhost:3000/user/GetTweet/${actualSelector}`);
+            console.log(response.data)
+            setTweets(response.data);
+        } catch (error) {
+            console.error("Error fetching tweets:", error);
+        }
+    }
+
+    const handleEmptyTweets = () => {
+
+        console.log(tweets.result)
+
+        if(tweets.result) {
+            if(tweets.result.length < 1) {
+                return (
+                    <div className={styles.noOneTweet}>
+                        <h3 className={styles.noOneTweet__title}> Nenhum Tweet encontrado. </h3>
+                    </div>
+                )
+            } else {
+                {console.log("Entrou no Else")}
+                return (
+                    <div>
+                        {/* <video src={tweets.result[0].content.video} controls autoplay ></video> */}
+                        <img src={tweets.result[1].content.image} />
+                        <p>ASDASDASDADASDASD</p>
+                    </div>
+                )
+            }
+        }
     }
 
     return (
@@ -194,7 +233,6 @@ export default function Home() {
                                             onChange={(file) => handleFileUpload(file)}
                                         />
                                     </div>
-                                    {/* {console.log(uploadedFile)} */}
                                 </div>
                                 <div className={styles.tweetButton}>
                                     <button type='text' onClick={handleTweetSubmit}>Tweetar</button>
@@ -205,7 +243,10 @@ export default function Home() {
                 </div>
 
                 <div className={styles.tweetsDiv}>
-
+                    <button style={{color: 'white'}} onClick={handleTweetGet}>ASDASD</button>
+                    <div className={styles.allTweetsDiv}>
+                        {handleEmptyTweets()}
+                    </div>
                 </div>
             </div>
         </div>

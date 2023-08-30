@@ -175,6 +175,18 @@
 }
 
 .tweetsDiv {
+    display: flex;
     grid-area: tweetsDiv;
     border-top: 3px solid wheat;
+    justify-content: center;
+}
+
+.noOneTweet {
+    display: flex;
+    margin: auto;
+}
+
+.noOneTweet__title {
+    color: white;
+    font-size: 2vw;
 }

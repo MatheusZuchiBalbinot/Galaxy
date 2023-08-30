@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
 
-const InsertModel = require("../model/InsertModel")
+const InsertLoginModel = require("../model/InsertLoginModel")
 
 const UserRegisterController = async (client, req, res) => {
     try {
@@ -44,7 +44,7 @@ const UserRegisterController = async (client, req, res) => {
                 password: hashedPassword,
             }
             try {
-                await InsertModel(client, data, email, nickName);
+                await InsertLoginModel(client, data, email, nickName);
                 res.status(201).json({ message: "Success" });
             } catch (error) {
                 if (typeof error === "object") {

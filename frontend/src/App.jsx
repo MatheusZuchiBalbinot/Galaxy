@@ -10,6 +10,7 @@ import {userContext} from './context/userContext.jsx'
 function App() {
 
   const [isLogged, setIsLogged] = useState({passwordsMatch: false, nickName: ''})
+  const [actualTweetSeletor, setActualTweetSeletor] = useState({actualSeletor: 'orderByRecent'})
 
   const routes = useRoutes([
     {
@@ -31,7 +32,7 @@ function App() {
   ])
 
   return (
-    <userContext.Provider value={{isLogged, setIsLogged}} className="App">
+    <userContext.Provider value={{isLogged, setIsLogged, actualTweetSeletor, setActualTweetSeletor}} className="App">
       {routes}
     </userContext.Provider>
 )
