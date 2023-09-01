@@ -59,6 +59,9 @@
 
 .asideSelectedItem {
     grid-area: asideSelectedItem;
+    position: fixed;
+    right: 5vh;
+    top: 20vh;
     margin: 1rem;
     display: flex;
     flex-direction: column;

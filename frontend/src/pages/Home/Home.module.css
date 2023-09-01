@@ -1,17 +1,18 @@
 .mainContainer {
     display: grid;
-    grid-template-columns: 20vw 60vw 20vw;
+    grid-template-columns: 20vw auto 20vw;
     grid-template-rows: auto;
     grid-template-areas: 
     "asideLeft main asideRight";
-    height: 100vh;
     background-image: linear-gradient(to right bottom, #232022, #232023, #232024, #222026, #202027, #1d1f27, #1a1d26, #171c26, #131823, #0f1421, #0a0e1e, #05071c);
+    font-family: 'Roboto', sans-serif;
+    min-height: 100vh;
 }
 
 .asideLeft {
     grid-area: asideLeft;
     display: grid;
-    background-color: #0a0e1e;
+    border-right: 3px solid #413c41;
     grid-template-rows: 17vh auto;
     grid-template-areas: 
     "appLogo"
@@ -23,14 +24,6 @@
     display: flex;
 }
 
-.menu {
-    grid-area: menu;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
 .leftLogo {
     margin: auto;
 }
@@ -38,7 +31,7 @@
 .asideRight {
     grid-area: asideRight;
     display: grid;
-    background-color: #0a0e1e;
+    border-left: 3px solid #413c41;
     grid-template-columns: auto;
     grid-template-rows: 7vh 10vh auto;
     grid-template-areas: 
@@ -65,7 +58,7 @@
     grid-area: postDiv;
     background-color: #2c2b2c;
     border-radius: 1vw;
-    margin: 1rem;
+    margin: 2vw;
     display: flex;
 }
 
@@ -73,16 +66,6 @@
     width: 100%;
     display: flex;
     height: 50%;
-}
-
-.mainInput {
-    background-color: transparent;
-    color: white;
-    width: 100%;
-    outline: none;
-    padding: 0.5vw;
-    margin: 1vw;
-    max-height: 10vh;
 }
 
 ::-webkit-scrollbar {
@@ -175,18 +158,91 @@
 }
 
 .tweetsDiv {
-    display: flex;
     grid-area: tweetsDiv;
-    border-top: 3px solid wheat;
     justify-content: center;
+}
+
+.refreshTweets {
+    display: flex;
+    justify-content: center;
+    margin: 2vw;
+}
+
+.refreshTweets__button {
+    color: white;
+}
+
+.refreshTweets__button svg {
+    color: white;
+    font-size: 4vw;
 }
 
 .noOneTweet {
     display: flex;
-    margin: auto;
+    justify-content: center;
 }
 
 .noOneTweet__title {
     color: white;
     font-size: 2vw;
+}
+
+.oneTweetdiv {
+    margin: 2vw;
+    background-color: #2a2b2f6e;
+    padding: 1.2vw;
+    border-radius: 1vw;
+}
+
+.oneTweetdiv__text {
+    padding: 1vw;
+}
+
+.oneTweetdiv__textAndFile {
+    background-color: #4243456e;
+    margin: 1vw 0.5vw;
+    color: white;
+    border-radius: 1vw;
+}
+
+.oneTweetdiv__image {
+    display: flex;
+    justify-content: center;
+}
+
+.oneTweetdiv__infoAboutTweet {
+    color: white;
+    display: flex;
+    gap: 2vw;
+}
+
+.oneTweetdiv__image img, .oneTweetdiv__image video {
+    width: 100%;
+}
+
+.oneTweetdiv__comments__title {
+    color: white;
+    font-size: 1.5vw;
+}
+
+.createComment__div {
+    display: flex;
+    color: white;
+    margin: 1vw 0.5vw;
+    border: 1px solid white;
+    border-radius: 1vw;
+    background-color: #4243456e;
+}
+
+.createComment__div__icon {
+    display: flex;
+    margin: auto;
+    font-size: 2vw;
+    cursor: pointer;
+}
+
+.createComment__div__icon svg {
+    display: flex;
+    justify-content: right;
+    margin: 0.7vw;
 }

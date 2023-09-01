@@ -6,6 +6,8 @@ import axios from "axios";
 
 import {BsFillPersonFill, BsEmojiSmile} from 'react-icons/bs'
 import {HiOutlinePhotograph} from 'react-icons/hi'
+import {SlRefresh} from 'react-icons/sl'
+import {AiOutlineSend} from 'react-icons/ai'
 
 import EmojiPicker from 'emoji-picker-react';
 
@@ -16,6 +18,9 @@ import styles from './Home.module.css'
 import UserRightComponents from '../../components/HomeComponents/AsideRightComponent/RightUserMenu/UserRightComponent'
 import Menu from '../../components/HomeComponents/AsideLeftComponent/Menu.jsx'
 
+import { TextAreaInput, TextInput } from '../../components/ElementComponents/Input/TextInput'
+import ShowTimeDiff from '../../components/ElementComponents/ShowTimeDiff/ShowTimeDiff';
+
 export default function Home() {
 
     const [tweets, setTweets] = useState([]);
@@ -25,6 +30,7 @@ export default function Home() {
     const {nickName, passwordsMatch} = isLogged
 
     const [tweetText, setTweetText] = useState('')
+    const [tweetAnswers, setTweetAnswers]= useState([]);
 
     const [showEmojiScreen, setShowEmojiScreen] = useState(false)
 
@@ -37,13 +43,13 @@ export default function Home() {
             setIsLogged({passwordsMatch: false, nickName: ''})
             return navigate("/")
         }
+        handleTweetGet()
+        handleTweets()
     }, [isLogged])
 
     const handleEmoji = (emoji) => {
         setShowEmojiScreen(false)
         setTweetText((prevState) => prevState + String.fromCodePoint(`0x${emoji.unified}`));
-
-        {/* <p> <span> &#x1F600; </span> </p> */}
     }
 
     const handleFileUpload = (file) => {
@@ -110,6 +116,7 @@ export default function Home() {
         try {
             if(tweetText.length > 0) {
                 const result = await axios.post("http://localhost:3000/user/InsertTweet", tweetData);
+                console.log(result)
             } else {
 
             }
@@ -125,32 +132,88 @@ export default function Home() {
         try {
             const actualSelector = actualTweetSeletor.actualSeletor
             const response = await axios.get(`http://localhost:3000/user/GetTweet/${actualSelector}`);
-            console.log(response.data)
-            setTweets(response.data);
+            setTweets(response.data.result);
         } catch (error) {
             console.error("Error fetching tweets:", error);
         }
     }
 
-    const handleEmptyTweets = () => {
+    const handleTweetResponses = async (item) => {
+        
+        const {_id} = item
 
-        console.log(tweets.result)
+        tweetAnswers.map((tweet) => {
+            if(tweet.itemId == _id && tweet.text.length > 0) {
+                console.log('Toma TOma')
+            }
+        })
 
-        if(tweets.result) {
-            if(tweets.result.length < 1) {
+    }
+
+    const handleAnswerChange = async (itemId, respectiveText) => {
+        console.log(itemId, respectiveText)
+        setTweetAnswers((prevAnswers) => {
+            const newAnswers = [...prevAnswers];
+            const existingIndex = newAnswers.findIndex(item => item.itemId === itemId);
+    
+            if (existingIndex === -1) {
+                newAnswers.push({ itemId, text: respectiveText });
+            } else {
+                newAnswers[existingIndex] = { itemId, text: respectiveText };
+            }
+    
+            return newAnswers;
+        });
+        console.log(tweetAnswers)
+    }
+
+    const handleTweets = () => {
+
+        if(tweets) {
+            if(tweets.length < 1) {
+
                 return (
                     <div className={styles.noOneTweet}>
                         <h3 className={styles.noOneTweet__title}> Nenhum Tweet encontrado. </h3>
                     </div>
                 )
             } else {
-                {console.log("Entrou no Else")}
+                // console.log(tweets)
                 return (
-                    <div>
-                        {/* <video src={tweets.result[0].content.video} controls autoplay ></video> */}
-                        <img src={tweets.result[1].content.image} />
-                        <p>ASDASDASDADASDASD</p>
-                    </div>
+                    tweets.map((item, index) => {
+
+                        const {likes, nickName, userId, _id, content, comments, actualDate} = item
+                        const {text, image, video} = content
+                        
+                        return (
+                            <div className={styles.oneTweetdiv} key={index}>
+                                <div className={styles.oneTweetdiv__infoAboutTweet}>
+                                    <h2>{nickName}</h2>
+                                    <ShowTimeDiff actualDate={actualDate} />
+                                </div>
+                                <div className={styles.oneTweetdiv__textAndFile}>
+                                    <h1 className={styles.oneTweetdiv__text}>{text}</h1>
+                                    <div className={styles.oneTweetdiv__image}>
+                                        {image && <img src={image} />}
+                                        {video && <video src={video} controls />}
+                                    </div>
+                                </div>
+                                <div className={styles.oneTweetdiv__comments}>
+                                    <h3 className={styles.oneTweetdiv__comments__title}>Comentários: </h3>
+                                    <div className={styles.createComment__div}>
+                                        <TextInput 
+                                            type={"text"} 
+                                            maxLength={280} 
+                                            onChange={(e) =>  handleAnswerChange(item._id, e.target.value)}
+                                        />
+                                        <div className={styles.createComment__div__icon} onClick={() => handleTweetResponses(item)}>
+                                            <AiOutlineSend />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    })
                 )
             }
         }
@@ -164,9 +227,7 @@ export default function Home() {
                         <img src={logo} className={styles.logoImage}/>
                     </div>
                 </div>
-                <div className={styles.menu}>
-                    <Menu />
-                </div>
+                <Menu />
             </div>
 
             <div className={styles.asideRight}>
@@ -182,14 +243,11 @@ export default function Home() {
                         <div className={styles.inpuItemsDiv}>
                             <div className={styles.inputBar}>
                                 <div className={styles.inputBar__textarea}>
-                                    <textarea 
-                                        type='textarea' 
-                                        rows={8}
+                                    <TextAreaInput 
+                                        value={tweetText} 
+                                        rows={8} 
+                                        onChange={(e) => setTweetText(e.target.value)} 
                                         maxLength={280}
-                                        className={styles.mainInput} 
-                                        value={tweetText}
-                                        onChange={(e) => setTweetText(e.target.value)}
-                                        placeholder='No que está pensando?'
                                     />
                                 </div>
                                 <div className={styles.inputBar__videoAndImage}>
@@ -235,7 +293,7 @@ export default function Home() {
                                     </div>
                                 </div>
                                 <div className={styles.tweetButton}>
-                                    <button type='text' onClick={handleTweetSubmit}>Tweetar</button>
+                                    <button type='text' onClick={() => handleTweetSubmit()}>Tweetar</button>
                                 </div>
                             </div>
                         </div>
@@ -243,9 +301,13 @@ export default function Home() {
                 </div>
 
                 <div className={styles.tweetsDiv}>
-                    <button style={{color: 'white'}} onClick={handleTweetGet}>ASDASD</button>
-                    <div className={styles.allTweetsDiv}>
-                        {handleEmptyTweets()}
+                    <div className={styles.refreshTweets}>
+                        <button className={styles.refreshTweets__button} onClick={() => handleTweetGet()}> 
+                            <SlRefresh />
+                        </button>
+                    </div>
+                    <div className={styles.allTweetsDiv} id='allTweetsDiv'>
+                        {handleTweets()}
                     </div>
                 </div>
             </div>

@@ -21,48 +21,50 @@ export default function Menu() {
 
     return (
         <>
-            <div className={styles.menuNavigation}>
+            <div className={styles.menu}>
+                <div className={styles.menuNavigation}>
 
-                <div className={styles.menuDiv}>
-                    <div className={styles.menuIconDiv}>
-                        <BsFillPersonFill />
+                    <div className={styles.menuDiv}>
+                        <div className={styles.menuIconDiv}>
+                            <BsFillPersonFill />
+                        </div>
+                        <div className={styles.menuIconText}>
+                            <h2 className={styles.nickNameTitle}> {nickName} </h2>
+                        </div>
                     </div>
-                    <div className={styles.menuIconText}>
-                        <h2 className={styles.nickNameTitle}> {nickName} </h2>
-                    </div>
-                </div>
 
-                <div className={styles.menuDiv}>
-                    <div className={styles.menuIconDiv} onClick={handleLogout}>
-                        <FiLogOut />
+                    <div className={styles.menuDiv}>
+                        <div className={styles.menuIconDiv} onClick={handleLogout}>
+                            <FiLogOut />
+                        </div>
+                        <div className={styles.menuIconText} onClick={handleLogout}>
+                            <h2 className={styles.nickNameTitle}> Logout </h2>
+                        </div>
                     </div>
-                    <div className={styles.menuIconText} onClick={handleLogout}>
-                        <h2 className={styles.nickNameTitle}> Logout </h2>
-                    </div>
-                </div>
 
-                <div className={styles.menuDiv}>
-                    <div className={styles.menuIconDiv}>
-                        <TiMessages />
+                    <div className={styles.menuDiv}>
+                        <div className={styles.menuIconDiv}>
+                            <TiMessages />
+                        </div>
+                        <div className={styles.menuIconText}>
+                            <h2>Mensagens</h2>
+                        </div>
                     </div>
-                    <div className={styles.menuIconText}>
-                        <h2>Mensagens</h2>
+                    <div className={styles.menuDiv}>
+                        <div className={styles.menuIconDiv}>
+                            <IoMdNotificationsOutline />
+                        </div>
+                        <div className={styles.menuIconText}>
+                            <h2>Notificações</h2>
+                        </div>
                     </div>
-                </div>
-                <div className={styles.menuDiv}>
-                    <div className={styles.menuIconDiv}>
-                        <IoMdNotificationsOutline />
-                    </div>
-                    <div className={styles.menuIconText}>
-                        <h2>Notificações</h2>
-                    </div>
-                </div>
-                <div className={styles.menuDiv}>
-                    <div className={styles.menuIconDiv}>
-                        <CgProfile />
-                    </div>
-                    <div className={styles.menuIconText}>
-                        <h2>Perfil</h2>
+                    <div className={styles.menuDiv}>
+                        <div className={styles.menuIconDiv}>
+                            <CgProfile />
+                        </div>
+                        <div className={styles.menuIconText}>
+                            <h2>Perfil</h2>
+                        </div>
                     </div>
                 </div>
             </div>

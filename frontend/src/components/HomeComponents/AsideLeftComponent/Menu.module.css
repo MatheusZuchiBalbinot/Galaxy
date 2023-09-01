@@ -13,7 +13,17 @@
     font-size: 1.5rem;
     display: flex;
     gap: 1rem;
+    padding: 1vw;
+    margin: 0.5vw;
     width: 100%;
+}
+
+.menu {
+    grid-area: menu;
+    display: flex;
+    position: fixed;
+    top: 20vh;
+    left: 5vh;
 }
 
 .menuIconDiv {
