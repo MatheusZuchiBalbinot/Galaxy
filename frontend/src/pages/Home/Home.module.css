@@ -33,10 +33,9 @@
     display: grid;
     border-left: 3px solid #413c41;
     grid-template-columns: auto;
-    grid-template-rows: 7vh 10vh auto;
+    grid-template-rows: 8vh auto;
     grid-template-areas: 
     "asideSelect"
-    "."
     "asideSelectedItem";
 }
 
@@ -79,7 +78,7 @@
   }
 
 .inputAvatar {
-    font-size: 2rem;
+    font-size: 2vw;
     display: flex;
     padding: 1.5vw;
     color: white;
@@ -111,7 +110,7 @@
 .imageVideoEmojiIcons {
     display: flex;  
     color: white;
-    font-size: 1.5rem;
+    font-size: 2vw;
 }
 
 .emojiPickerStyle {
@@ -132,12 +131,13 @@
 .imageVideoEmojiIcons__div {
     margin: auto;
     display: flex;
-    gap: 1rem; 
+    gap: 2vw; 
 }
 
 .imageVideoEmojiIcons__div svg {
-    margin: 0.5vw;
+    margin: 1vw;
     cursor: pointer;
+    font-size: 2.6vw;
 }
 
 .bottomTweetDiv {
@@ -153,8 +153,9 @@
 }
 
 .tweetButton button {
-    margin-right: 1rem;
-    padding: 0 0.5rem 0.5rem 0.5rem;
+    margin-right: 1vw;
+    padding: 0 0.5vw 0.5vw 0.5vw;
+    font-size: 1.7vw;
 }
 
 .tweetsDiv {
@@ -189,6 +190,7 @@
 
 .oneTweetdiv {
     margin: 2vw;
+    font-size: 1.3vw;
     background-color: #2a2b2f6e;
     padding: 1.2vw;
     border-radius: 1vw;
@@ -232,6 +234,7 @@
     border: 1px solid white;
     border-radius: 1vw;
     background-color: #4243456e;
+    font-size: 1.3vw;
 }
 
 .createComment__div__icon {

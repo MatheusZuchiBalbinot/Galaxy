@@ -1,11 +1,12 @@
 import { useRoutes } from "react-router-dom";
 import { useState } from "react";
 
+import {userContext} from './context/userContext.jsx'
+
 import Login from './pages/Login/Login.jsx'
 import Register from './pages/Register/Register.jsx'
 import Home from './pages/Home/Home.jsx'
-
-import {userContext} from './context/userContext.jsx'
+import Profile from "./pages/Profile/Profile.jsx";
 
 function App() {
 
@@ -28,7 +29,11 @@ function App() {
     {
       path: '/home',
       element: <Home />
-    }
+    },
+    {
+      path: '/user/profile',
+      element: <Profile />
+    },
   ])
 
   return (

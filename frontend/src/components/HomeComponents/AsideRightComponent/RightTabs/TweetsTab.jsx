@@ -35,8 +35,8 @@ export default function TweetsTab() {
                 <div className={styles.asideIconDiv}>
                     <MdOutlineWhatshot />
                 </div>
-                <div className={styles.asideText}>
-                    <h2>Recentes</h2>
+                <div className={styles.asideText__div}>
+                    <h2 className={styles.asideText__text}>Recentes</h2>
                 </div>
             </div>
             <div className={styles.asideDiv} id="orderByFriendsTweets" onClick={() => setActualTweetSeletor({actualSeletor: "orderByFriendsTweets"})}>
@@ -44,39 +44,39 @@ export default function TweetsTab() {
                     <FaUserFriends />
                 </div>
                 <div className={styles.asideText}>
-                    <h2>Tweets Amigos</h2>
+                    <h2 className={styles.asideText__text}>Tweets Amigos</h2>
                 </div>
             </div>
             <div className={styles.asideDiv} id="orderByMyTweets" onClick={() => setActualTweetSeletor({actualSeletor: "orderByMyTweets"})}>
                 <div className={styles.asideIconDiv}>
                     <BsFilePerson />
                 </div>
-                <div className={styles.asideText}>
-                    <h2>Meus Tweets</h2>
+                <div className={styles.asideText__div}>
+                    <h2 className={styles.asideText__text}>Meus Tweets</h2>
                 </div>
             </div>
             <div className={styles.asideDiv} id="orderByMostRelevant" onClick={() => setActualTweetSeletor({actualSeletor: "orderByMostRelevant"})}>
                 <div className={styles.asideIconDiv}>
                     <CgRowFirst />
                 </div>
-                <div className={styles.asideText}>
-                    <h2>Mais famosos</h2>
+                <div className={styles.asideText__div}>
+                    <h2 className={styles.asideText__text}>Mais famosos</h2>
                 </div>
             </div>
             <div className={styles.asideDiv} id="orderByLessRelevant" onClick={() => setActualTweetSeletor({actualSeletor: "orderByLessRelevant"})}>
                 <div className={styles.asideIconDiv}>
                     <CgRowLast />
                 </div>
-                <div className={styles.asideText}>
-                    <h2>Menos famosos</h2>
+                <div className={styles.asideText__div}>
+                    <h2 className={styles.asideText__text}>Menos famosos</h2>
                 </div>
             </div>
             <div className={styles.asideDiv} id="orderByLiked" onClick={() => setActualTweetSeletor({actualSeletor: "orderByLiked"})}>
                 <div className={styles.asideIconDiv}>
                     <AiFillLike />
                 </div>
-                <div className={styles.asideText}>
-                    <h2>Curtidos</h2>
+                <div className={styles.asideText__div}>
+                    <h2 className={styles.asideText__text}>Curtidos</h2>
                 </div>
             </div>
         </>

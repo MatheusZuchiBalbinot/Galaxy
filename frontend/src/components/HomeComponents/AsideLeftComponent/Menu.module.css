@@ -1,21 +1,26 @@
 .menuNavigation {
-    margin: 1rem;
+    margin: 2vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    row-gap: 1.5rem;
+    row-gap: 1.5vw;
     color: white;
 }
 
 .menuDiv {
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.5vw;
     display: flex;
-    gap: 1rem;
+    gap: 1vw;
     padding: 1vw;
     margin: 0.5vw;
     width: 100%;
+}
+
+.menuDiv:hover {
+    background-color: gray;
+    cursor: pointer;
 }
 
 .menu {
@@ -23,14 +28,18 @@
     display: flex;
     position: fixed;
     top: 20vh;
-    left: 5vh;
 }
 
 .menuIconDiv {
     display: flex;
     margin: auto;
+    font-size: 2vw;
 }
 
-.menuIconText {
+.menuIconText__div {
     width: 80%;
+}
+
+.menuIconText__text {
+    font-size: 1.5vw;
 }
