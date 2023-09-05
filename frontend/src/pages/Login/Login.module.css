@@ -52,12 +52,12 @@
 }
 
 .formTitleH1 {
-    font-size: 2vw;
+    font-size: 1.6vw;
 }
 
 .formBodyTitle {
     color: white;
-    font-size: 2vw;
+    font-size: 1.6vw;
 }
 
 .formBody {
@@ -87,7 +87,7 @@
 .formIcon {
     margin: auto;
     display: flex;
-    font-size: 2vw;
+    font-size: 1.6vw;
 }
 
 .formButton {
@@ -101,7 +101,7 @@
     cursor: pointer;
     display: flex;
     margin: auto;
-    font-size: 2vw;
+    font-size: 1.6vw;
 }
 
 .buttonDiv {

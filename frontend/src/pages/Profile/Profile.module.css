@@ -1,0 +1,127 @@
+.mainContainer {
+    display: grid;
+    grid-template-columns: 20vw auto;
+    grid-template-rows: auto;
+    grid-template-areas: 
+    "asideLeft userProfileMain__div";
+    background-image: linear-gradient(to right bottom, #232022, #232023, #232024, #222026, #202027, #1d1f27, #1a1d26, #171c26, #131823, #0f1421, #0a0e1e, #05071c);
+    font-family: 'Roboto', sans-serif;
+    min-height: 100vh;
+}
+
+.asideLeft {
+    grid-area: asideLeft;
+    display: grid;
+    border-right: 3px solid #413c41;
+    grid-template-rows: 17vh auto;
+    grid-template-areas: 
+    "appLogo"
+    "menu";
+}
+
+.appLogo {
+    grid-area: appLogo;
+    display: flex;
+}
+
+.leftLogo {
+    margin: auto;
+}
+
+.logoImage {
+    width: 7vw;
+    height: auto;
+}
+
+.userProfileMain__div {
+    display: grid;
+    grid-area: userProfileMain__div;
+    grid-template-rows: 25vh auto;
+    margin: 2vw;
+    border: 2px solid white;
+    border-radius: 1vw;
+    grid-template-areas: 
+    "infoAboutUser"
+    "userInteractions"
+    ;
+}
+
+.infoaboutUserMain {
+    grid-area: infoAboutUser;
+    margin: 1vw;
+}
+
+.infoaboutUserMain__div {
+    margin: 1vw;
+    display: flex;
+}
+
+.infoaboutUserMain__div__text {
+    display: flex;
+    padding: 1vw;
+}
+
+.infoaboutUserMain__div__image {
+    width: 15%;
+    margin: auto;
+}
+
+.userInteractions {
+    grid-area: userInteractions;
+    min-height: 50vh;
+}
+
+.infoaboutUserMain__div__nickname__info {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5vw;
+}
+
+.infoaboutUserMain__title {
+    font-size: 1.6vw;
+    color: white;
+    text-align: center;
+}
+
+.infoaboutUserMain__subtitle {
+    font-size: 1.3vw;
+    color: rgb(175, 163, 163);
+}
+
+.infoaboutUserMain__div__texts {
+    display: block;
+    color: white;
+    width: 85%;
+    text-align: justify;
+}
+
+.infoaboutUserMain__div__nickname {
+    display: flex;
+    padding: 0 0 1vw 0;
+    gap: 1.5vw;
+    justify-content: space-between;
+}
+
+.infoaboutUserMain__div__nickname h3, .infoaboutUserMain__div__nickname h2 {
+    margin: auto 0;
+}
+
+.userProfileStats {
+    display: flex;
+    color: white;
+    justify-content: space-around;
+    padding: 1vw;
+}
+
+.editInfoAboutPerson {
+    color: white;
+    padding: 1vw;
+}
+
+.editInfoAboutPerson svg {
+    font-size: 2vw;
+}
+
+
+
+

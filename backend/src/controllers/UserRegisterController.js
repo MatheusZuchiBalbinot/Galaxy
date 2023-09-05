@@ -38,10 +38,26 @@ const UserRegisterController = async (client, req, res) => {
 
             const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
 
+            const actualDate = new Date();
+            const days = actualDate.getDate();
+            const month = actualDate.getMonth() + 1;
+            const year = actualDate.getFullYear();
+
+            function addLeadingZero(value) {
+                return value < 10 ? `0${value}` : value;
+            }
+
+            const dayFormatted = addLeadingZero(days);
+            const monthFormatted = addLeadingZero(month);
+
+            const dateFormattedString = `${dayFormatted}/${monthFormatted}/${year}`;
+
             const data = {
                 email, 
                 nickName, 
                 password: hashedPassword,
+                createdInDate: dateFormattedString,
+                avatar: "https://upload.wikimedia.org/wikipedia/commons/5/59/User-avatar.svg"
             }
             try {
                 await InsertLoginModel(client, data, email, nickName);

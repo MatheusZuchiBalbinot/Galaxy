@@ -36,6 +36,8 @@ export default function Home() {
 
     const [uploadedFile, setUploadedFile] = useState({});
 
+    const [userInfo, setUserInfo] = useState();
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -45,8 +47,19 @@ export default function Home() {
         }
         handleTweetGet()
         handleTweets()
+        getUserInfo()
     }, [isLogged])
 
+    const getUserInfo = async () => {
+
+        try {
+            const response = await axios.get(`http://localhost:3000/user/profile/${nickName}`);
+            setUserInfo(response.data.user)
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    
     const handleEmoji = (emoji) => {
         setShowEmojiScreen(false)
         setTweetText((prevState) => prevState + String.fromCodePoint(`0x${emoji.unified}`));
@@ -227,7 +240,9 @@ export default function Home() {
                         <img src={logo} className={styles.logoImage}/>
                     </div>
                 </div>
-                <Menu />
+                {userInfo && (
+                    <Menu userInfo={userInfo}/>
+                )}
             </div>
 
             <div className={styles.asideRight}>

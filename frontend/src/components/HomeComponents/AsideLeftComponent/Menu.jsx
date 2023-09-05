@@ -4,28 +4,30 @@ import {TiMessages} from 'react-icons/ti'
 import {BsFillPersonFill} from 'react-icons/bs'
 import { FiLogOut } from 'react-icons/fi'
 
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { userContext} from '../../../context/userContext'
+
+import Avatar from '../../ElementComponents/Avatar/Avatar'
 
 import styles from './Menu.module.css'
 
 import { useNavigate } from 'react-router-dom';
 
-export default function Menu() {
+export default function Menu({userInfo}) {
 
     const navigate = useNavigate()
+
+    const {isLogged, setIsLogged} = useContext(userContext)
 
     const changePage = () => {
         return navigate("/user/profile")
     }
 
-    const {isLogged, setIsLogged} = useContext(userContext)
-
-    const {nickName} = isLogged
-
     const handleLogout = () => {
         setIsLogged({passwordsMatch: false, nickName: ''})
     }
+
+    const {nickName} = isLogged
 
     return (
         <>
@@ -34,7 +36,7 @@ export default function Menu() {
 
                     <div className={styles.menuDiv}>
                         <div className={styles.menuIconDiv}>
-                            <BsFillPersonFill />
+                            <Avatar userInfo={userInfo} size={'small'} />
                         </div>
                         <div className={styles.menuIconText__div}>
                             <h2 className={styles.menuIconText__text}> {nickName} </h2>

@@ -1,0 +1,15 @@
+.userAvatarDiv {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+} 
+
+.userAvatarImg__small {
+    width: 3vw;
+    border-radius: 50%;
+}
+
+.userAvatarImg__big {
+    width: 8vw;
+    border-radius: 50%;
+}
