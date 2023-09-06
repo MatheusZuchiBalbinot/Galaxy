@@ -12,13 +12,35 @@ import {
     Input,
     Textarea ,
   } from "@chakra-ui/react";
-import { useDisclosure } from "@chakra-ui/react";
 
-import { useRef } from "react";
+import { useRef, useState, useContext } from "react";
+import { userContext } from '../../../context/userContext'
 
-export default function  ModalWithInput({isOpen, onClose}) {
+import axios from 'axios'
+
+export default function  ModalWithInput({isOpen, onClose, newUserInfo, setNewUserInfo}) {
+
+    const {isLogged} = useContext(userContext)
+
     const initialRef = useRef();
     const finalRef = useRef();
+
+    const {nickName} = isLogged
+
+    const [editErrors, setEditErros] = useState({
+        textError: '',
+        descriptionError: '',
+    })
+
+    const handleProfileChanges = async () => {
+
+        try {
+            const result = await axios.patch(`http://localhost:3000/user/profile/edit/${nickName}`, newUserInfo)
+        }
+        catch(error) {
+            console.log(error)
+        }
+    }
 
     return (
         <>
@@ -34,18 +56,32 @@ export default function  ModalWithInput({isOpen, onClose}) {
                     <ModalCloseButton />
                     <ModalBody pb={6}>
                         <FormControl>
-                            <FormLabel>Nickname: </FormLabel>
-                            <Input ref={initialRef} placeholder='Ex: teste123' />
+                            <FormLabel>Apelido: </FormLabel>
+                            <Input 
+                                ref={initialRef} 
+                                placeholder='Ex: teste123' 
+                                onChange={(e) => setNewUserInfo(prevState => ({
+                                    ...prevState,
+                                    nickName: e.target.value
+                                }))}
+                            />
                         </FormControl>
 
                         <FormControl mt={4}>
-                            <FormLabel> Description: </FormLabel>
-                            <Textarea resize="none" placeholder='Ex: Estudante que gosta de jogar futebol aos finais de semana.' />
+                            <FormLabel> Descrição: </FormLabel>
+                            <Textarea 
+                                resize="none" 
+                                placeholder='Ex: Estudante que gosta de jogar futebol aos finais de semana.'
+                                onChange={(e) => setNewUserInfo(prevState => ({
+                                    ...prevState,
+                                    userDescription: e.target.value
+                                }))}
+                            />
                         </FormControl>
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button colorScheme='blue' mr={3}>
+                        <Button colorScheme='blue' mr={3} onClick={() => handleProfileChanges()}>
                             Save
                         </Button>
                         <Button onClick={onClose}>Cancel</Button>

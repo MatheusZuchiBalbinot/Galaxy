@@ -23,7 +23,9 @@ export default function Profile() {
     const {nickName, passwordsMatch} = isLogged;
 
     const [userInfo, setUserInfo] = useState();
-    const [editUserInfo, setEditUserInfo] = useState();
+    const [showEditUserInfo, setShowEditUserInfo] = useState();
+
+    const [newUserInfo, setNewUserInfo] = useState({})
 
     useEffect(() => {
         if (passwordsMatch === false) {
@@ -43,18 +45,22 @@ export default function Profile() {
     };
 
     const handleOpenModal = () => {
-        setEditUserInfo(true);
-      };
+        setShowEditUserInfo(true);
+    };
     
-      const handleCloseModal = () => {
-        setEditUserInfo(false);
-      };
+    const handleCloseModal = () => {
+        setShowEditUserInfo(false);
+    };
+
+    const changeToHome = () => {
+        return navigate("/home")
+    }
 
     return (
         <div className={styles.mainContainer}>
             <div className={styles.asideLeft}>
                 <div className={styles.appLogo}>
-                    <div className={styles.leftLogo}>
+                    <div className={styles.leftLogo} onClick={changeToHome}>
                         <img src={logo} className={styles.logoImage}/>
                     </div>
                 </div>
@@ -80,15 +86,22 @@ export default function Profile() {
                                         <h3 className={styles.infoaboutUserMain__subtitle}> Conta criada em: {userInfo.createdInDate}</h3>
                                     )}
                                 </div>
-                                <div className={styles.editInfoAboutPerson}>
-                                    <AiOutlineEdit onClick={handleOpenModal} />
-                                    {editUserInfo && (
-                                        <ModalWithInput isOpen={editUserInfo} onClose={handleCloseModal} />
+                                <div className={styles.editInfoAboutPerson} onClick={handleOpenModal}>
+                                    <AiOutlineEdit />
+                                    {showEditUserInfo && (
+                                        <ModalWithInput 
+                                            isOpen={showEditUserInfo} 
+                                            onClose={handleCloseModal}  
+                                            newUserInfo={newUserInfo}
+                                            setNewUserInfo={setNewUserInfo}
+                                        />
                                     )}
                                 </div>
                             </div>
                             <div className={styles.infoaboutUserMain__div__description}>
-                                <h4>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia cupiditate quasi explicabo ducimus et magni praesentium quam eaque laborum totam unde soluta, quisquam iste, similique repudiandae sed ullam. Alias, quos!</h4>
+                            {userInfo && (
+                                <h4 className={styles.userDescription}> {userInfo.userDescription} </h4>
+                            )}
                             </div>
                         </div>
                     </div>

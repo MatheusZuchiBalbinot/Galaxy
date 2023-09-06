@@ -57,6 +57,7 @@ const UserRegisterController = async (client, req, res) => {
                 nickName, 
                 password: hashedPassword,
                 createdInDate: dateFormattedString,
+                userDescription: "Hi, I'm using Galaxy and would like to find friends.",
                 avatar: "https://upload.wikimedia.org/wikipedia/commons/5/59/User-avatar.svg"
             }
             try {

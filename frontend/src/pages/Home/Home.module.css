@@ -28,6 +28,11 @@
     margin: auto;
 }
 
+.leftLogo:hover {
+   cursor: pointer;
+   background-color: gray;
+}
+
 .asideRight {
     grid-area: asideRight;
     display: grid;

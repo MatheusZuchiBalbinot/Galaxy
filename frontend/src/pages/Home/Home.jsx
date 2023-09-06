@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 import {BsFillPersonFill, BsEmojiSmile} from 'react-icons/bs'
-import {HiOutlinePhotograph} from 'react-icons/hi'
 import {SlRefresh} from 'react-icons/sl'
 import {AiOutlineSend} from 'react-icons/ai'
 
@@ -20,6 +19,7 @@ import Menu from '../../components/HomeComponents/AsideLeftComponent/Menu.jsx'
 
 import { TextAreaInput, TextInput } from '../../components/ElementComponents/Input/TextInput'
 import ShowTimeDiff from '../../components/ElementComponents/ShowTimeDiff/ShowTimeDiff';
+import FileUploadButton from '../../components/ElementComponents/FileUploadButton/FileUploadButton';
 
 export default function Home() {
 
@@ -51,7 +51,7 @@ export default function Home() {
     }, [isLogged])
 
     const getUserInfo = async () => {
-
+        
         try {
             const response = await axios.get(`http://localhost:3000/user/profile/${nickName}`);
             setUserInfo(response.data.user)
@@ -63,39 +63,6 @@ export default function Home() {
     const handleEmoji = (emoji) => {
         setShowEmojiScreen(false)
         setTweetText((prevState) => prevState + String.fromCodePoint(`0x${emoji.unified}`));
-    }
-
-    const handleFileUpload = (file) => {
-        const inputFile = file.target;
-
-        if (inputFile.files && inputFile.files[0]) {
-            const reader = new FileReader();
-    
-            reader.onload = function (e) {
-                const dataUrl = e.target.result;
-
-                const typeIndex = dataUrl.indexOf(':') + 1;
-                const typeEndIndex = dataUrl.indexOf(';');
-                const fileType = dataUrl.substring(typeIndex, typeEndIndex);
-    
-                if (fileType.includes('video/')) {
-                    setUploadedFile({
-                        video: true,
-                        url: dataUrl
-                    })
-                } else if (fileType.includes('image/png') || fileType.includes('image/jng')) {
-                    setUploadedFile({
-                        file: true,
-                        url: dataUrl
-                    })
-                } 
-                else {
-                    throw ('Tipo de arquivo não suportado.');
-                }
-            };
-    
-            reader.readAsDataURL(inputFile.files[0]);
-        }
     }
 
     const handleTweetSubmit = async () => {
@@ -232,11 +199,15 @@ export default function Home() {
         }
     }
 
+    const changeToHome = () => {
+        return navigate("/home")
+    }
+
     return (
         <div className={styles.mainContainer}>
             <div className={styles.asideLeft}>
                 <div className={styles.appLogo}>
-                    <div className={styles.leftLogo}>
+                    <div className={styles.leftLogo} onClick={changeToHome}>
                         <img src={logo} className={styles.logoImage}/>
                     </div>
                 </div>
@@ -296,15 +267,7 @@ export default function Home() {
                                                 />
                                             </div>
                                         )}
-                                        <HiOutlinePhotograph 
-                                            onClick={() => document.getElementById('inputFile').click()}
-                                        />
-                                        <input
-                                            type="file"
-                                            id="inputFile"
-                                            style={{ display: 'none' }}
-                                            onChange={(file) => handleFileUpload(file)}
-                                        />
+                                        <FileUploadButton uploadedFile={uploadedFile} setUploadedFile={setUploadedFile} />
                                     </div>
                                 </div>
                                 <div className={styles.tweetButton}>

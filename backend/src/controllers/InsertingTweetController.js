@@ -1,8 +1,6 @@
 const InsertTweetModel = require('../model/InsertTweetModel')
 const GetUserIdModel = require('../model/GetUserIdModel')
 
-const sharp = require('sharp')
-
 const UserTweetController = async (client, req, res) => {
     try {
 

@@ -7,6 +7,7 @@ const InsertingTweetController = require('../controllers/InsertingTweetControlle
 const GettingTweetController = require('../controllers/GettingTweetController');
 
 const GetUserInfoModel = require("../model/GetUserInfoModel");
+const ProfileChangesController = require('../controllers/ProfileChangesController');
 
 module.exports = (client) => {
   router.post('/user/register', (req, res) => {
@@ -24,6 +25,11 @@ module.exports = (client) => {
   router.get('/user/profile/:nickName', async(req, res) => {
     const nickName = req.params.nickName
     GetUserInfoModel(client, req, res, nickName);
+  })
+
+  router.patch('/user/profile/edit/:nickName', async(req, res) => {
+    const nickName = req.params.nickName
+    ProfileChangesController(client, req, res, nickName);
   })
 
   router.get('/user/GetTweet/:actualSelector', async(req, res) => {

@@ -28,6 +28,11 @@
     margin: auto;
 }
 
+.leftLogo:hover {
+    cursor: pointer;
+    background-color: gray;
+ }
+
 .logoImage {
     width: 7vw;
     height: auto;
@@ -36,7 +41,7 @@
 .userProfileMain__div {
     display: grid;
     grid-area: userProfileMain__div;
-    grid-template-rows: 25vh auto;
+    grid-template-rows: max-content;
     margin: 2vw;
     border: 2px solid white;
     border-radius: 1vw;
@@ -84,7 +89,7 @@
 }
 
 .infoaboutUserMain__subtitle {
-    font-size: 1.3vw;
+    font-size: 1.2vw;
     color: rgb(175, 163, 163);
 }
 
@@ -120,6 +125,15 @@
 
 .editInfoAboutPerson svg {
     font-size: 2vw;
+}
+
+.editInfoAboutPerson:hover {
+    cursor: pointer;
+    background-color: gray;
+}
+
+.userDescription {
+    margin-right: 1.2vw;
 }
 
 
