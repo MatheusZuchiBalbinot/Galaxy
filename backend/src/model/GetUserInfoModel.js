@@ -1,16 +1,19 @@
-async function GetUserInfoModel(client, req, res, userNickName) {
+const ObjectId = require('mongodb').ObjectId;
+
+const getUserIdByTokenModel = require("./getUserIdByTokenModel")
+
+async function GetUserInfoModel(client, req, res, accessToken) {
     try {
         const dbCollection = client.db("cluster0").collection("users")
+        const userId = getUserIdByTokenModel(accessToken)
 
         const user = await dbCollection.findOne(
-            { nickName: userNickName },
+            { _id: new ObjectId(userId) },
             { projection: { _id: 0, nickName: 1, avatar: 1, createdInDate: 1, userDescription: 1, } }
           );
-
-        const teste = await dbCollection.findOne({userNickName})
         
         res.status(200).json({user});
-        return
+        return user
     } catch (error) {
         console.error("Error getting user Info");
         throw error;

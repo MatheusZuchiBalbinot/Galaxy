@@ -27,7 +27,7 @@ export default function Home() {
 
     const {isLogged, setIsLogged, actualTweetSeletor} = useContext(userContext)
 
-    const {nickName, passwordsMatch} = isLogged
+    const {token, passwordsMatch} = isLogged
 
     const [tweetText, setTweetText] = useState('')
     const [tweetAnswers, setTweetAnswers]= useState([]);
@@ -41,8 +41,9 @@ export default function Home() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if(passwordsMatch == false) {
-            setIsLogged({passwordsMatch: false, nickName: ''})
+
+        if(passwordsMatch == false && token.length > 0) {
+            setIsLogged({passwordsMatch: false})
             return navigate("/")
         }
         handleTweetGet()
@@ -51,12 +52,16 @@ export default function Home() {
     }, [isLogged])
 
     const getUserInfo = async () => {
-        
         try {
-            const response = await axios.get(`http://localhost:3000/user/profile/${nickName}`);
-            setUserInfo(response.data.user)
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            };
+            const response = await axios.get('http://localhost:3000/user/profile', config);
+            setUserInfo(response.data.user);
         } catch (error) {
-            console.error(error);
+            console.error('Error:', error);
         }
     };
     
@@ -74,9 +79,13 @@ export default function Home() {
         const month = actualDate.getMonth() + 1;
         const year = actualDate.getFullYear();
 
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        };
+
         const tweetData = {
-            nickName,
-            userId: '',
             likes: 0,
             content: {
                 text: tweetText,
@@ -95,7 +104,7 @@ export default function Home() {
 
         try {
             if(tweetText.length > 0) {
-                const result = await axios.post("http://localhost:3000/user/InsertTweet", tweetData);
+                const result = await axios.post("http://localhost:3000/user/InsertTweet", tweetData, config);
                 console.log(result)
             } else {
 
@@ -211,9 +220,7 @@ export default function Home() {
                         <img src={logo} className={styles.logoImage}/>
                     </div>
                 </div>
-                {userInfo && (
-                    <Menu userInfo={userInfo}/>
-                )}
+                <Menu userInfo={userInfo} setUserInfo={setUserInfo}/>
             </div>
 
             <div className={styles.asideRight}>

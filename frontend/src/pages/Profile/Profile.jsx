@@ -20,6 +20,8 @@ export default function Profile() {
     const { isLogged, setIsLogged } = useContext(userContext);
     const navigate = useNavigate();
 
+    const {token} = isLogged
+
     const {nickName, passwordsMatch} = isLogged;
 
     const [userInfo, setUserInfo] = useState();
@@ -37,10 +39,15 @@ export default function Profile() {
 
     const getUserInfo = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/user/profile/${nickName}`);
-            setUserInfo(response.data.user)
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            };
+            const response = await axios.get('http://localhost:3000/user/profile', config);
+            setUserInfo(response.data.user);
         } catch (error) {
-            console.error(error);
+            console.error('Error:', error);
         }
     };
 
@@ -65,7 +72,7 @@ export default function Profile() {
                     </div>
                 </div>
                 {userInfo && (
-                    <Menu userInfo={userInfo}/>
+                    <Menu userInfo={userInfo} setUserInfo={setUserInfo}/>
                 )}
             </div>
 

@@ -1,8 +1,9 @@
 import {IoMdNotificationsOutline} from 'react-icons/io'
 import {CgProfile} from 'react-icons/cg'
 import {TiMessages} from 'react-icons/ti'
-import {BsFillPersonFill} from 'react-icons/bs'
 import { FiLogOut } from 'react-icons/fi'
+
+import axios from 'axios'
 
 import { useContext, useEffect, useState } from 'react'
 import { userContext} from '../../../context/userContext'
@@ -24,10 +25,8 @@ export default function Menu({userInfo}) {
     }
 
     const handleLogout = () => {
-        setIsLogged({passwordsMatch: false, nickName: ''})
+        setIsLogged({passwordsMatch: false, token: ''})
     }
-
-    const {nickName} = isLogged
 
     return (
         <>
@@ -36,10 +35,14 @@ export default function Menu({userInfo}) {
 
                     <div className={styles.menuDiv}>
                         <div className={styles.menuIconDiv}>
-                            <Avatar userInfo={userInfo} size={'small'} />
+                            {userInfo && (
+                                <Avatar userInfo={userInfo} size={'small'} />
+                            )}
                         </div>
                         <div className={styles.menuIconText__div}>
-                            <h2 className={styles.menuIconText__text}> {nickName} </h2>
+                            {userInfo && (
+                                <h2 className={styles.menuIconText__text}> {userInfo.nickName} </h2>
+                            )}
                         </div>
                     </div>
 

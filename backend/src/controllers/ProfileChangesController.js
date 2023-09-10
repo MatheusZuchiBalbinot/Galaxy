@@ -1,9 +1,9 @@
-const GetUserIdModel = require("../model/GetUserIdModel")
-const EditingProfile = require("../model/EditingProfileModel")
+const EditingProfile = require("../model/EditingProfileModel");
+const getUserIdByTokenModel = require("../model/getUserIdByTokenModel");
 
-const ProfileChangesController = async (client, req, res, nickname) => {
+const ProfileChangesController = async (client, req, res, somethingASDASD) => {
     try {
-        const getUserId = await GetUserIdModel(client, nickname)
+        const getUserId = await getUserIdByTokenModel(userId)
         
         if (!getUserId) {
           return res.status(400).json({ success: false, error: 'Invalid user ID' });

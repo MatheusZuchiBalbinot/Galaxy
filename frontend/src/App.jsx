@@ -10,7 +10,7 @@ import Profile from "./pages/Profile/Profile.jsx";
 
 function App() {
 
-  const [isLogged, setIsLogged] = useState({passwordsMatch: false, nickName: ''})
+  const [isLogged, setIsLogged] = useState({passwordsMatch: false, token: ''})
   const [actualTweetSeletor, setActualTweetSeletor] = useState({actualSeletor: 'orderByRecent'})
 
   const routes = useRoutes([

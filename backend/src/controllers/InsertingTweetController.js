@@ -1,16 +1,16 @@
+const GetUserInfoModel = require('../model/GetUserInfoModel');
 const InsertTweetModel = require('../model/InsertTweetModel')
-const GetUserIdModel = require('../model/GetUserIdModel')
+const getUserIdByTokenModel = require('../model/getUserIdByTokenModel')
 
-const UserTweetController = async (client, req, res) => {
+const UserTweetController = async (client, req, res, userData, userId) => {
     try {
-
-        const { nickName, content, actualDate } = req.body;
+        const { content, actualDate } = req.body;
         const { text, image, video } = content;
         const { hours, minutes, days, month, year } = actualDate;
 
         const tweetDocument = {
-            nickName,
-            userId: '',
+            userId,
+            nickName: userData.nickName,
             likes: 0,
             content: {
               text: text,
@@ -28,18 +28,7 @@ const UserTweetController = async (client, req, res) => {
           };
 
         try {
-            const result = await GetUserIdModel(client, nickName);
-            tweetDocument.userId = result;
-            console.log(tweetDocument)
-            res.status(201)
-        } catch(error) {
-            console.error('Error looking for id:', error);
-            res.status(500).json({ success: false, error: 'Internal Server Error' });
-        }
-
-        try {
             const addingTweet = await InsertTweetModel(client, tweetDocument);
-            res.status(201).json({ success: true });
         } catch(error) {
             console.error('Error when insert data:', error);
             res.status(500).json({ success: false, error: 'Internal Server Error' });
