@@ -16,29 +16,36 @@ import {
 import { useRef, useState, useContext } from "react";
 import { userContext } from '../../../context/userContext'
 
+import styles from './ModalWithInput.module.css'
+
 import axios from 'axios'
 
-export default function  ModalWithInput({isOpen, onClose, newUserInfo, setNewUserInfo}) {
+export default function  ModalWithInput({isOpen, onClose, newUserInfo, setNewUserInfo, getUserInfo}) {
 
     const {isLogged} = useContext(userContext)
 
     const initialRef = useRef();
     const finalRef = useRef();
 
-    const {nickName} = isLogged
+    const {token} = isLogged
 
-    const [editErrors, setEditErros] = useState({
-        textError: '',
-        descriptionError: '',
-    })
+    const [editErrors, setEditErros] = useState({})
 
     const handleProfileChanges = async () => {
-
         try {
-            const result = await axios.patch(`http://localhost:3000/user/profile/edit/${nickName}`, newUserInfo)
-        }
-        catch(error) {
-            console.log(error)
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            };
+            const response = await axios.patch('http://localhost:3000/user/profile/edit', newUserInfo, config);
+            setEditErros({})
+            onClose()
+            await getUserInfo()
+        } catch (error) {
+            console.error('Erro ao enviar dados:', error);
+            const errors = error.response.data.errors;
+            setEditErros(errors)
         }
     }
 
@@ -66,6 +73,9 @@ export default function  ModalWithInput({isOpen, onClose, newUserInfo, setNewUse
                                 }))}
                             />
                         </FormControl>
+                        {editErrors.nickNameError && (
+                            editErrors.nickNameError.hasError ? <p className={styles.errorMessage}>{editErrors.nickNameError.errorText}</p> : ''
+                        )}
 
                         <FormControl mt={4}>
                             <FormLabel> Descrição: </FormLabel>
@@ -78,6 +88,9 @@ export default function  ModalWithInput({isOpen, onClose, newUserInfo, setNewUse
                                 }))}
                             />
                         </FormControl>
+                        {editErrors.userDescription && (
+                            editErrors.userDescription.hasError ? <p className={styles.errorMessage}>{editErrors.userDescription.errorText}</p> : ''
+                        )}
                     </ModalBody>
 
                     <ModalFooter>

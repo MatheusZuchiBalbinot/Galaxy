@@ -20,9 +20,7 @@ export default function Profile() {
     const { isLogged, setIsLogged } = useContext(userContext);
     const navigate = useNavigate();
 
-    const {token} = isLogged
-
-    const {nickName, passwordsMatch} = isLogged;
+    const {passwordsMatch, token} = isLogged;
 
     const [userInfo, setUserInfo] = useState();
     const [showEditUserInfo, setShowEditUserInfo] = useState();
@@ -31,7 +29,7 @@ export default function Profile() {
 
     useEffect(() => {
         if (passwordsMatch === false) {
-            setIsLogged({ passwordsMatch: false, nickName: "" });
+            setIsLogged({ passwordsMatch: false, token: ''});
             return navigate("/");
         }
         getUserInfo();
@@ -88,9 +86,11 @@ export default function Profile() {
                         <div className={styles.infoaboutUserMain__div__texts}>
                             <div className={styles.infoaboutUserMain__div__nickname}>
                                 <div className={styles.infoaboutUserMain__div__nickname__info}>
-                                    <h2 className={styles.infoaboutUserMain__title}>{nickName}</h2>
                                     {userInfo && (
-                                        <h3 className={styles.infoaboutUserMain__subtitle}> Conta criada em: {userInfo.createdInDate}</h3>
+                                        <>
+                                            <h2 className={styles.infoaboutUserMain__title}>{userInfo.nickName}</h2>
+                                            <h3 className={styles.infoaboutUserMain__subtitle}> Conta criada em: {userInfo.createdInDate}</h3>
+                                        </>
                                     )}
                                 </div>
                                 <div className={styles.editInfoAboutPerson} onClick={handleOpenModal}>
@@ -101,6 +101,7 @@ export default function Profile() {
                                             onClose={handleCloseModal}  
                                             newUserInfo={newUserInfo}
                                             setNewUserInfo={setNewUserInfo}
+                                            getUserInfo={getUserInfo}
                                         />
                                     )}
                                 </div>
@@ -122,7 +123,7 @@ export default function Profile() {
                     
                 <div className={styles.userInteractions}>
                     {userInfo && (
-                        <h1 className={styles.infoaboutUserMain__title}>Tweets de {nickName} </h1>
+                        <h1 className={styles.infoaboutUserMain__title}>Tweets de {userInfo.nickName} </h1>
                     )}
                 </div>
             </div>

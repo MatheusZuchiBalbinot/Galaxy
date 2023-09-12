@@ -8,11 +8,7 @@ async function EditingProfile(client, userId, data) {
             nickName,
             userDescription
         };
-        
-        console.log("Trying to Edit")
-
         const result = await dbCollection.updateOne({ _id: new ObjectId(userId) }, { $set: updateFields });
-        console.log(result)
     } catch (error) {
         console.error(error);
         throw error;

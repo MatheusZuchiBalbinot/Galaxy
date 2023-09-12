@@ -33,9 +33,9 @@ module.exports = (client) => {
     GetUserInfoModel(client, req, res, jwtToken);
   })
 
-  router.patch('/user/profile/edit/:nickName', async(req, res) => {
-    const nickName = req.params.nickName
-    ProfileChangesController(client, req, res, nickName);
+  router.patch('/user/profile/edit', async(req, res) => {
+    const jwtToken = req.headers['authorization']
+    ProfileChangesController(client, req, res, jwtToken);
   })
 
   router.get('/user/GetTweet/:actualSelector', async(req, res) => {
