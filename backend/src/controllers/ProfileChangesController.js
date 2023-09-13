@@ -16,10 +16,10 @@ const ProfileChangesController = async (client, req, res, userId) => {
 			},
 		  };
 		  
-		  if (!validator.isLength(nickName, { min: 6 })) {
+		  if (!validator.isLength(nickName, { min: 6, max: 15 })) {
 			errors.nickNameError = {
 			  hasError: true,
-			  errorText: 'O nickName deve conter pelo menos 6 caracteres',
+			  errorText: 'O nickName deve conter entre 6 e 15 caracteres',
 			};
 		  }
 		  if (!validator.isLength(userDescription, { min: 12, max: 120 })) {
@@ -42,6 +42,7 @@ const ProfileChangesController = async (client, req, res, userId) => {
         const data = req.body;
 
         try {
+			console.log(data)
             const result = await EditingProfile(client, getUserId, data);
             res.status(200).json({ success: true, message: 'Sucesso alterando usuário!!', data: result });
         } catch (error) {

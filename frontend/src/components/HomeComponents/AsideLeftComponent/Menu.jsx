@@ -26,6 +26,8 @@ export default function Menu({userInfo}) {
 
     const handleLogout = () => {
         setIsLogged({passwordsMatch: false, token: ''})
+        console.log(isLogged)
+        return navigate("/");
     }
 
     return (

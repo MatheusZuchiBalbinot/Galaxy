@@ -36,6 +36,7 @@ export default function Profile() {
     }, [isLogged, setIsLogged]);
 
     const getUserInfo = async () => {
+
         try {
             const config = {
                 headers: {
@@ -102,6 +103,7 @@ export default function Profile() {
                                             newUserInfo={newUserInfo}
                                             setNewUserInfo={setNewUserInfo}
                                             getUserInfo={getUserInfo}
+                                            userInfo={userInfo}
                                         />
                                     )}
                                 </div>

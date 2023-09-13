@@ -1,5 +1,4 @@
 .menuNavigation {
-    margin: 2vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -13,9 +12,10 @@
     font-size: 1.5vw;
     display: flex;
     gap: 1vw;
-    padding: 1vw;
-    margin: 0.5vw;
-    width: 100%;
+    padding: 0.5vw;
+    margin-top: 0.5vw;
+    margin-bottom: 0.5vw;
+    width: 80%;
 }
 
 .menuDiv:hover {
@@ -25,9 +25,8 @@
 
 .menu {
     grid-area: menu;
-    display: flex;
-    position: fixed;
-    top: 20vh;
+    width: 100%;
+    margin: auto;
 }
 
 .menuIconDiv {
@@ -43,4 +42,5 @@
 
 .menuIconText__text {
     font-size: 1.5vw;
+    white-space: nowrap;
 }

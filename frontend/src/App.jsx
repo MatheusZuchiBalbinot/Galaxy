@@ -36,11 +36,11 @@ function App() {
     },
   ])
 
-  return (
-    <userContext.Provider value={{isLogged, setIsLogged, actualTweetSeletor, setActualTweetSeletor}} className="App">
-      {routes}
-    </userContext.Provider>
-)
+	return (
+		<userContext.Provider value={{isLogged, setIsLogged, actualTweetSeletor, setActualTweetSeletor}} className="App">
+			{routes}
+		</userContext.Provider>
+	)
 }
 
 export default App

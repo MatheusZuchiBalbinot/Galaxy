@@ -41,9 +41,8 @@ export default function Home() {
     const navigate = useNavigate()
 
     useEffect(() => {
-
-        if(passwordsMatch == false && token.length > 0) {
-            setIsLogged({passwordsMatch: false})
+        if(passwordsMatch == false) {
+            setIsLogged({passwordsMatch: false, token: ''})
             return navigate("/")
         }
         handleTweetGet()
@@ -274,7 +273,11 @@ export default function Home() {
                                                 />
                                             </div>
                                         )}
-                                        <FileUploadButton uploadedFile={uploadedFile} setUploadedFile={setUploadedFile} />
+                                        <FileUploadButton 
+                                            uploadedFile={uploadedFile} 
+                                            setUploadedFile={setUploadedFile} 
+                                            styleOfButton={"small"}
+                                        />
                                     </div>
                                 </div>
                                 <div className={styles.tweetButton}>

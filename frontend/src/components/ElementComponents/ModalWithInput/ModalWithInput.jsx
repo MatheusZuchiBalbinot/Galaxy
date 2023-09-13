@@ -13,14 +13,15 @@ import {
     Textarea ,
   } from "@chakra-ui/react";
 
-import { useRef, useState, useContext } from "react";
+import { useRef, useState, useContext, useEffect  } from "react";
 import { userContext } from '../../../context/userContext'
 
 import styles from './ModalWithInput.module.css'
 
 import axios from 'axios'
+import FileUploadButton from "../FileUploadButton/FileUploadButton";
 
-export default function  ModalWithInput({isOpen, onClose, newUserInfo, setNewUserInfo, getUserInfo}) {
+export default function  ModalWithInput({isOpen, onClose, newUserInfo, setNewUserInfo, getUserInfo, userInfo}) {
 
     const {isLogged} = useContext(userContext)
 
@@ -30,6 +31,19 @@ export default function  ModalWithInput({isOpen, onClose, newUserInfo, setNewUse
     const {token} = isLogged
 
     const [editErrors, setEditErros] = useState({})
+    const [uploadedFile, setUploadedFile] = useState()
+
+    useEffect(() => {
+        if (isOpen) {
+          setNewUserInfo(userInfo);
+        }
+        if (uploadedFile) {
+            setNewUserInfo((prevState) => ({
+                ...prevState,
+                avatar: uploadedFile.url,
+            }));
+        }
+      }, [isOpen, userInfo, uploadedFile, setNewUserInfo]);
 
     const handleProfileChanges = async () => {
         try {
@@ -64,40 +78,64 @@ export default function  ModalWithInput({isOpen, onClose, newUserInfo, setNewUse
                     <ModalBody pb={6}>
                         <FormControl>
                             <FormLabel>Apelido: </FormLabel>
-                            <Input 
-                                ref={initialRef} 
-                                placeholder='Ex: teste123' 
-                                onChange={(e) => setNewUserInfo(prevState => ({
-                                    ...prevState,
-                                    nickName: e.target.value
-                                }))}
-                            />
+                            {userInfo && (
+                                <Input 
+                                    ref={initialRef} 
+                                    onChange={(e) => setNewUserInfo(prevState => ({
+                                        ...prevState,
+                                        nickName: e.target.value
+                                    }))}
+                                    value={newUserInfo.nickName}
+                                />
+                            )}
                         </FormControl>
                         {editErrors.nickNameError && (
-                            editErrors.nickNameError.hasError ? <p className={styles.errorMessage}>{editErrors.nickNameError.errorText}</p> : ''
+                            editErrors.nickNameError.hasError 
+                            ? <p className={styles.errorMessage}>{editErrors.nickNameError.errorText}</p> 
+                            : ''
                         )}
 
                         <FormControl mt={4}>
                             <FormLabel> Descrição: </FormLabel>
-                            <Textarea 
-                                resize="none" 
-                                placeholder='Ex: Estudante que gosta de jogar futebol aos finais de semana.'
-                                onChange={(e) => setNewUserInfo(prevState => ({
-                                    ...prevState,
-                                    userDescription: e.target.value
-                                }))}
-                            />
+                            {userInfo && (
+                                <Textarea 
+                                    resize="none" 
+                                    onChange={(e) => setNewUserInfo(prevState => ({
+                                        ...prevState,
+                                        userDescription: e.target.value
+                                    }))}
+                                    value={newUserInfo.userDescription}
+                                />
+                            )}
                         </FormControl>
                         {editErrors.userDescription && (
-                            editErrors.userDescription.hasError ? <p className={styles.errorMessage}>{editErrors.userDescription.errorText}</p> : ''
+                            editErrors.userDescription.hasError 
+                            ? <p className={styles.errorMessage}>{editErrors.userDescription.errorText}</p> 
+                            : ''
                         )}
+
+                        <FormControl mt={4}>
+                            <FormLabel> Imagem de Perfil: </FormLabel>
+                            <div className={styles.uploadImageDiv}>
+                                {userInfo && (
+                                    <FileUploadButton 
+                                        setUploadedFile={setUploadedFile} 
+                                        styleOfButton={"big"}
+                                    />
+                                )}
+                                {uploadedFile 
+                                    ? <img className={styles.imageElement} src={uploadedFile.url}></img>
+                                    : <img className={styles.imageElement} src={userInfo.avatar}></img>
+                                }
+                            </div>
+                        </FormControl>
                     </ModalBody>
 
                     <ModalFooter>
                         <Button colorScheme='blue' mr={3} onClick={() => handleProfileChanges()}>
-                            Save
+                            Editar
                         </Button>
-                        <Button onClick={onClose}>Cancel</Button>
+                        <Button onClick={onClose}>Cancelar</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

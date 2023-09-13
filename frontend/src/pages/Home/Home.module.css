@@ -1,12 +1,12 @@
 .mainContainer {
     display: grid;
-    grid-template-columns: 20vw auto 20vw;
+    grid-template-columns: auto;
     grid-template-rows: auto;
     grid-template-areas: 
     "asideLeft main asideRight";
     background-image: linear-gradient(to right bottom, #232022, #232023, #232024, #222026, #202027, #1d1f27, #1a1d26, #171c26, #131823, #0f1421, #0a0e1e, #05071c);
     font-family: 'Roboto', sans-serif;
-    min-height: 100vh;
+    height: 100vh;
 }
 
 .asideLeft {
@@ -56,6 +56,17 @@
     grid-template-areas: 
     "postDiv"
     "tweetsDiv";
+    overflow-y: auto;
+}
+
+::-webkit-scrollbar {
+    margin: 2vw;
+    width: 5px;
+  }
+
+::-webkit-scrollbar-thumb {
+    background: rgb(179, 176, 176); 
+    border-radius: 10px;
 }
 
 .postDiv {
@@ -71,16 +82,6 @@
     display: flex;
     height: 50%;
 }
-
-::-webkit-scrollbar {
-    margin: 2vw;
-    width: 5px;
-  }
-   
-  ::-webkit-scrollbar-thumb {
-    background: rgb(179, 176, 176); 
-    border-radius: 10px;
-  }
 
 .inputAvatar {
     font-size: 2vw;

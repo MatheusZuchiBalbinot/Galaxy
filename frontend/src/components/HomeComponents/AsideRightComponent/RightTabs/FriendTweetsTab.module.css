@@ -1,19 +1,19 @@
 .asideDiv {
     display: flex;
     gap: 1vw;
-    padding: 1vw;
     width: 100%;
+    padding: 0.5vw;
 }
 
 .asideDiv:hover {
     border: '2px solid gray';
-    padding-inline: 1vw;
     cursor: pointer;
 }
 
 .asideIconDiv {
     display: flex;
     margin: auto;
+    font-size: 2vw;
 }
 
 .asideText__div {

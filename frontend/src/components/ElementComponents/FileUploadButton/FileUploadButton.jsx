@@ -1,6 +1,6 @@
 import { HiOutlinePhotograph } from 'react-icons/hi';
 
-function FileUploadButton({ uploadedFile, setUploadedFile }) {
+function FileUploadButton({ setUploadedFile, styleOfButton }) {
   const handleFileUpload = (file) => {
     const inputFile = file.target;
 
@@ -37,17 +37,33 @@ function FileUploadButton({ uploadedFile, setUploadedFile }) {
     document.getElementById('inputFile').click();
   };
 
-  return (
-    <>
-      <HiOutlinePhotograph onClick={handleButtonClick} />
-      <input
-        type="file"
-        id="inputFile"
-        style={{ display: 'none' }}
-        onChange={(e) => handleFileUpload(e)}
-      />
-    </>
-  );
+  if(styleOfButton == "small") {
+    return (
+      <>
+        <HiOutlinePhotograph onClick={handleButtonClick} />
+        <input
+          type="file"
+          id="inputFile"
+          style={{ display: 'none' }}
+          onChange={(e) => handleFileUpload(e)}
+        />
+      </>
+    );
+  } else if (styleOfButton == "big") {
+    return (
+      <>
+        <HiOutlinePhotograph 
+          onClick={handleButtonClick} 
+        />
+        <input
+          type="file"
+          id="inputFile"
+          style={{ display: 'none' }}
+          onChange={(e) => handleFileUpload(e)}
+        />
+      </>
+    );
+  }
 }
 
 export default FileUploadButton;

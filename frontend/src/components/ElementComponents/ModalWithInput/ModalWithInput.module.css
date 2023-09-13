@@ -2,3 +2,33 @@
     color: rgb(245, 81, 81);
     text-align: center;
 }
+
+.inputImage {
+    display: flex;
+    margin: auto;
+}
+
+.uploadImageDiv {
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    row-gap: 2vw;
+}
+
+.uploadImageDiv svg {
+    font-size: 3vw;
+    display: flex;
+    margin: 0 auto;
+}
+
+.uploadImageDiv svg:hover {
+    background-color: gray;
+    cursor: pointer;
+    color: white;
+}
+
+.imageElement {
+    width: 50%;
+    max-height: 50%;
+    margin: auto;
+}

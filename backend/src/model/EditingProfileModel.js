@@ -3,10 +3,11 @@ const ObjectId = require('mongodb').ObjectId;
 async function EditingProfile(client, userId, data) {
     try {
         const dbCollection = client.db("cluster0").collection("users")
-        const {nickName, userDescription} = data
+        const {nickName, userDescription, avatar} = data
         const updateFields = {
             nickName,
-            userDescription
+            userDescription,
+            avatar,
         };
         const result = await dbCollection.updateOne({ _id: new ObjectId(userId) }, { $set: updateFields });
     } catch (error) {
