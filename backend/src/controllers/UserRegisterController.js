@@ -7,29 +7,36 @@ const InsertLoginModel = require("../model/InsertLoginModel")
 
 const UserRegisterController = async (client, req, res) => {
     try {
-        const isEmailValid = validator.isEmail(req.body.email);
-        const isPasswordValid = validator.isLength(req.body.password, { min: 6 });
-        const isNicknameValid = validator.isLength(req.body.nickName, { min: 6 });
-        const isPasswordsEqual = req.body.password == req.body.confirmPassword
+        const errorsVerification = {
+            email: {
+                isValid: validator.isEmail(req.body.email, { min: 10, max: 30 }),
+                message: 'O campo de e-mail é inválido.'
+            },
+            password: {
+                isValid: validator.isLength(req.body.password, { min: 6, max: 20 }),
+                message: 'A senha deve ter entre 6 e 20 caracteres.'
+            },
+            nickName: {
+                isValid: validator.isLength(req.body.nickName, { min: 6, max: 15 }),
+                message: 'O apelido deve ter entre 6 e 15 caracteres.'
+            },
+            confirmPassword: {
+                isValid: req.body.password === req.body.confirmPassword && validator.isLength(req.body.confirmPassword, { min: 6, max: 20 }),
+                message: 'As senhas não coincidem.'
+            }
+        };
 
-        const errors = {
-            isEmailValid,
-            isPasswordValid,
-            isNicknameValid, 
-            isPasswordsEqual
-        }
+        const newErrorMessages = {};
 
-        let hasErrors = false;
-
-        for (const key in errors) {
-            if (!errors[key]) {
-                hasErrors = true;
-                break;
+        for (const fieldName in errorsVerification) {
+            const { isValid, message } = errorsVerification[fieldName];
+            if (!isValid) {
+                newErrorMessages[fieldName] = message;
             }
         }
-        
-        if (hasErrors) {
-            res.status(400).json({errors});
+
+        if (Object.keys(newErrorMessages).length > 0) {
+            res.status(400).json({newErrorMessages});
         } else {
             const {
                 email,
@@ -80,7 +87,7 @@ const UserRegisterController = async (client, req, res) => {
 
     } catch (e) {
         console.error(e);
-        res.status(500).json({ error: 'An error occurred' });
+        res.status(500).json({ error: 'Erro ao tentar registrar usuário.' });
     }
 }
 

@@ -1,0 +1,54 @@
+.formBodyTitle {
+    color: white;
+    font-size: 1.6vw;
+}
+
+.formInputDiv {
+    color: white;
+    display: flex;
+    padding: 0.25vw;
+    gap: 0.5vw;
+}
+
+.formIcon {
+    margin: auto;
+    display: flex;
+    font-size: 1.6vw;
+}
+
+.formInput {
+    width: 100%;
+    padding: 0.3vw;
+    outline: none;
+    background-color: transparent;
+    border: none;
+    color: white;
+}
+
+.formInput:hover {
+    border-bottom: 3px solid white;
+}
+
+.showPasswordIcon {
+    cursor: pointer;
+    display: flex;
+    margin: auto;
+    font-size: 1.6vw;
+}
+
+.errorMessage {
+    color: rgb(245, 81, 81);
+    text-align: center;
+}
+
+.formBodyTitle {
+    color: white;
+    font-size: 1.6vw;
+}
+
+.formInputDiv {
+    color: white;
+    display: flex;
+    padding: 0.25vw;
+    gap: 0.5vw;
+}
