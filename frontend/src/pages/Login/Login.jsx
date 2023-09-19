@@ -68,7 +68,6 @@ export default function Login() {
 
         if(format == "login") {
             errors = err.response.data.newErrorMessages
-            console.log(errors)
         } else {
             errors = err.response.data.newErrorMessages
         }
@@ -89,15 +88,17 @@ export default function Login() {
                     colorErrorOrCorrectInput("password", "red");
                     colorErrorOrCorrectInput("email", "green");
                 } else {
-                    colorErrorOrCorrectInput("password", "green");
-                    colorErrorOrCorrectInput("email", "green");
+                    colorErrorOrCorrectInput("password", "red");
+                    colorErrorOrCorrectInput("email", "red");
                 }
             }
         } else {
-            colorErrorOrCorrectInput("email", errors.email ? "red" : "green");
             colorErrorOrCorrectInput("password", errors.password ? "red" : "green");
             colorErrorOrCorrectInput("confirmPassword", errors.confirmPassword ? "red" : "green");
-            colorErrorOrCorrectInput("nickname", errors.nickName ? "red" : "green");
+
+            colorErrorOrCorrectInput("email", errors.emailAlreadyExists || errors.email ? "red" : "green");
+            colorErrorOrCorrectInput("nickname", errors.nickName || errors.nickNameAlreadyExists ? "red" : "green");
+
         }
     };
 
@@ -169,6 +170,7 @@ export default function Login() {
                                 <input className={styles.formInput} id="email" maxLength={30} placeholder='Ex: matheus@gmail.com' value={email} onChange={(e) => setEmail(e.target.value)} type='text'></input>
                             </div>
                             {errorMessages.email ? <p className={styles.errorMessage}>{errorMessages.email}</p> : null}
+                            {errorMessages.emailAlreadyExists ? <p className={styles.errorMessage}>{errorMessages.emailAlreadyExists}</p> : null}
                             <h1 className={styles.formBodyTitle}>Senha: </h1>
                             <div className={styles.formInputDiv}>
                                 <div className={styles.formIcon}>
@@ -191,6 +193,7 @@ export default function Login() {
                                 setNickName={setNickName}
                             />
                             {errorMessages.mainError ? <p className={styles.errorMessage}>{errorMessages.mainError}</p> : null}
+                            {errorMessages.nickNameAlreadyExists ? <p className={styles.errorMessage}>{errorMessages.nickNameAlreadyExists}</p> : null}
                         </div>
                         <div className={styles.formButton}>
                             <div className={styles.buttonDiv}>

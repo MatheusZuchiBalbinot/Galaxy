@@ -1,11 +1,11 @@
 .mainTextAreaInput {
     background-color: transparent;
     color: white;
-    font-size: 1.6vw;
+    font-size: 1rem;
     width: 100%;
     outline: none;
     padding: 0.5vw;
-    margin: 1vw;
+    margin: 1vw 0 0 1vw;
     max-height: 10vh;
     resize: none;
 }

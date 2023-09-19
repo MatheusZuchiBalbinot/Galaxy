@@ -15,7 +15,7 @@
     padding: 0.5vw;
     margin-top: 0.5vw;
     margin-bottom: 0.5vw;
-    width: 80%;
+    min-width: 80%;
 }
 
 .menuDiv:hover {
@@ -32,15 +32,15 @@
 .menuIconDiv {
     display: flex;
     margin: auto;
-    font-size: 2vw;
+    font-size: 1.3rem;
 }
 
 .menuIconText__div {
-    width: 80%;
+    width: 70%;
     margin: auto;
 }
 
 .menuIconText__text {
-    font-size: 1.5vw;
+    font-size: 1rem;
     white-space: nowrap;
 }

@@ -4,9 +4,13 @@ const bcrypt = require('bcrypt');
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
 
 const InsertLoginModel = require("../model/InsertLoginModel")
+const {CheckEmailAndNickNameModel} = require("../model/CheckExistingFields")
 
 const UserRegisterController = async (client, req, res) => {
     try {
+
+        const checkIfNicknameOrEmailExists = await CheckEmailAndNickNameModel(client, req.body.email, req.body.nickName) 
+        
         const errorsVerification = {
             email: {
                 isValid: validator.isEmail(req.body.email, { min: 10, max: 30 }),
@@ -23,9 +27,19 @@ const UserRegisterController = async (client, req, res) => {
             confirmPassword: {
                 isValid: req.body.password === req.body.confirmPassword && validator.isLength(req.body.confirmPassword, { min: 6, max: 20 }),
                 message: 'As senhas não coincidem.'
+            },
+            emailAlreadyExists: {
+                isValid: checkIfNicknameOrEmailExists.email ? false : true,
+                message: 'E-mail já está cadastrado. Escolha outro e-mail.'
+            },
+            nickNameAlreadyExists: {
+                isValid: checkIfNicknameOrEmailExists.nickName ? false : true,
+                message: 'Nickname já está cadastrado. Escolha outro nickname'
             }
         };
 
+        console.log(errorsVerification.nickNameAlreadyExists, errorsVerification.emailAlreadyExists)
+    
         const newErrorMessages = {};
 
         for (const fieldName in errorsVerification) {
@@ -36,6 +50,7 @@ const UserRegisterController = async (client, req, res) => {
         }
 
         if (Object.keys(newErrorMessages).length > 0) {
+            console.log(newErrorMessages)
             res.status(400).json({newErrorMessages});
         } else {
             const {
@@ -67,24 +82,14 @@ const UserRegisterController = async (client, req, res) => {
                 userDescription: "Hi, I'm using Galaxy and would like to find friends.",
                 avatar: "https://upload.wikimedia.org/wikipedia/commons/5/59/User-avatar.svg"
             }
+
             try {
                 await InsertLoginModel(client, data, email, nickName);
                 res.status(201).json({ message: "Success" });
             } catch (error) {
-                if (typeof error === "object") {
-                    if (error.emailExists && error.nickNameExists) {
-                        res.status(400).json({ emailExists: true, nickNameExists: true });
-                    } else if (error.emailExists) {
-                        res.status(400).json({ emailExists: true, nickNameExists: false });
-                    } else if (error.nickNameExists) {
-                        res.status(400).json({ nickNameExists: true, emailExists: false });
-                    }
-                } else {
-                    res.status(400).json({ error: error.message });
-                }
+                res.status(400).json({ message: "Não foi possível inserir um usuário! "});
             }
         }
-
     } catch (e) {
         console.error(e);
         res.status(500).json({ error: 'Erro ao tentar registrar usuário.' });

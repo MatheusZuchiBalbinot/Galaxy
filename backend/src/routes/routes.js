@@ -7,8 +7,6 @@ const InsertingTweetController = require('../controllers/InsertingTweetControlle
 const GettingTweetController = require('../controllers/GettingTweetController');
 const ProfileChangesController = require('../controllers/ProfileChangesController');
 
-const generateTokenMiddleware = require("../model/generateTokenModel")
-
 const GetUserInfoModel = require("../model/GetUserInfoModel");
 const getUserIdByTokenModel = require('../model/getUserIdByTokenModel');
 

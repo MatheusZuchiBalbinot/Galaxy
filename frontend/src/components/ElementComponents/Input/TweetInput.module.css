@@ -1,0 +1,85 @@
+.inputAvatar {
+    font-size: 2vw;
+    display: flex;
+    padding: 1.5vw;
+    color: white;
+}
+
+.inputAvatar svg {
+    margin: auto;
+}
+
+.mainInputDiv {
+    width: 100%;
+    display: flex;
+    height: 50%;
+}
+.inpuItemsDiv {
+    width: 100%;
+}
+
+.inputBar {
+    display: flex;
+}
+
+.inputBar__textarea {
+    width: 100%;
+    display: flex;
+    margin: auto;
+}
+
+.inputBar__videoAndImage {
+    margin: auto;
+    padding: 1vw;
+}
+
+.uploadedImageStyle {
+    width: 10vw;
+    height: 10vh;
+}
+
+.uploadedVideoStyle {
+    width: 20vw;
+    padding: 1vw;
+}
+
+.bottomTweetDiv {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5vw 0.5vw 1vw 0.5vw;
+}
+
+.imageVideoEmojiIcons {
+    display: flex;  
+    color: white;
+    font-size: 2vw;
+}
+
+.imageVideoEmojiIcons__div {
+    margin: auto;
+    display: flex;
+    gap: 2vw; 
+}
+
+.imageVideoEmojiIcons__div svg {
+    margin: 1vw;
+    cursor: pointer;
+    font-size: 2vw;
+}
+
+.emojiPickerStyle {
+    position: absolute;
+    margin: 3vw;
+}
+
+.tweetButton {
+    color: white;
+    border: none;
+    margin: auto 0;
+    outline: none;
+}
+
+.tweetButton button {
+    padding: 1vw;
+    font-size: 1rem;
+}

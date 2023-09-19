@@ -1,5 +1,5 @@
-const CheckEmailModel = require("../model/CheckEmailModel")
-const generateTokenMiddleware = require("../model/generateTokenModel")
+const {CheckEmailModel} = require("../model/CheckExistingFields")
+const GenerateTokenModel = require("../model/GenerateTokenModel")
 
 const validator = require('validator');
 
@@ -71,7 +71,7 @@ const UserLoginController = async (client, req, res) => {
                     return
                 }
                 const id = _id.toString()
-                const token = generateTokenMiddleware(id)
+                const token = GenerateTokenModel(id)
         
                 res.status(200).json({
                     passwordsMatch,

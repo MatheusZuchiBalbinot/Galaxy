@@ -43,7 +43,7 @@ export default function TweetsTab() {
                 <div className={styles.asideIconDiv}>
                     <FaUserFriends />
                 </div>
-                <div className={styles.asideText}>
+                <div className={styles.asideText__div}>
                     <h2 className={styles.asideText__text}>Tweets Amigos</h2>
                 </div>
             </div>

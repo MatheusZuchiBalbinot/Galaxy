@@ -1,7 +1,7 @@
 .asideDiv {
     display: flex;
     gap: 1vw;
-    width: 100%;
+    min-width: 80%;
     padding: 0.5vw;
 }
 
@@ -12,14 +12,17 @@
 
 .asideIconDiv {
     display: flex;
-    margin: auto;
-    font-size: 2vw;
+    margin: auto 0;
+    padding: 0.5rem;
+    font-size: 1.3rem;
 }
 
 .asideText__div {
-    width: 80%;
+    width: 70%;
+    margin: auto;
 }
 
 .asideText__text {
-    font-size: 1.5vw;
+    font-size: 1rem;
+    white-space: nowrap
 }

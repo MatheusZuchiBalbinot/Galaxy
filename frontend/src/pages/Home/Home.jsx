@@ -4,11 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 import axios from "axios";
 
-import {BsFillPersonFill, BsEmojiSmile} from 'react-icons/bs'
 import {SlRefresh} from 'react-icons/sl'
 import {AiOutlineSend} from 'react-icons/ai'
-
-import EmojiPicker from 'emoji-picker-react';
 
 import logo from '../../assets/logo.png'
 
@@ -17,9 +14,9 @@ import styles from './Home.module.css'
 import UserRightComponents from '../../components/HomeComponents/AsideRightComponent/RightUserMenu/UserRightComponent'
 import Menu from '../../components/HomeComponents/AsideLeftComponent/Menu.jsx'
 
-import { TextAreaInput, TextInput } from '../../components/ElementComponents/Input/TextInput'
+import { TextInput } from '../../components/ElementComponents/Input/TextInput'
 import ShowTimeDiff from '../../components/ElementComponents/ShowTimeDiff/ShowTimeDiff';
-import FileUploadButton from '../../components/ElementComponents/FileUploadButton/FileUploadButton';
+import { TweetInput } from '../../components/ElementComponents/Input/TweetInput';
 
 export default function Home() {
 
@@ -88,7 +85,7 @@ export default function Home() {
             likes: 0,
             content: {
                 text: tweetText,
-                image: uploadedFile.file ? uploadedFile.url : null,
+                image: uploadedFile.image ? uploadedFile.url : null,
                 video: uploadedFile.video ? uploadedFile.url : null,
             }, 
             actualDate: {
@@ -189,6 +186,18 @@ export default function Home() {
                                 <div className={styles.oneTweetdiv__comments}>
                                     <h3 className={styles.oneTweetdiv__comments__title}>Comentários: </h3>
                                     <div className={styles.createComment__div}>
+                                        {/* <TweetInput 
+                                            setUploadedFile={setUploadedFile}
+                                            uploadedFile={uploadedFile}
+                                            userInfo={userInfo}
+                                            tweetText={tweetText}
+                                            handleChange={handleChange}
+                                            handleInput={handleInput}
+                                            setShowEmojiScreen={setShowEmojiScreen}
+                                            showEmojiScreen={showEmojiScreen}
+                                            handleEmoji={handleEmoji}
+                                            handleTweetSubmit={handleTweetSubmit}
+                                        /> */}
                                         <TextInput 
                                             type={"text"} 
                                             maxLength={280} 
@@ -211,6 +220,14 @@ export default function Home() {
         return navigate("/home")
     }
 
+    const handleChange = (e) => {
+        setTweetText(e.target.value);
+    };
+
+    const handleInput = (e) => {
+        setRowsInput(e.target.value.split('\n').length);
+    };
+
     return (
         <div className={styles.mainContainer}>
             <div className={styles.asideLeft}>
@@ -228,64 +245,18 @@ export default function Home() {
 
             <div className={styles.main}>
                 <div className={styles.postDiv}>
-                    <div className={styles.inputAvatar}>
-                        <BsFillPersonFill />
-                    </div>
-                    <div className={styles.mainInputDiv}>
-                        <div className={styles.inpuItemsDiv}>
-                            <div className={styles.inputBar}>
-                                <div className={styles.inputBar__textarea}>
-                                    <TextAreaInput 
-                                        value={tweetText} 
-                                        rows={8} 
-                                        onChange={(e) => setTweetText(e.target.value)} 
-                                        maxLength={280}
-                                    />
-                                </div>
-                                <div className={styles.inputBar__videoAndImage}>
-                                    {uploadedFile.file && (
-                                        <img
-                                            src={uploadedFile.url}
-                                            alt="Uploaded"
-                                            className={styles.uploadedImageStyle}
-                                        />
-                                    )}
-                                    {uploadedFile.video && (
-                                        <video 
-                                            src={uploadedFile.url} 
-                                            controls autoplay 
-                                            className={styles.uploadedVideoStyle}
-                                        />
-                                    )}
-                                </div>
-                            </div>
-                            <div className={styles.bottomTweetDiv}>
-                                <div className={styles.imageVideoEmojiIcons}>
-                                    <div className={styles.imageVideoEmojiIcons__div}>
-                                        <BsEmojiSmile onClick={() => setShowEmojiScreen(true)}/>
-                                        {showEmojiScreen && (
-                                            <div style={{position: 'absolute', margin: '3vw'}}>
-                                                <EmojiPicker 
-                                                    skinTonesDisabled={true} 
-                                                    autoFocusSearch={true} 
-                                                    className={styles.emojiPickerStyle}
-                                                    onEmojiClick={(emoji) => handleEmoji(emoji)}
-                                                />
-                                            </div>
-                                        )}
-                                        <FileUploadButton 
-                                            uploadedFile={uploadedFile} 
-                                            setUploadedFile={setUploadedFile} 
-                                            styleOfButton={"small"}
-                                        />
-                                    </div>
-                                </div>
-                                <div className={styles.tweetButton}>
-                                    <button type='text' onClick={() => handleTweetSubmit()}>Tweetar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <TweetInput
+                    setUploadedFile={setUploadedFile}
+                    uploadedFile={uploadedFile}
+                    userInfo={userInfo}
+                    tweetText={tweetText}
+                    handleChange={handleChange}
+                    handleInput={handleInput}
+                    setShowEmojiScreen={setShowEmojiScreen}
+                    showEmojiScreen={showEmojiScreen}
+                    handleEmoji={handleEmoji}
+                    handleTweetSubmit={handleTweetSubmit}
+                />
                 </div>
 
                 <div className={styles.tweetsDiv}>

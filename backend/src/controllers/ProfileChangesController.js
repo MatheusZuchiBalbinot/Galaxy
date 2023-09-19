@@ -1,10 +1,14 @@
 const EditingProfile = require("../model/EditingProfileModel");
 const getUserIdByTokenModel = require("../model/getUserIdByTokenModel");
+
+const ObjectId = require('mongodb').ObjectId;
+
 const validator = require("validator");
 
-const ProfileChangesController = async (client, req, res, userId) => {
+const ProfileChangesController = async (client, req, res, jwtToken) => {
     try {
         const { nickName, userDescription } = req.body;
+
         const errors = {
 			userDescription: {
 			  hasError: false,
@@ -33,7 +37,7 @@ const ProfileChangesController = async (client, req, res, userId) => {
 			return res.status(400).json({ success: false, errors });
 		  }
 
-        const getUserId = await getUserIdByTokenModel(userId);
+        const getUserId = await getUserIdByTokenModel(jwtToken);
 
         if (!getUserId) {
             return res.status(400).json({ success: false, error: 'Invalid user ID' });
@@ -42,15 +46,15 @@ const ProfileChangesController = async (client, req, res, userId) => {
         const data = req.body;
 
         try {
-			console.log(data)
+			// console.log(data)
             const result = await EditingProfile(client, getUserId, data);
-            res.status(200).json({ success: true, message: 'Sucesso alterando usuário!!', data: result });
+            return res.status(200).json({ success: true, message: 'Sucesso alterando usuário!!', data: result });
         } catch (error) {
-            res.status(500).json({ success: false, error: 'Erro interno do servidor' });
+            return res.status(500).json({ success: false, error: 'Erro interno do servidor' });
         }
     } catch (error) {
         console.error('Erro ao obter os dados:', error);
-        res.status(500).json({ success: false, error: 'Erro interno do servidor' });
+        return res.status(500).json({ success: false, error: 'Erro interno do servidor' });
     }
 };
 
