@@ -9,6 +9,15 @@ const ProfileChangesController = async (client, req, res, jwtToken) => {
     try {
         const { nickName, userDescription } = req.body;
 
+		const dbCollection = client.db("cluster0").collection("users")
+        const getUserId = getUserIdByTokenModel(jwtToken)
+
+        const oldUserInfo = await dbCollection.findOne(
+            { _id: new ObjectId(getUserId) },	
+            { projection: { _id: 0, nickName: 1, avatar: 1, createdInDate: 1, userDescription: 1, } }
+          );
+        
+
         const errors = {
 			userDescription: {
 			  hasError: false,
@@ -37,8 +46,6 @@ const ProfileChangesController = async (client, req, res, jwtToken) => {
 			return res.status(400).json({ success: false, errors });
 		  }
 
-        const getUserId = await getUserIdByTokenModel(jwtToken);
-
         if (!getUserId) {
             return res.status(400).json({ success: false, error: 'Invalid user ID' });
         }
@@ -47,7 +54,7 @@ const ProfileChangesController = async (client, req, res, jwtToken) => {
 
         try {
 			// console.log(data)
-            const result = await EditingProfile(client, getUserId, data);
+            const result = await EditingProfile(client, getUserId, oldUserInfo, data);
             return res.status(200).json({ success: true, message: 'Sucesso alterando usuário!!', data: result });
         } catch (error) {
             return res.status(500).json({ success: false, error: 'Erro interno do servidor' });

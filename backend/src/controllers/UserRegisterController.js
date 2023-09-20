@@ -37,8 +37,6 @@ const UserRegisterController = async (client, req, res) => {
                 message: 'Nickname já está cadastrado. Escolha outro nickname'
             }
         };
-
-        console.log(errorsVerification.nickNameAlreadyExists, errorsVerification.emailAlreadyExists)
     
         const newErrorMessages = {};
 
@@ -50,7 +48,6 @@ const UserRegisterController = async (client, req, res) => {
         }
 
         if (Object.keys(newErrorMessages).length > 0) {
-            console.log(newErrorMessages)
             res.status(400).json({newErrorMessages});
         } else {
             const {

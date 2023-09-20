@@ -3,6 +3,7 @@ import { userContext} from '../../context/userContext'
 import { useNavigate } from 'react-router-dom';
 
 import axios from "axios";
+import io from 'socket.io-client';
 
 import {SlRefresh} from 'react-icons/sl'
 import {AiOutlineSend} from 'react-icons/ai'
@@ -46,6 +47,31 @@ export default function Home() {
         handleTweets()
         getUserInfo()
     }, [isLogged])
+  
+
+    useEffect(() => {
+        const socket = io('http://localhost:3000');
+    
+        // Lidar com eventos do servidor
+        socket.on('solicitacaoDoCliente', (message) => {
+          console.log('Solicitação do cliente recebida:', message);
+    
+            // Você pode processar a solicitação do cliente aqui e, se necessário, emitir uma resposta
+            // Vamos apenas definir a mensagem recebida para fins de demonstração
+            //   setReceivedMessage(message);
+        });
+    
+        // Fazer uma solicitação para o servidor enviando uma mensagem
+        const enviarSolicitacao = () => {
+          socket.emit('evento', { mensagem: 'Esta é uma solicitação do cliente' });
+        };
+    
+        enviarSolicitacao();
+    
+        return () => {
+          socket.disconnect();
+        };
+      }, []);
 
     const getUserInfo = async () => {
         try {
@@ -100,11 +126,20 @@ export default function Home() {
 
         try {
             if(tweetText.length > 0) {
-                const result = await axios.post("http://localhost:3000/user/InsertTweet", tweetData, config);
-                console.log(result)
-            } else {
+                try {
+                    const result = await axios.post("http://localhost:3000/user/InsertTweet", tweetData, config);
+                    if(result.status == 200) {
+                        setUploadedFile({})
+                        setTweetText('')
+                        handleTweetGet()
+                    }
 
-            }
+                } catch(error) {
+                    console.log(error)
+                }
+            } else {
+                console.log("Tweet Vazio")
+            }   
         } catch(error) {
             console.log(error)
         }

@@ -112,6 +112,7 @@
     background-color: #2a2b2f6e;
     padding: 1.2vw;
     border-radius: 1vw;
+    max-width: 60vw;
 }
 
 .oneTweetdiv__text {
@@ -140,7 +141,8 @@
 }
 
 .oneTweetdiv__image img, .oneTweetdiv__image video {
-    width: 100%;
+    width: fit-content;
+    height: fit-content;
 }
 
 .oneTweetdiv__comments__title {

@@ -2,8 +2,6 @@ import styles from './Avatar.module.css'
 
 export default function Avatar({userInfo, size}) {
 
-    console.log(userInfo)
-
     const {avatar, nickName} = userInfo
 
     const checkAvatarSize = () => {

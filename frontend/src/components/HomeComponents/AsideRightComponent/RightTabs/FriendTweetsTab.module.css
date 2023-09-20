@@ -1,7 +1,7 @@
 .asideDiv {
     display: flex;
     gap: 1vw;
-    min-width: 80%;
+    min-width: 100%;
     padding: 0.5vw;
 }
 
