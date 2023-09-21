@@ -2,15 +2,14 @@ const GetUserInfoModel = require('../model/GetUserInfoModel');
 const InsertTweetModel = require('../model/InsertTweetModel')
 const getUserIdByTokenModel = require('../model/getUserIdByTokenModel')
 
-const UserTweetController = async (client, req, res, userData, userId) => {
+const UserTweetController = async (client, req, res, userId) => {
     try {
         const { content, actualDate } = req.body;
         const { text, image, video } = content;
-        const { hours, minutes, days, month, year } = actualDate;
+        const { seconds, minutes, hours, days, month, year } = actualDate;
 
         const tweetDocument = {
             userId,
-            nickName: userData.nickName,
             likes: 0,
             content: {
               text: text,
@@ -18,8 +17,9 @@ const UserTweetController = async (client, req, res, userData, userId) => {
               video: video, 
             },
             actualDate: {
-              hours,
+              seconds,
               minutes,
+              hours,
               days,
               month,
               year,

@@ -9,6 +9,7 @@ import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios'
+import io from 'socket.io-client';
 
 import {AiOutlineEdit} from 'react-icons/ai'
 
@@ -28,10 +29,18 @@ export default function Profile() {
     const [newUserInfo, setNewUserInfo] = useState({})
 
     useEffect(() => {
+
+        // const socket = io('http://localhost:3000');
+
         if (passwordsMatch === false) {
             setIsLogged({ passwordsMatch: false, token: ''});
             return navigate("/");
         }
+
+        // socket.on('change123', (data) => {
+        //     console.log('Evento change123 recebido:', data);
+        // });
+
         getUserInfo();
     }, [isLogged, setIsLogged]);
 

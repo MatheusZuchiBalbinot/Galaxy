@@ -6,6 +6,8 @@ const http = require('http');
 const { MongoClient } = require('mongodb');
 const mongodbUri = require('./config');
 
+const MonitoringChangesController = require('./controllers/MonitoringChangesController')
+
 const routes = require('./routes/ExpressRoutes'); 
 
 const app = express();
@@ -33,6 +35,8 @@ require('./routes/SocketIoRoutes')(io);
     console.log('Successfully connected to the database');
     const mainRoutes = routes(client, io);
     app.use('/', mainRoutes);
+
+    MonitoringChangesController(client, io);
 
     server.listen(port, () => {
       console.log(`Server is running on port ${port}`);

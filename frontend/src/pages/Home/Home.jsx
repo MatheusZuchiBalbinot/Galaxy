@@ -19,6 +19,8 @@ import { TextInput } from '../../components/ElementComponents/Input/TextInput'
 import ShowTimeDiff from '../../components/ElementComponents/ShowTimeDiff/ShowTimeDiff';
 import { TweetInput } from '../../components/ElementComponents/Input/TweetInput';
 
+import { Popover, Portal, PopoverTrigger, PopoverContent, PopoverArrow, PopoverHeader, PopoverCloseButton, PopoverBody, PopoverFooter, Button } from '@chakra-ui/react';
+
 export default function Home() {
 
     const [tweets, setTweets] = useState([]);
@@ -36,6 +38,11 @@ export default function Home() {
 
     const [userInfo, setUserInfo] = useState();
 
+    const initialFocusRef = useRef();
+
+    const [isOpen, setIsOpen] = useState(false);
+    
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -52,21 +59,24 @@ export default function Home() {
     useEffect(() => {
         const socket = io('http://localhost:3000');
     
-        // Lidar com eventos do servidor
         socket.on('solicitacaoDoCliente', (message) => {
           console.log('Solicitação do cliente recebida:', message);
-    
-            // Você pode processar a solicitação do cliente aqui e, se necessário, emitir uma resposta
-            // Vamos apenas definir a mensagem recebida para fins de demonstração
-            //   setReceivedMessage(message);
         });
-    
-        // Fazer uma solicitação para o servidor enviando uma mensagem
-        const enviarSolicitacao = () => {
-          socket.emit('evento', { mensagem: 'Esta é uma solicitação do cliente' });
+
+        socket.on('listaUsuariosConectados', (usuarios) => {
+            console.log('Usuários conectados:', usuarios);
+        });
+
+        socket.on('change123', () => {
+            handleTweetGet()
+        });
+
+
+        const sendUserData = () => {
+            socket.emit('userId', token)
         };
-    
-        enviarSolicitacao();
+
+        sendUserData()
     
         return () => {
           socket.disconnect();
@@ -97,6 +107,7 @@ export default function Home() {
         const actualDate = new Date();
         const hours = actualDate.getHours();
         const minutes = actualDate.getMinutes();
+        const seconds = actualDate.getSeconds()
         const days = actualDate.getDate();
         const month = actualDate.getMonth() + 1;
         const year = actualDate.getFullYear();
@@ -115,8 +126,9 @@ export default function Home() {
                 video: uploadedFile.video ? uploadedFile.url : null,
             }, 
             actualDate: {
-                hours,
+                seconds,
                 minutes,
+                hours,
                 days,
                 month,
                 year
@@ -208,7 +220,24 @@ export default function Home() {
                         return (
                             <div className={styles.oneTweetdiv} key={index}>
                                 <div className={styles.oneTweetdiv__infoAboutTweet}>
-                                    <h2>{nickName}</h2>
+                                    <div>
+                                        <Popover>
+                                            <PopoverTrigger>
+                                                <h2>{nickName}</h2>
+                                            </PopoverTrigger>
+                                            <Portal>
+                                            <PopoverContent>
+                                            <PopoverArrow />
+                                            <PopoverHeader>Header</PopoverHeader>
+                                            <PopoverCloseButton />
+                                            <PopoverBody>
+                                            <Button colorScheme='blue'>Button</Button>
+                                            </PopoverBody>
+                                            <PopoverFooter>This is the footer</PopoverFooter>
+                                            </PopoverContent>
+                                            </Portal>
+                                        </Popover>
+                                    </div>
                                     <ShowTimeDiff actualDate={actualDate} />
                                 </div>
                                 <div className={styles.oneTweetdiv__textAndFile}>

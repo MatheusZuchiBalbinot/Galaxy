@@ -78,6 +78,7 @@ export default function  ModalWithInput({isOpen, onClose, newUserInfo, setNewUse
                     <ModalBody pb={6}>
                         <FormControl>
                             <FormLabel>Apelido: </FormLabel>
+
                             {userInfo && (
                                 <Input 
                                     ref={initialRef} 
@@ -85,6 +86,7 @@ export default function  ModalWithInput({isOpen, onClose, newUserInfo, setNewUse
                                         ...prevState,
                                         nickName: e.target.value
                                     }))}
+                                    isInvalid={editErrors.nickNameError?.hasError ? true : false}
                                     value={newUserInfo.nickName}
                                 />
                             )}
@@ -104,6 +106,7 @@ export default function  ModalWithInput({isOpen, onClose, newUserInfo, setNewUse
                                         ...prevState,
                                         userDescription: e.target.value
                                     }))}
+                                    isInvalid={editErrors.userDescription?.hasError ? true : false}
                                     value={newUserInfo.userDescription}
                                 />
                             )}

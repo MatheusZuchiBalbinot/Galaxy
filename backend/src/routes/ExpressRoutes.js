@@ -9,9 +9,9 @@ const ProfileChangesController = require('../controllers/ProfileChangesControlle
 
 const GetUserInfoModel = require("../model/GetUserInfoModel");
 const getUserIdByTokenModel = require('../model/getUserIdByTokenModel');
-const MonitoringChangesController = require('../controllers/MonitoringChangesController');
 
 module.exports = (client, io) => {
+
   router.post('/user/register', (req, res) => {
     UserRegisterController(client, req, res);
   });
@@ -22,9 +22,8 @@ module.exports = (client, io) => {
 
   router.post('/user/InsertTweet', async(req, res) => {
     const jwtToken = req.headers['authorization'];
-    const userData = await GetUserInfoModel(client, req, res, jwtToken);
     const userId = await getUserIdByTokenModel(jwtToken)
-    InsertingTweetController(client, req, res, userData, userId);
+    InsertingTweetController(client, req, res, userId);
   })
 
   router.get('/user/profile', async(req, res) => {

@@ -1,17 +1,24 @@
 module.exports = (io) => {
-    io.on('connection', (socket) => {
-      console.log('Cliente conectado ao WebSocket');
+	const usuariosConectados = {};
   
-      io.emit('solicitacaoDoCliente', 'Um novo cliente se conectou');
+	io.on('connection', (socket) => {
+	  socket.on('userId', (userId) => {
+		usuariosConectados[socket.id] = {
+		  id: userId
+		};
+		atualizarListaUsuariosConectados();
+	  });
   
-      socket.on('evento', (data) => {
-        console.log('Evento recebido do cliente:', data);
-
-        socket.emit('resposta', 'Resposta ao evento recebido do cliente');
-      });
+	  socket.on('disconnect', () => {
+		delete usuariosConectados[socket.id];
+		atualizarListaUsuariosConectados();
+	  });
   
-      socket.on('disconnect', () => {
-        console.log('Cliente desconectado do WebSocket');
-      });
-    });
+	  io.emit('solicitacaoDoCliente', 'Um novo cliente se conectou');
+  
+	  function atualizarListaUsuariosConectados() {
+		io.emit('listaUsuariosConectados', usuariosConectados);
+	  }
+	});
   };
+  

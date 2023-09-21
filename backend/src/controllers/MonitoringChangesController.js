@@ -1,16 +1,14 @@
 const MonitoringChangesController = (client, io) => {
-    const dbCollection = client.db("cluster0").collection("users");
+    const dbCollection = client.db("cluster0").collection("tweets");
     const changeStream = dbCollection.watch();  
-
-    console.log("MONITOROU ALGO?")
   
     changeStream.on('change', (change) => {
       console.log('Change:', change);
   
-      io.emit('change', change);
+      io.emit('change123', change);
     });
-  
-    return 'Change Stream monitoring started';
   };
   
+// Estou em dúvida se faz algum sentido atualizar todas as páginas quando alguém insere um tweet;
+// Mas está funcionando, posteriormente se consumir processamento demais desnecessariamente, irei remover.
 module.exports = MonitoringChangesController;
