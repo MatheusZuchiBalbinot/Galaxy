@@ -16,10 +16,10 @@ import UserRightComponents from '../../components/HomeComponents/AsideRightCompo
 import Menu from '../../components/HomeComponents/AsideLeftComponent/Menu.jsx'
 
 import { TextInput } from '../../components/ElementComponents/Input/TextInput'
-import ShowTimeDiff from '../../components/ElementComponents/ShowTimeDiff/ShowTimeDiff';
 import { TweetInput } from '../../components/ElementComponents/Input/TweetInput';
 
-import { Popover, Portal, PopoverTrigger, PopoverContent, PopoverArrow, PopoverHeader, PopoverCloseButton, PopoverBody, PopoverFooter, Button } from '@chakra-ui/react';
+import ShowTimeDiff from '../../components/ElementComponents/ShowTimeDiff/ShowTimeDiff';
+import TweetPopover from '../../components/ElementComponents/TweetPopover/TweetPopover'
 
 export default function Home() {
 
@@ -39,9 +39,6 @@ export default function Home() {
     const [userInfo, setUserInfo] = useState();
 
     const initialFocusRef = useRef();
-
-    const [isOpen, setIsOpen] = useState(false);
-    
 
     const navigate = useNavigate()
 
@@ -199,6 +196,9 @@ export default function Home() {
         console.log(tweetAnswers)
     }
 
+
+    
+
     const handleTweets = () => {
 
         if(tweets) {
@@ -214,29 +214,18 @@ export default function Home() {
                 return (
                     tweets.map((item, index) => {
 
-                        const {likes, nickName, userId, _id, content, comments, actualDate} = item
+                        const {likes, nickName, content, comments, actualDate, _id: tweetId} = item
                         const {text, image, video} = content
+
+                        // Não é a abordagem ideial passar assim facilmente o id do tweet para o front-end, mas não consegui
+                        // Pensar em outra maneira de obter o Id do dono do tweet para exibir um mini-resumo.
+                        // Pesquisar por conteúdo não me parece inteligente.
                         
                         return (
                             <div className={styles.oneTweetdiv} key={index}>
                                 <div className={styles.oneTweetdiv__infoAboutTweet}>
                                     <div>
-                                        <Popover>
-                                            <PopoverTrigger>
-                                                <h2>{nickName}</h2>
-                                            </PopoverTrigger>
-                                            <Portal>
-                                            <PopoverContent>
-                                            <PopoverArrow />
-                                            <PopoverHeader>Header</PopoverHeader>
-                                            <PopoverCloseButton />
-                                            <PopoverBody>
-                                            <Button colorScheme='blue'>Button</Button>
-                                            </PopoverBody>
-                                            <PopoverFooter>This is the footer</PopoverFooter>
-                                            </PopoverContent>
-                                            </Portal>
-                                        </Popover>
+                                        <TweetPopover nickName={nickName} tweetId={tweetId}/>
                                     </div>
                                     <ShowTimeDiff actualDate={actualDate} />
                                 </div>

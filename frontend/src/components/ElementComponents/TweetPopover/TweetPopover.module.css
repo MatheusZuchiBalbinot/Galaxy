@@ -1,0 +1,54 @@
+.PopoverHeader__avatar {
+    display: flex;
+    justify-content: space-around;
+}
+
+.PopoverHeader__info {
+    display: flex;
+    margin: auto;
+    gap: 1.2vw;
+}
+
+.PopoverBody__statistics {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1vw;
+}
+
+.PopoverBody__statistics__number {
+    color: gray;
+    font-weight: 400;
+}
+
+.PopoverFooter {
+    display: flex;
+    margin: 0 1vw 1vw 1vw;
+    justify-content: space-between;
+}
+
+.PopoverFooter button{
+    margin: auto 0;
+}
+
+.PopoverFooter__icons {
+    display: flex;
+    margin: 1vw;
+    gap: 1.5vw;
+}
+
+.PopoverFooter__icons svg {
+    font-size: 2.7vw;
+}
+
+.PopoverHeader__info h2 {
+    font-weight: 500;
+    font-size: 1.5vw;
+    margin: auto 0;
+}
+
+.PopoverHeader__info h3 {
+    font-weight: 200;
+    margin: auto 0;
+    color: gray;
+    font-size: 1.3vw;
+}
