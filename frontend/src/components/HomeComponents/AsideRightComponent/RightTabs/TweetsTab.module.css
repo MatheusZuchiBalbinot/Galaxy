@@ -1,0 +1,32 @@
+.asideDiv {
+    display: flex;
+    gap: 1vw;
+    min-width: 100%;
+    padding: 0.5vw;
+}
+
+.asideDiv:hover {
+    border: '2px solid gray';
+    cursor: pointer;
+}
+
+.asideIconDiv {
+    display: flex;
+    margin: auto 0;
+    padding: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.asideText {
+    margin: auto;
+}
+
+.asideText__div {
+    width: 70%;
+    margin: auto;
+}
+
+.asideText__text {
+    font-size: 1rem;
+    white-space: nowrap
+}

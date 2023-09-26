@@ -10,7 +10,7 @@ const GettingTweetUserInfoController = require('../controllers/GettingTweetUserI
 const SendFriendRequestController = require('../controllers/SendFriendRequestController')
 
 const GetUserInfoModel = require("../model/GetUserInfoModel");
-const getUserIdByTokenModel = require('../model/getUserIdByTokenModel');
+const GetUserIdByToken = require('../model/GetUserIdByTokenModel');
 
 module.exports = (client, io) => {
 
@@ -24,13 +24,14 @@ module.exports = (client, io) => {
 
   router.post('/user/InsertTweet', async(req, res) => {
     const jwtToken = req.headers['authorization'];
-    const userId = await getUserIdByTokenModel(jwtToken)
+    const userId = await GetUserIdByToken(jwtToken)
     InsertingTweetController(client, req, res, userId);
   })
 
-  router.post('/user/friend:tweetId', async(req, res) => {
+  router.post('/user/friendrequest:tweetId', async(req, res) => {
     const tweetId = req.params.tweetId
-    SendFriendRequestController(client, req, res, tweetId)
+    const jwtToken = req.body.headers['Authorization']
+    SendFriendRequestController(client, req, res, tweetId, jwtToken)
   })
 
   router.patch('/user/profile/edit', async(req, res) => {

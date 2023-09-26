@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react'
 
-import styles from './FriendTweetsTab.module.css'
+import styles from './TweetsTab.module.css'
 
 import {FaUserFriends} from 'react-icons/fa'
 import {BsFilePerson} from 'react-icons/bs'

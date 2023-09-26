@@ -11,14 +11,14 @@
 }
 
 .mainInput {
-    color: white;
+    font-size: 1.2vw;
     width: 90%;
     outline: none;
-    padding: 0.5vw;
+    padding: 0.2vw;
     max-height: 10vh;
     background-color: transparent;
 }
 
 .mainInput::placeholder {
-    color: white;
+    color: rgb(145, 141, 141);
 }

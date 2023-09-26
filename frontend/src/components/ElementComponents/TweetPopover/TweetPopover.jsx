@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
+import { userContext} from '../../../context/userContext'
 import axios from "axios";
 
 import { Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverArrow, PopoverCloseButton, PopoverBody, PopoverFooter, Button, ButtonGroup, Box } from "@chakra-ui/react";
@@ -12,18 +13,33 @@ import {MdBlock} from 'react-icons/md'
 
 function Tweet({ nickName, tweetId }) {
 
-  const [popoverContent, setPopoverContent] = useState(null);
+	const {isLogged} = useContext(userContext)
 
-  const initialFocusRef = useRef();
+	const {token} = isLogged
 
-  const sendFriendRequest = async (tweetId) => {
-    try {
-      const result = await axios.post(`http://localhost:3000/user/friend${tweetId}`)
-      console.log(result)
-    } catch(error) {
-      console.log(error)
-    }
-  }
+	const [popoverContent, setPopoverContent] = useState(null);
+	const [succesFriendRequest, setSuccesFriendRequest] = useState(false);
+
+	const initialFocusRef = useRef();
+
+	const sendFriendRequest = async (tweetId) => {
+		try {
+			const config = {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            };
+			const result = await axios.post(`http://localhost:3000/user/friendrequest${tweetId}`, config)
+			
+			if(result.status == 200) {
+				setSuccesFriendRequest(true)
+			} else {
+				setSuccesFriendRequest(false)
+			}
+		} catch(error) {
+			console.log(error)
+		}
+	}
 
   async function generatePopoverContent() {
 	try {
@@ -59,8 +75,12 @@ function Tweet({ nickName, tweetId }) {
 					<div className={styles.PopoverFooter}>
 						<Button> Mensagens </Button>
 						<div className={styles.PopoverFooter__icons}>
-							<GoPersonAdd onClick={() => sendFriendRequest(tweetId)} />
-							<MdBlock />
+							<div className={styles.PopoverFooter__icons__div}>
+								<GoPersonAdd onClick={() => sendFriendRequest(tweetId)} />
+							</div>
+							<div className={styles.PopoverFooter__icons__div}>
+								<MdBlock/>
+							</div>
 						</div>
 					</div>
 				</PopoverContent>

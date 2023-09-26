@@ -1,0 +1,82 @@
+.FriendTab__main {
+    display: grid;
+    gap: 2vw;
+    grid-template-rows: 40vh 40vh;
+    grid-template-areas: 
+    "searchFriend"
+    "friendRequests";
+}
+
+.searchFriend {
+    grid-area: searchFriend;
+    gap: 1vw;
+    min-width: 100%;
+    background-color: #4243456e;
+    border-radius: 1vw;
+}
+
+.friendRequests {
+    grid-area: friendRequests;
+    min-width: 100%;
+    background-color: #4243456e;
+    border-radius: 1vw;
+}
+
+.asideDiv:hover {
+    border: '2px solid gray';
+    cursor: pointer;
+}
+
+.asideIconDiv {
+    display: flex;
+    margin: auto 0;
+    padding: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.asideText {
+    margin: auto;
+    font-size: 1.2vw;
+}
+
+.friendRequests__div {
+    width: 90%;
+    margin: auto;
+    justify-content: center;
+    display: flex;
+}
+
+.createComment__div {
+    display: flex;
+    width: 90%;
+    margin: auto;
+    font-size: 1.3vw;
+}
+
+.createComment__div__icon {
+    display: flex;
+    margin: auto;
+    font-size: 1.3vw;
+    cursor: pointer;
+}
+
+.createComment__div__icon svg {
+    display: flex;
+    justify-content: right;
+    margin: 0.7vw;
+}
+
+.searchFriend__result, .friendRequest__result {
+    border-top: 2px solid rgb(99, 94, 94);
+    color: rgb(167, 159, 159);
+    margin: auto;
+    font-size: 1vw;
+    display: flex;
+    height: 90%;
+}
+
+.searchFriend__result h2, .friendRequest__result h2 {
+    font-size: 1vw;
+    text-align: center;
+    margin: auto;
+}

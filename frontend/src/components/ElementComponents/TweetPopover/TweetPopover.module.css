@@ -1,12 +1,13 @@
 .PopoverHeader__avatar {
     display: flex;
-    justify-content: space-around;
+    margin: auto;
+    column-gap: 2rem;
 }
 
 .PopoverHeader__info {
     display: flex;
-    margin: auto;
-    gap: 1.2vw;
+    flex-direction: column;
+    margin: auto 0;
 }
 
 .PopoverBody__statistics {
@@ -36,13 +37,23 @@
     gap: 1.5vw;
 }
 
-.PopoverFooter__icons svg {
-    font-size: 2.7vw;
+.PopoverFooter__icons__div {
+    cursor: pointer;
+    padding-inline: 1vw;
+    padding-block: 0.5vw;
+}
+
+.PopoverFooter__icons__div:hover {
+    background-color: gray;
+}
+
+.PopoverFooter__icons__div svg {
+    font-size: 2.5vw;
 }
 
 .PopoverHeader__info h2 {
     font-weight: 500;
-    font-size: 1.5vw;
+    font-size: 1.2vw;
     margin: auto 0;
 }
 
@@ -50,5 +61,5 @@
     font-weight: 200;
     margin: auto 0;
     color: gray;
-    font-size: 1.3vw;
+    font-size: 1vw;
 }

@@ -1,11 +1,11 @@
 const ObjectId = require('mongodb').ObjectId;
 
-const getUserIdByTokenModel = require("./getUserIdByTokenModel")
+const GetUserIdByTokenModel = require("./GetUserIdByTokenModel")
 
 async function GetUserInfoModel(client, req, res, accessToken) {
     try {
         const dbCollection = client.db("cluster0").collection("users")
-        const userId = getUserIdByTokenModel(accessToken)
+        const userId = GetUserIdByTokenModel(accessToken)
 
         const user = await dbCollection.findOne(
             { _id: new ObjectId(userId) },

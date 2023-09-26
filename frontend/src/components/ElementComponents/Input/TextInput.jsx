@@ -1,6 +1,6 @@
 import styles from './TextInput.module.css';
 
-export const TextAreaInput = ({ value, onChange, maxLength, rows }) => {
+export const TextAreaInput = ({ value, onChange, maxLength, rows, placeholder }) => {
     return (
         <textarea 
             rows={rows}
@@ -13,15 +13,16 @@ export const TextAreaInput = ({ value, onChange, maxLength, rows }) => {
     );
 };
 
-export const TextInput = ({ value, onChange, maxLength, type }) => {
+export const TextInput = ({ value, onChange, maxLength, type, placeholder }) => {
     return (
         <input 
+            autoFocus
             type={type}
             maxLength={maxLength}
             className={styles.mainInput} 
             value={value}
             onChange={onChange}
-            placeholder='No que está pensando?'
+            placeholder={(placeholder ? placeholder : "No que você está pensando")}
         />
     );
 };  
