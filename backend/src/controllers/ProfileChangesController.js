@@ -1,5 +1,5 @@
 const EditingProfile = require("../model/EditingProfileModel");
-const getUserIdByTokenModel = require("../model/getUserIdByTokenModel");
+const GetUserIdByTokenModel = require("../model/GetUserIdByTokenModel");
 
 const ObjectId = require('mongodb').ObjectId;
 
@@ -10,7 +10,7 @@ const ProfileChangesController = async (client, req, res, jwtToken) => {
         const { nickName, userDescription } = req.body;
 
 		const dbCollection = client.db("cluster0").collection("users")
-        const getUserId = getUserIdByTokenModel(jwtToken)
+        const getUserId = GetUserIdByTokenModel(jwtToken)
 
         const oldUserInfo = await dbCollection.findOne(
             { _id: new ObjectId(getUserId) },	

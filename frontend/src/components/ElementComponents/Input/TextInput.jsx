@@ -13,7 +13,7 @@ export const TextAreaInput = ({ value, onChange, maxLength, rows, placeholder })
     );
 };
 
-export const TextInput = ({ value, onChange, maxLength, type, placeholder }) => {
+export const TextInput = ({ value, onChange, maxLength, type, placeholder, onInput }) => {
     return (
         <input 
             autoFocus
@@ -22,6 +22,7 @@ export const TextInput = ({ value, onChange, maxLength, type, placeholder }) => 
             className={styles.mainInput} 
             value={value}
             onChange={onChange}
+            onInput={onInput}
             placeholder={(placeholder ? placeholder : "No que você está pensando")}
         />
     );

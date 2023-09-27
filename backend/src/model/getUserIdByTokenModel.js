@@ -7,9 +7,9 @@ function GetUserIdByToken(accessToken) {
   }
 
   try {
-      const token = accessToken.split(' ')[1];
-      const decoded = jwt.verify(token, SECRET_KEY);
-      return decoded.id;
+		const token = accessToken.split(' ')[1];
+		const decoded = jwt.verify(token, SECRET_KEY);
+		return decoded.id;
   } catch (err) {
       throw new Error('Token de acesso inválido');
   }

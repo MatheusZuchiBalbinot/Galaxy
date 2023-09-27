@@ -7,7 +7,9 @@ const InsertingTweetController = require('../controllers/InsertingTweetControlle
 const GettingTweetController = require('../controllers/GettingTweetController');
 const ProfileChangesController = require('../controllers/ProfileChangesController');
 const GettingTweetUserInfoController = require('../controllers/GettingTweetUserInfoController');
-const SendFriendRequestController = require('../controllers/SendFriendRequestController')
+const SendFriendRequestController = require('../controllers/SendFriendRequestController');
+const GettingFriendRequestsController = require("../controllers/GettingFriendRequestsController");
+const GettingFriendByNickname = require("../controllers/GettingFriendByNicknameController")
 
 const GetUserInfoModel = require("../model/GetUserInfoModel");
 const GetUserIdByToken = require('../model/GetUserIdByTokenModel');
@@ -52,6 +54,16 @@ module.exports = (client, io) => {
   router.get('/tweet/user:tweetId', async(req, res) => {
     const tweetId = req.params.tweetId
     GettingTweetUserInfoController(client, req, res, tweetId);
+  })
+
+  router.get('/user/GetFriendRequests', async(req, res) => {
+    const jwtToken = req.headers['authorization']
+    GettingFriendRequestsController(client, req, res, jwtToken);
+  })
+
+  router.get('/user/getFriendByNickname:searchFriend', async(req, res) => {
+    const searchFriend = req.params.searchFriend
+    GettingFriendByNickname(client, req, res, searchFriend);
   })
 
   return router;

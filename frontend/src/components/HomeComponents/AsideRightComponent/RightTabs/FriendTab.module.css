@@ -80,3 +80,35 @@
     text-align: center;
     margin: auto;
 }
+
+.friendRequest__user__div {
+    display: flex;
+    margin: 1vw;
+}
+
+.friendRequest__user__userInfo {
+    display: block;
+    margin: 0.5vw;
+}
+.friendRequest__user__userInfo h2 {
+    text-align: left;
+    color: white;
+}
+
+.friendRequest__user__Icons {
+    margin: auto;
+}
+
+.friendRequest__user__Icons div {
+    padding: 1vw;
+}
+
+.friendRequest__user__Icons div svg {
+    cursor: pointer;
+    color: white;
+    fill: white;
+}
+
+.friendRequest__user__Icons div:hover {
+    background-color: gray;
+}
