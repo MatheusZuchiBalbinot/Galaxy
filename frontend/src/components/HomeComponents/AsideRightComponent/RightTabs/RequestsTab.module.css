@@ -86,20 +86,6 @@
     margin: auto;
 }
 
-.friendRequest__user__div {
-    display: flex;
-    margin: 1vw;
-}
-
-.friendRequest__user__userInfo {
-    display: block;
-    margin: 0.5vw;
-}
-.friendRequest__user__userInfo h2 {
-    text-align: left;
-    color: white;
-}
-
 .friendRequest__user__Icons {
     margin: auto;
 }
