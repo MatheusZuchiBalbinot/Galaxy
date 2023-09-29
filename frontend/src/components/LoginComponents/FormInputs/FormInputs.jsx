@@ -28,6 +28,7 @@ const FormInputs = ({
                         id="confirmPassword"
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         type={confirmPasswordVisible ? 'password' : 'text'}
+                        autoComplete='off'
                     ></input>
                     <div className={styles.showPasswordIcon} onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}>
                         {confirmPasswordVisible ? <AiFillEyeInvisible /> : <AiFillEye />}
@@ -45,6 +46,7 @@ const FormInputs = ({
                         maxLength={15}
                         placeholder='Ex: MatheusZin'
                         value={nickName}
+                        autoComplete='off'
                         onChange={(e) => setNickName(e.target.value)}
                     ></input>
                 </div>

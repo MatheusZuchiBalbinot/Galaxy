@@ -56,9 +56,9 @@ export default function Home() {
     useEffect(() => {
         const socket = io('http://localhost:3000');
     
-        socket.on('solicitacaoDoCliente', (message) => {
-          console.log('Solicitação do cliente recebida:', message);
-        });
+        // socket.on('solicitacaoDoCliente', (message) => {
+        //   console.log('Solicitação do cliente recebida:', message);
+        // });
 
         socket.on('listaUsuariosConectados', (usuarios) => {
             console.log('Usuários conectados:', usuarios);
@@ -301,6 +301,7 @@ export default function Home() {
                 <TweetInput
                     setUploadedFile={setUploadedFile}
                     uploadedFile={uploadedFile}
+                    id={"makeTweet"}
                     userInfo={userInfo}
                     tweetText={tweetText}
                     handleChange={handleChange}

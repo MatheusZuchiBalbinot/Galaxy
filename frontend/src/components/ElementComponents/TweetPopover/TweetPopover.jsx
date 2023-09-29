@@ -41,60 +41,105 @@ function Tweet({ nickName, tweetId }) {
 		}
 	}
 
-  async function generatePopoverContent() {
-	try {
-		const getTweetUser = await axios.get(`http://localhost:3000/tweet/user${tweetId}`);
-
-		if (getTweetUser != undefined) {
-		
-			const {nickName, createdInDate, userDescription} = getTweetUser.data.user
-
-			const content = (
-				<PopoverContent color='white' bg='gray.900' borderColor='gray.50'>
-					<PopoverHeader pt={4} fontWeight='bold' border='0' className={styles.PopoverHeader__avatar}>
-						<div>
-							{getTweetUser.data.user ? <Avatar userInfo={getTweetUser.data.user} size={"medium"}/> : null}
-						</div>
-						<div className={styles.PopoverHeader__info}>
-							{nickName ? <h2>{nickName}</h2> : <h2> Carregando... </h2>}
-							{createdInDate ? <h3>{createdInDate}</h3> : <h3> Carregando... </h3>}
-						</div>
-					</PopoverHeader>
-					<PopoverArrow bg='gray.50' />
-					<PopoverCloseButton />
-					<PopoverBody>
-						<div>
-							{userDescription ? <h2> {userDescription} </h2> : <h2> Carregando... </h2>}
-						</div>
-						<div className={styles.PopoverBody__statistics}>
-							<h2>Likes: <span className={styles.PopoverBody__statistics__number}> 172 </span> </h2>
-							<h2>Amigos: <span className={styles.PopoverBody__statistics__number}> 172 </span> </h2>
-							<h2>Posts: <span className={styles.PopoverBody__statistics__number}> 172 </span> </h2>
-						</div>
-					</PopoverBody>
-					<div className={styles.PopoverFooter}>
-						<Button> Mensagens </Button>
-						<div className={styles.PopoverFooter__icons}>
-							<div className={styles.PopoverFooter__icons__div}>
-								<GoPersonAdd onClick={() => sendFriendRequest(tweetId)} />
-							</div>
-							<div className={styles.PopoverFooter__icons__div}>
-								<MdBlock/>
-							</div>
-						</div>
-					</div>
-				</PopoverContent>
-				);
-			setPopoverContent(content);
-		}
-	} catch (error) {
-	  console.log(error);
-	}
-  }
-
   useEffect(() => {
+
+	async function generatePopoverContent() {
+		try {
+			const config = {
+				headers: {
+					'Authorization': `Bearer ${token}`,
+				},
+			};
+	
+			const getTweetUser = await axios.post(`http://localhost:3000/tweet/user${tweetId}`, config);
+	
+			console.log(getTweetUser)
+	
+			if (getTweetUser != undefined) {
+	
+				if(getTweetUser.data.itsMe == true) {
+					
+					const {nickName, createdInDate, userDescription} = getTweetUser.data.user
+	
+					const content = (
+						<PopoverContent color='white' bg='gray.900' borderColor='gray.50'>
+							<PopoverHeader pt={4} fontWeight='bold' border='0' className={styles.PopoverHeader__avatar}>
+								<div>
+									{getTweetUser.data.user ? <Avatar userInfo={getTweetUser.data.user} size={"medium"}/> : null}
+								</div>
+								<div className={styles.PopoverHeader__info}>
+									{nickName ? <h2>{nickName}</h2> : <h2> Carregando... </h2>}
+									{createdInDate ? <h3>{createdInDate}</h3> : <h3> Carregando... </h3>}
+								</div>
+							</PopoverHeader>
+							<PopoverArrow bg='gray.50' />
+							<PopoverCloseButton />
+							<PopoverBody>
+								<div>
+									{userDescription ? <h2> {userDescription} </h2> : <h2> Carregando... </h2>}
+								</div>
+								<div className={styles.PopoverBody__statistics}>
+									<h2>Likes: <span className={styles.PopoverBody__statistics__number}> 172 </span> </h2>
+									<h2>Amigos: <span className={styles.PopoverBody__statistics__number}> 172 </span> </h2>
+									<h2>Posts: <span className={styles.PopoverBody__statistics__number}> 172 </span> </h2>
+								</div>
+							</PopoverBody>
+						</PopoverContent>
+						);
+	
+					setPopoverContent(content);
+	
+				} else {
+	
+					const {nickName, createdInDate, userDescription} = getTweetUser.data.user
+	
+					const content = (
+						<PopoverContent color='white' bg='gray.900' borderColor='gray.50'>
+							<PopoverHeader pt={4} fontWeight='bold' border='0' className={styles.PopoverHeader__avatar}>
+								<div>
+									{getTweetUser.data.user ? <Avatar userInfo={getTweetUser.data.user} size={"medium"}/> : null}
+								</div>
+								<div className={styles.PopoverHeader__info}>
+									{nickName ? <h2>{nickName}</h2> : <h2> Carregando... </h2>}
+									{createdInDate ? <h3>{createdInDate}</h3> : <h3> Carregando... </h3>}
+								</div>
+							</PopoverHeader>
+							<PopoverArrow bg='gray.50' />
+							<PopoverCloseButton />
+							<PopoverBody>
+								<div>
+									{userDescription ? <h2> {userDescription} </h2> : <h2> Carregando... </h2>}
+								</div>
+								<div className={styles.PopoverBody__statistics}>
+									<h2>Likes: <span className={styles.PopoverBody__statistics__number}> 172 </span> </h2>
+									<h2>Amigos: <span className={styles.PopoverBody__statistics__number}> 172 </span> </h2>
+									<h2>Posts: <span className={styles.PopoverBody__statistics__number}> 172 </span> </h2>
+								</div>
+							</PopoverBody>
+							<div className={styles.PopoverFooter}>
+								<Button> Mensagens </Button>
+								<div className={styles.PopoverFooter__icons}>
+									<div className={styles.PopoverFooter__icons__div}>
+										<GoPersonAdd onClick={() => sendFriendRequest(tweetId)} />
+									</div>
+									<div className={styles.PopoverFooter__icons__div}>
+										<MdBlock/>
+									</div>
+								</div>
+							</div>
+						</PopoverContent>
+						);
+	
+					setPopoverContent(content);
+				}
+			}
+		} catch (error) {
+		  console.log(error);
+		}
+	  }
+
     generatePopoverContent();
-  }, [tweetId]);
+  }, []);
 
   return (
     <Popover

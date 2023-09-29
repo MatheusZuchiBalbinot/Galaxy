@@ -13,8 +13,12 @@ module.exports = (io) => {
 		delete usuariosConectados[socket.id];
 		atualizarListaUsuariosConectados();
 	  });
+
+	  socket.on('acceptRequest', (friendRequestId) => {
+		console.log(friendRequestId);
+	  });
   
-	  io.emit('solicitacaoDoCliente', 'Um novo cliente se conectou');
+	//   io.emit('solicitacaoDoCliente', 'Um novo cliente se conectou');
   
 	  function atualizarListaUsuariosConectados() {
 		io.emit('listaUsuariosConectados', usuariosConectados);

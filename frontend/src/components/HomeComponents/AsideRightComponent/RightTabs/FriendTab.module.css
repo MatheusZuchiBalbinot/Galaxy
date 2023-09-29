@@ -9,8 +9,8 @@
 
 .searchFriend {
     grid-area: searchFriend;
-    gap: 1vw;
     min-width: 100%;
+    padding-bottom: 1vw;
     background-color: #4243456e;
     border-radius: 1vw;
 }
@@ -71,8 +71,13 @@
     color: rgb(167, 159, 159);
     margin: auto;
     font-size: 1vw;
+    overflow: auto;
     display: flex;
     height: 90%;
+}
+
+.searchFriend__result {
+    display: block;
 }
 
 .searchFriend__result h2, .friendRequest__result h2 {
@@ -105,10 +110,39 @@
 
 .friendRequest__user__Icons div svg {
     cursor: pointer;
+    font-size: 1.2vw;
     color: white;
     fill: white;
 }
 
 .friendRequest__user__Icons div:hover {
     background-color: gray;
+}
+
+.withoutRequest {
+    display: flex;
+    justify-content: center;
+    font-size: 1vw;
+    align-items: center;
+    color: rgb(167, 159, 159);
+    height: 90%;
+}
+
+.searchFriendResult__icons {
+    cursor: pointer;
+    display: flex;
+    padding-inline: 1vw;
+    padding-block: 0.5vw;
+}
+
+.searchFriendResult__icons:hover {
+    background-color: gray;
+}
+
+.searchFriendResult__icons svg {
+    font-size: 1.5vw;
+}
+
+.divGrapping {
+    display: flex;
 }

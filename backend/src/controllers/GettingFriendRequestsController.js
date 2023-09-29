@@ -28,10 +28,15 @@ const GettingFriendRequestsController = async (client, req, res, jwtToken) => {
       const RequestId = data._id
       const RecipientId = data.RecipientId
 
-      const userInfo = await UserCollection.findOne(
+      let userInfo = await UserCollection.findOne(
         { _id: new ObjectId(RecipientId) },
         { projection: { _id: 0, nickName: 1, avatar: 1, userDescription: 1} }
       );
+
+      userInfo = {
+        ...userInfo,
+        friendRequestId: RequestId,
+      }
 
       infoResults[RequestId] = userInfo
     }

@@ -21,7 +21,7 @@ async function AddFriendshipRequest(client, RecipientId, SenderId) {
     
             console.log(result)
         }
-
+        return true
     } catch (error) {
         console.error("Error while attempting to insert friendship request:", error);
         return { success: false, error: 'Error while attempting to insert friendship request' };

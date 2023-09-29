@@ -176,7 +176,7 @@ export default function Login() {
                                 <div className={styles.formIcon}>
                                     <BsFillLockFill />
                                 </div>
-                                <input className={styles.formInput} id="password" maxLength={20} placeholder='#Ex: dsa5S!9' value={password} onChange={(e) => setPassword(e.target.value)} type={passwordVisible ? 'password' : 'text'}></input>
+                                <input className={styles.formInput} id="password" autoComplete='off' maxLength={20} placeholder='#Ex: dsa5S!9' value={password} onChange={(e) => setPassword(e.target.value)} type={passwordVisible ? 'password' : 'text'}></input>
                                 <div className={styles.showPasswordIcon} onClick={() => setPasswordVisible(!passwordVisible)}>
                                     {passwordVisible ? <AiFillEyeInvisible /> : <AiFillEye />}
                                 </div>

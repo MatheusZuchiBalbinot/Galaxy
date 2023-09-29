@@ -9,7 +9,9 @@ const ProfileChangesController = require('../controllers/ProfileChangesControlle
 const GettingTweetUserInfoController = require('../controllers/GettingTweetUserInfoController');
 const SendFriendRequestController = require('../controllers/SendFriendRequestController');
 const GettingFriendRequestsController = require("../controllers/GettingFriendRequestsController");
-const GettingFriendByNickname = require("../controllers/GettingFriendByNicknameController")
+const GettingFriendByNickname = require("../controllers/GettingFriendByNicknameController");
+const AddFriendController = require('../controllers/AddFriendController');
+const SendFriendRequestToSearchedUsers = require('../controllers/SendFriendRequestToSearchedUsersController');
 
 const GetUserInfoModel = require("../model/GetUserInfoModel");
 const GetUserIdByToken = require('../model/GetUserIdByTokenModel');
@@ -36,9 +38,33 @@ module.exports = (client, io) => {
     SendFriendRequestController(client, req, res, tweetId, jwtToken)
   })
 
+  router.post('/user/sendFriendRequestByNickName/:nickName', async(req, res) => {
+    const nickName = req.params.nickName
+    const jwtToken = req.body.headers['Authorization']
+    SendFriendRequestToSearchedUsers(client, req, res, nickName, jwtToken)
+  })
+
+  router.post('/tweet/user:tweetId', async(req, res) => {
+    const tweetId = req.params.tweetId
+    const jwtToken = req.body.headers['Authorization']
+    GettingTweetUserInfoController(client, req, res, tweetId, jwtToken);
+  })
+
+  router.post('/user/getFriendByNickname:searchFriend', async(req, res) => {
+    const jwtToken = req.body.headers['Authorization']
+    const searchFriend = req.params.searchFriend
+    GettingFriendByNickname(client, req, res, searchFriend, jwtToken);
+  })
+
   router.patch('/user/profile/edit', async(req, res) => {
     const jwtToken = req.headers['authorization']
     ProfileChangesController(client, req, res, jwtToken);
+  })
+
+  router.patch('/user/acceptOrRefuseFriendRequest', async(req, res) => {
+    const friendRequestId = req.body.friendRequestId
+    const acceptOrRefuse = req.body.AcceptOrRefuse
+    AddFriendController(client, req, res, friendRequestId, acceptOrRefuse);
   })
 
   router.get('/user/profile', async(req, res) => {
@@ -51,19 +77,9 @@ module.exports = (client, io) => {
     GettingTweetController(client, req, res, getTweetsType);
   })
 
-  router.get('/tweet/user:tweetId', async(req, res) => {
-    const tweetId = req.params.tweetId
-    GettingTweetUserInfoController(client, req, res, tweetId);
-  })
-
   router.get('/user/GetFriendRequests', async(req, res) => {
     const jwtToken = req.headers['authorization']
     GettingFriendRequestsController(client, req, res, jwtToken);
-  })
-
-  router.get('/user/getFriendByNickname:searchFriend', async(req, res) => {
-    const searchFriend = req.params.searchFriend
-    GettingFriendByNickname(client, req, res, searchFriend);
   })
 
   return router;

@@ -33,6 +33,7 @@ export const TweetInput = ({
                         <TextAreaInput 
                             value={tweetText} 
                             rows={8} 
+                            id={'tweetInput'}
                             onChange={handleChange} 
                             maxLength={280}
                             onInput={handleInput}
