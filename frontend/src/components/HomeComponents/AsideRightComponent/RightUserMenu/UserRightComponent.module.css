@@ -38,6 +38,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 1.2vw;
     width: 100%;
     color: white;
     border-bottom: 3px solid white;

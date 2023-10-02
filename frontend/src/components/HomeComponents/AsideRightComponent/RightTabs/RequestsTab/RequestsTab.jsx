@@ -1,13 +1,13 @@
 import { useContext, useState, useEffect } from 'react';
-import { userContext } from '../../../../context/userContext';
+import { userContext } from '../../../../../context/userContext';
 
 import axios from 'axios';
 import io from 'socket.io-client';
 
 import styles from './RequestsTab.module.css';
 
-import { TextInput } from '../../../ElementComponents/Input/TextInput';
-import FriendCard from '../../../ElementComponents/FriendCard/FriendCard';
+import { TextInput } from '../../../../ElementComponents/Input/TextInput';
+import FriendCard from '../../../../ElementComponents/FriendCard/FriendCard';
 
 import { FaUserFriends } from 'react-icons/fa';
 import { AiOutlineSend, AiOutlineDelete } from 'react-icons/ai';

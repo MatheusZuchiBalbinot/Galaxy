@@ -7,7 +7,14 @@
     display: block;
     margin: 0.5vw;
 }
+
+.friendRequest__user__userInfo p {
+    color: rgb(153, 151, 151);
+    font-size: 1vw;
+}
+
 .friendRequest__user__userInfo h2 {
+    font-size: 1.4vw;
     text-align: left;
     color: white;
 }

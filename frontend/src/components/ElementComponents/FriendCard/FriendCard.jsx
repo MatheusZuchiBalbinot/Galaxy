@@ -6,7 +6,7 @@ function FriendCard({ friendRequest, avatar, nickName, descriptXcaracters }) {
     <div className={styles.friendRequest__user__div}>
       {avatar && <Avatar userInfo={friendRequest} size={'small'} />}
       <div className={styles.friendRequest__user__userInfo}>
-        <h2>{nickName}</h2>
+        <h2>{nickName} </h2>
         <p>{descriptXcaracters}</p>
       </div>
     </div>

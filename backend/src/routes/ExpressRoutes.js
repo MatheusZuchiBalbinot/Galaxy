@@ -12,6 +12,7 @@ const GettingFriendRequestsController = require("../controllers/GettingFriendReq
 const GettingFriendByNickname = require("../controllers/GettingFriendByNicknameController");
 const AddFriendController = require('../controllers/AddFriendController');
 const SendFriendRequestToSearchedUsers = require('../controllers/SendFriendRequestToSearchedUsersController');
+const GettingAllUsersFriend = require('../controllers/GettingAllUsersFriendController');
 
 const GetUserInfoModel = require("../model/GetUserInfoModel");
 const GetUserIdByToken = require('../model/GetUserIdByTokenModel');
@@ -80,6 +81,11 @@ module.exports = (client, io) => {
   router.get('/user/GetFriendRequests', async(req, res) => {
     const jwtToken = req.headers['authorization']
     GettingFriendRequestsController(client, req, res, jwtToken);
+  })
+
+  router.get('/v1/friends/getAccepted/', async (req, res) => {
+    const jwtToken = req.headers['authorization']
+    GettingAllUsersFriend(client, req, res, jwtToken);
   })
 
   return router;

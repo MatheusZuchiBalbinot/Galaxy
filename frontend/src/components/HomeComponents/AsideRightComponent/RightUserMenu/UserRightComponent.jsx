@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import ShowAsideRequests from '../RightTabs/RequestsTab';
-import ShowAsideTweets from '../RightTabs/TweetsTab';
-import ShowAsideFriends from '../RightTabs/FriendsTab';
+import ShowAsideRequests from '../RightTabs/RequestsTab/RequestsTab';
+import ShowAsideTweets from '../RightTabs/TweetsTab/TweetsTab';
+import ShowAsideFriends from '../RightTabs/FriendsTab/FriendsTab';
 import styles from './UserRightComponent.module.css';
 
 export default function UserRightComponents() {
