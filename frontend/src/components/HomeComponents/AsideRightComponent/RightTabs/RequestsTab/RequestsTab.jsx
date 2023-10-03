@@ -7,7 +7,7 @@ import io from 'socket.io-client';
 import styles from './RequestsTab.module.css';
 
 import { TextInput } from '../../../../ElementComponents/Input/TextInput';
-import FriendCard from '../../../../ElementComponents/FriendCard/FriendCard';
+import {FriendCard} from '../../../../ElementComponents/FriendCard/FriendCard';
 
 import { FaUserFriends } from 'react-icons/fa';
 import { AiOutlineSend, AiOutlineDelete } from 'react-icons/ai';
@@ -22,23 +22,23 @@ export default function RequestsTab() {
 	const [friendRequest, setFriendRequest] = useState('');
 	const [searchFriend, setSearchFriend] = useState('');
 	const [searchFriendResult, setSearchFriendResult] = useState('');
-	
-	useEffect(() => {
-		const getFriendRequests = async () => {
-			const config = {
-				headers: {
-				Authorization: `Bearer ${token}`,
-				},
-			};
 
-			try {
-				const result = await axios.get(`http://localhost:3000/user/GetFriendRequests`, config);
-				setFriendRequest(result.data.infoResults);
-			} catch (error) {
-				console.log(error);
-			}
+	const getFriendRequests = async () => {
+		const config = {
+			headers: {
+			Authorization: `Bearer ${token}`,
+			},
 		};
 
+		try {
+			const result = await axios.get(`http://localhost:3000/user/GetFriendRequests`, config);
+			setFriendRequest(result.data.infoResults);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+	
+	useEffect(() => {
 		getFriendRequests();
 	}, []);
 
@@ -61,18 +61,11 @@ export default function RequestsTab() {
 
 		try {
 			const response = await axios.patch("http://localhost:3000/user/acceptOrRefuseFriendRequest", { friendRequestId, AcceptOrRefuse });
-			if(response.status === 200) {
-				// Fazer lógica para o socket io emitir um evento de atualização de compoente especificamente para este usuário.
-			}
 		} catch(error) {
 			console.log(error)
 		}
 
-		// console.log(friendRequestId)
-
-		// const socket = io('http://localhost:3000');
-
-		// socket.emit("acceptRequest", friendRequestId)
+		getFriendRequests()
 
 	}
 	

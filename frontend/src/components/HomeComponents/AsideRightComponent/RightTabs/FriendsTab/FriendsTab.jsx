@@ -1,7 +1,9 @@
 import {useContext, useState, useEffect } from 'react';
 import { userContext } from '../../../../../context/userContext';
 
-import FriendCard from '../../../../ElementComponents/FriendCard/FriendCard'
+import {AcceptedFriendCard} from '../../../../ElementComponents/FriendCard/FriendCard'
+
+import Chat from '../../../../ChatComponents/Chat';
 
 import axios from 'axios';
 
@@ -11,6 +13,8 @@ export default function FriendsTab () {
 
     const { isLogged } = useContext(userContext);
 	const { token } = isLogged;
+    
+    const [chatOpen, setChatOpen] = useState(false);
 
     const [data, setData] = useState(false)
 
@@ -34,6 +38,10 @@ export default function FriendsTab () {
         GetMyFriends()
     }, [])
 
+    const openChat = () => {
+      setChatOpen(!chatOpen);
+    };
+
     return (
         <div className={styles.mainDiv}>
             {data && (
@@ -41,9 +49,18 @@ export default function FriendsTab () {
                     console.log(item)
                     const { avatar, nickName, userDescription } = item;
                     const descriptXcaracters = userDescription.slice(0, 30) + "...";
-                    return <FriendCard friendRequest={item} avatar={avatar} nickName={nickName} descriptXcaracters={descriptXcaracters} key={item._id} />
+                    return <AcceptedFriendCard 
+                        friendRequest={item} 
+                        avatar={avatar} 
+                        nickName={nickName} 
+                        descriptXcaracters={descriptXcaracters} 
+                        key={item._id} 
+                        onClick={() => console.log(nickName)}
+                        openChat={openChat}
+                    />
                 })
             )}
+            {chatOpen && <Chat />}
         </div>
     )
 }

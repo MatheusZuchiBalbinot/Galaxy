@@ -1,6 +1,7 @@
 .FriendTab__main {
     display: grid;
     gap: 2vw;
+    width: 18vw;
     grid-template-rows: 40vh 40vh;
     grid-template-areas: 
     "searchFriend"

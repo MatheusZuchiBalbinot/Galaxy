@@ -1,4 +1,4 @@
-const MonitoringChangesController = (client, io) => {
+const MonitoringTweetsChangesController = (client, io) => {
     const dbCollection = client.db("cluster0").collection("tweets");
     const changeStream = dbCollection.watch();  
   
@@ -11,4 +11,4 @@ const MonitoringChangesController = (client, io) => {
   
 // Estou em dúvida se faz algum sentido atualizar todas as páginas quando alguém insere um tweet;
 // Mas está funcionando, posteriormente se consumir processamento demais desnecessariamente, irei remover.
-module.exports = MonitoringChangesController;
+module.exports = MonitoringTweetsChangesController;

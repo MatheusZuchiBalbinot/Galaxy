@@ -6,7 +6,7 @@ const http = require('http');
 const { MongoClient } = require('mongodb');
 const mongodbUri = require('./config');
 
-const MonitoringChangesController = require('./controllers/MonitoringChangesController')
+const MonitoringTweetsChangesController = require('./controllers/MonitoringTweetsChangesController')
 
 const routes = require('./routes/ExpressRoutes'); 
 
@@ -36,7 +36,7 @@ require('./routes/SocketIoRoutes')(io);
     const mainRoutes = routes(client, io);
     app.use('/', mainRoutes);
 
-    MonitoringChangesController(client, io);
+    MonitoringTweetsChangesController(client, io);
 
     server.listen(port, () => {
       console.log(`Server is running on port ${port}`);

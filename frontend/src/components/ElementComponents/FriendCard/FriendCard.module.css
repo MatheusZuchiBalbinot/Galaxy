@@ -18,3 +18,14 @@
     text-align: left;
     color: white;
 }
+
+.acceptOrblockDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: auto;
+}
+
+.acceptOrblockDiv svg {
+    font-size: 1.5vw;
+}
