@@ -17,7 +17,6 @@
 * Vite
 * Axios
 * Dotenv
-* Mongoose
 * Nodemon
 
 
