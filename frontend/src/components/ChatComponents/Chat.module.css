@@ -1,0 +1,45 @@
+.mainChat {
+    position: fixed;
+    bottom: 0vh;
+    width: 60vw;
+    height: 60vh;
+    right: 0vw;
+    background-color: #1a1d26;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-template-areas: 
+    "anotherChats actualChat";
+}
+
+.actualChat {
+    grid-area: actualChat;
+    display: grid;
+    margin: 1vw;
+    border: 1px solid white;
+    border-radius: 1vw;
+    grid-template-rows: 15% 70% 15%;
+    grid-template-areas: 
+    "Header"
+    "MessagesChat"
+    "InputChat";
+}
+
+.anotherChats {
+    grid-area: anotherChats;
+    margin: 1vw 0 1vw 1vw;
+    border: 1px solid white;
+    border-radius: 1vw;
+}
+
+.Header {
+    grid-area: Header;
+    margin: auto;
+}
+
+.MessagesChat {
+    grid-area: MessagesChat;
+}
+
+.InputChat {
+    grid-area: InputChat;
+}

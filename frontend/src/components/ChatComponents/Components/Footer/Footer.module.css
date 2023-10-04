@@ -1,0 +1,19 @@
+.sendMessage {
+    display: flex;
+    color: white;
+    margin: 1vw;
+    height: 70%;
+}
+
+.sendMessage__div__icon {
+    display: flex;
+    margin: auto;
+    font-size: 2vw;
+    cursor: pointer;
+}
+
+.sendMessage__div__icon svg {
+    display: flex;
+    justify-content: right;
+    margin: 0.7vw;
+}
