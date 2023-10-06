@@ -1,4 +1,4 @@
-import {useContext, useState, useEffect } from 'react';
+import {useContext, useState, useEffect, useRef } from 'react';
 import { userContext } from '../../../../../context/userContext';
 
 import {AcceptedFriendCard} from '../../../../ElementComponents/FriendCard/FriendCard'
@@ -6,11 +6,14 @@ import {AcceptedFriendCard} from '../../../../ElementComponents/FriendCard/Frien
 import Chat from '../../../../ChatComponents/Chat';
 
 import axios from 'axios';
-import io from 'socket.io-client';
+
+import { useSocket } from '../../../../../context/socketContext';
 
 import styles from './FriendsTab.module.css'
 
 export default function FriendsTab () {
+
+    const socket = useSocket();
 
     const { isLogged, setActualOpenedChat } = useContext(userContext);
 	const { token } = isLogged;
@@ -40,40 +43,21 @@ export default function FriendsTab () {
         GetMyFriends()
     }, [])
 
-    // useEffect(() => {
-    //     const socket = io('http://localhost:3000');
-    
-    //     // socket.on('solicitacaoDoCliente', (message) => {
-    //     //   console.log('Solicitação do cliente recebida:', message);
-    //     // });
-
-    //     socket.on('listaUsuariosConectados', (usuarios) => {
-    //         console.log('Usuários conectados:', usuarios);
-    //     });
-
-    //     socket.on('change123', () => {
-    //         handleTweetGet()
-    //     });
-
-
-    //     const sendUserData = () => {
-    //         socket.emit('userId', token)
-    //     };
-
-    //     sendUserData()
-    
-    //     return () => {
-    //       socket.disconnect();
-    //     };
-    //   }, []);
-
     const openChat = (friendshipId) => {
 
-        const socket = io.connect('http://localhost:3000');
-        
-        socket.emit('user-joined', socket._id)
+        const sendUserData = () => {
+            socket.emit('userId', token)
+        };
 
-        setActualOpenedChat(friendshipId)
+        sendUserData()
+
+        socket.emit('join-room', friendshipId);
+
+        socket.on('user-joined', (id) => {
+            console.log(`O usuário com ID ${id} entrou na sala.`);
+        });
+
+        setActualOpenedChat(friendshipId);
         setChatOpen(!chatOpen);
     };
 

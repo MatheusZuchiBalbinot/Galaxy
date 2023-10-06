@@ -22,6 +22,9 @@ function Tweet({ nickName, tweetId }) {
 
 	const initialFocusRef = useRef();
 
+	// Essa consulta está extremamente mal otimizada, a query tem que ser por tweetId porém, evidentemente, se o usuário
+	// em questão já tiver sido encontrado anteriormente as informações devem ser reutilizadas.
+
 	const sendFriendRequest = async (tweetId) => {
 		try {
 			const config = {
@@ -30,6 +33,8 @@ function Tweet({ nickName, tweetId }) {
                 },
             };
 			const result = await axios.post(`http://localhost:3000/user/friendrequest${tweetId}`, config)
+
+			console.log(result)
 			
 			if(result.status == 200) {
 				setSuccesFriendRequest(true)

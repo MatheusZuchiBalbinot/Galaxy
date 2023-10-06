@@ -3,7 +3,7 @@ import { userContext} from '../../context/userContext'
 import { useNavigate } from 'react-router-dom';
 
 import axios from "axios";
-import io from 'socket.io-client';
+import { useSocket } from '../../context/socketContext';
 
 import {SlRefresh} from 'react-icons/sl'
 import {AiOutlineSend} from 'react-icons/ai'
@@ -23,6 +23,8 @@ import TweetPopover from '../../components/ElementComponents/TweetPopover/TweetP
 
 export default function Home() {
 
+    const socket = useSocket();
+
     const [tweets, setTweets] = useState([]);
 
     const {isLogged, setIsLogged, actualTweetSeletor} = useContext(userContext)
@@ -38,33 +40,27 @@ export default function Home() {
 
     const [userInfo, setUserInfo] = useState();
 
-    const initialFocusRef = useRef();
-
     const navigate = useNavigate()
 
     useEffect(() => {
+
         if(passwordsMatch == false) {
             setIsLogged({passwordsMatch: false, token: ''})
             return navigate("/")
         }
+
         handleTweetGet()
         handleTweets()
         getUserInfo()
-    }, [isLogged])
-  
 
-    useEffect(() => {
-        const socket = io('http://localhost:3000');
-    
-        // socket.on('solicitacaoDoCliente', (message) => {
-        //   console.log('Solicitação do cliente recebida:', message);
-        // });
+        // SOCKET IO ROUTES
 
         socket.on('listaUsuariosConectados', (usuarios) => {
             console.log('Usuários conectados:', usuarios);
         });
 
         socket.on('change123', () => {
+            console.log("CHAMOU OUTRA VEZ")
             handleTweetGet()
         });
 
@@ -78,7 +74,7 @@ export default function Home() {
         return () => {
           socket.disconnect();
         };
-      }, []);
+    }, []);
 
     const getUserInfo = async () => {
         try {
@@ -196,9 +192,6 @@ export default function Home() {
         console.log(tweetAnswers)
     }
 
-
-    
-
     const handleTweets = () => {
 
         if(tweets) {
@@ -210,7 +203,6 @@ export default function Home() {
                     </div>
                 )
             } else {
-                // console.log(tweets)
                 return (
                     tweets.map((item, index) => {
 

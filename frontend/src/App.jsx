@@ -2,6 +2,8 @@ import { useRoutes } from "react-router-dom";
 import { useState } from "react";
 
 import {userContext} from './context/userContext.jsx'
+import { SocketProvider } from './context/socketContext.jsx';
+import io from 'socket.io-client';
 
 import Login from './pages/Login/Login.jsx'
 import Register from './pages/Register/Register.jsx'
@@ -39,7 +41,9 @@ function App() {
 
 	return (
 		<userContext.Provider value={{isLogged, setIsLogged, actualTweetSeletor, setActualTweetSeletor, actualOpenedChat, setActualOpenedChat}} className="App">
-			{routes}
+      <SocketProvider>
+			  {routes}
+      </SocketProvider>
 		</userContext.Provider>
 	)
 }
