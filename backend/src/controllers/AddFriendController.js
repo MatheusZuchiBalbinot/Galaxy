@@ -1,14 +1,36 @@
-const ObjectId = require('mongodb').ObjectId;
+const { ObjectId } = require("mongodb");
 
 const AddFriendController = async (client, req, res, friendRequestId, acceptOrRefuse) => {
     const friendCollection = client.db("cluster0").collection("friendship");
     try {
-        const changeFriendStateToAccept = await friendCollection.updateOne(
-            { _id: new ObjectId(friendRequestId) },
-            { $set: { Status: acceptOrRefuse } }
-        );
 
-        console.log(changeFriendStateToAccept)
+        let changeFriendStateToAccept;
+
+        if(acceptOrRefuse == "aceito") {
+
+            // const message = {
+            //     senderId: ObjectId("senderUserId"),
+            //     content: "Esta é a mensagem de exemplo.",
+            //     timestamp: new Date()
+            // };
+        
+            const update = {
+                $set: {
+                    Status: acceptOrRefuse,
+                    messages: [] 
+                }
+            };
+
+            changeFriendStateToAccept = await friendCollection.updateOne(
+                { _id: new ObjectId(friendRequestId) },
+                update
+            );
+        } else {
+            changeFriendStateToAccept = await friendCollection.updateOne(
+                { _id: new ObjectId(friendRequestId) },
+                { $set: { Status: acceptOrRefuse } }
+            );
+        }
           
         if (changeFriendStateToAccept.modifiedCount === 1) {
             console.log(`Status do amigo atualizado para ${acceptOrRefuse}.`);

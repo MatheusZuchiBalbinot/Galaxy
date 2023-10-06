@@ -17,7 +17,7 @@
     margin: 1vw;
     border: 1px solid white;
     border-radius: 1vw;
-    grid-template-rows: 15% 70% 15%;
+    grid-template-rows: auto 70% auto;
     grid-template-areas: 
     "Header"
     "MessagesChat"
@@ -33,7 +33,6 @@
 
 .Header {
     grid-area: Header;
-    margin: auto;
 }
 
 .MessagesChat {

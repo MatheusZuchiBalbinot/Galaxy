@@ -13,6 +13,7 @@ const GettingFriendByNickname = require("../controllers/GettingFriendByNicknameC
 const AddFriendController = require('../controllers/AddFriendController');
 const SendFriendRequestToSearchedUsers = require('../controllers/SendFriendRequestToSearchedUsersController');
 const GettingAllUsersFriend = require('../controllers/GettingAllUsersFriendController');
+const GetActualConversationInfo = require('../controllers/GetActualConversationInfoController')
 
 const GetUserInfoModel = require("../model/GetUserInfoModel");
 const GetUserIdByToken = require('../model/GetUserIdByTokenModel');
@@ -86,6 +87,12 @@ module.exports = (client, io) => {
   router.get('/v1/friends/getAccepted/', async (req, res) => {
     const jwtToken = req.headers['authorization']
     GettingAllUsersFriend(client, req, res, jwtToken);
+  })
+
+  router.get('/v1/chat/getCurrentConversationInfo/:actualChatConversationId', async (req, res) => {
+	const actualChatConversationId = req.params.actualChatConversationId
+	const jwtToken = req.headers['authorization']
+	GetActualConversationInfo(client, req, res, actualChatConversationId, jwtToken)
   })
 
   return router;

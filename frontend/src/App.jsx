@@ -12,6 +12,7 @@ function App() {
 
   const [isLogged, setIsLogged] = useState({passwordsMatch: false, token: ''})
   const [actualTweetSeletor, setActualTweetSeletor] = useState({actualSeletor: 'orderByRecent'})
+  const [actualOpenedChat, setActualOpenedChat] = useState()
 
   const routes = useRoutes([
     {
@@ -37,7 +38,7 @@ function App() {
   ])
 
 	return (
-		<userContext.Provider value={{isLogged, setIsLogged, actualTweetSeletor, setActualTweetSeletor}} className="App">
+		<userContext.Provider value={{isLogged, setIsLogged, actualTweetSeletor, setActualTweetSeletor, actualOpenedChat, setActualOpenedChat}} className="App">
 			{routes}
 		</userContext.Provider>
 	)

@@ -1,0 +1,33 @@
+.anotherPeopleInfo__div {
+    display: flex;
+    justify-content: space-between;
+    margin: auto 0;
+    padding: 1vw;
+}
+
+.chatTitle {
+    text-align: center;
+     margin: auto 0;
+    padding-inline: 1vw;
+    text-transform: capitalize;
+}
+
+.onlineOrofflineCircle {
+    width: 5px;
+    height: 5px;
+     margin: auto 0;
+    border-radius: 50%;
+    background-color: gray;
+}
+
+.onlineOrofflineText {
+    color: gray;
+    padding: 0.2vw;
+    font-weight: 300;
+    margin: auto 0;
+    font-size: 1rem;
+}
+
+.onlineOroffline {
+    display: flex;
+}

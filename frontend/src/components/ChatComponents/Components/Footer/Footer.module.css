@@ -1,8 +1,7 @@
 .sendMessage {
     display: flex;
     color: white;
-    margin: 1vw;
-    height: 70%;
+    height: 99%;
 }
 
 .sendMessage__div__icon {
@@ -15,5 +14,4 @@
 .sendMessage__div__icon svg {
     display: flex;
     justify-content: right;
-    margin: 0.7vw;
 }

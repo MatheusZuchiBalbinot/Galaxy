@@ -1,22 +1,55 @@
-import { useState } from "react";
+import { useContext, useState, useEffect } from "react";
+import { userContext } from '../../context/userContext';
+
+import axios from 'axios'
 
 import { Divider } from '@chakra-ui/react'
 
 import Footer from "./Components/Footer/Footer";
 import Header from "./Components/Header/Header";
 import Messages from "./Components/Messages/Messages";
+import AnotherChats from "./Components/AnotherChats/AnotherChats";
 
 import styles from './Chat.module.css'
 
 const Chat = () => {
+
+	const {actualOpenedChat, isLogged } = useContext(userContext);
+
+	const {token} = isLogged
+
+	const [currentConversationInfo, setCurrentConversationInfo] = useState()
+
+	useEffect(() => {
+
+		const config = {
+			headers: {
+				'Authorization': `Bearer ${token}`,
+			},
+		};
+
+		const getChatUserInfo = async () => {
+
+            try {
+                const result = await axios.get(`http://localhost:3000/v1/chat/getCurrentConversationInfo/${actualOpenedChat}`, config)
+                setCurrentConversationInfo(result.data.getAnotherPersonChatInfo);
+            } catch(error) {
+                console.log(error)
+            }
+		}
+
+		getChatUserInfo()
+	}, [actualOpenedChat])
+
 	return (
 		<div className={styles.mainChat}>
 			<div className={styles.anotherChats}>
-				<h2>Teste</h2>
+				<AnotherChats />
 			</div>
 			<div className={styles.actualChat}>
 				<div className={styles.Header}>
-					<Header />
+					<Header anotherUserInfo={currentConversationInfo}/>
+					<Divider orientation='horizontal' />
 				</div>
 				<div className={styles.MessagesChat}>
 					<Messages />
