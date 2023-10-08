@@ -9,6 +9,4 @@ const MonitoringTweetsChangesController = (client, io) => {
     });
   };
   
-// Estou em dúvida se faz algum sentido atualizar todas as páginas quando alguém insere um tweet;
-// Mas está funcionando, posteriormente se consumir processamento demais desnecessariamente, irei remover.
 module.exports = MonitoringTweetsChangesController;

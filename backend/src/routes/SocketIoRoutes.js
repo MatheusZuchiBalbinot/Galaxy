@@ -68,5 +68,4 @@ module.exports = (io) => {
 		io.emit('listaUsuariosConectados', connectedUsers);
 	  }
 	});
-  };
-  
+};
