@@ -52,7 +52,7 @@ export default function  ModalWithInput({isOpen, onClose, newUserInfo, setNewUse
                     'Authorization': `Bearer ${token}`,
                 },
             };
-            const response = await axios.patch('http://localhost:3000/user/profile/edit', newUserInfo, config);
+            const response = await axios.patch('http://localhost:3000/v1/user/profile/edit', newUserInfo, config);
             setEditErros({})
             onClose()
             await getUserInfo()

@@ -2,7 +2,6 @@ import { useContext, useState, useEffect } from 'react';
 import { userContext } from '../../../../../context/userContext';
 
 import axios from 'axios';
-import io from 'socket.io-client';
 
 import styles from './RequestsTab.module.css';
 
@@ -31,7 +30,7 @@ export default function RequestsTab() {
 		};
 
 		try {
-			const result = await axios.get(`http://localhost:3000/user/GetFriendRequests`, config);
+			const result = await axios.get(`http://localhost:3000/v1/user/GetFriendRequests`, config);
 			setFriendRequest(result.data.infoResults);
 		} catch (error) {
 			console.log(error);
@@ -49,10 +48,12 @@ export default function RequestsTab() {
                     'Authorization': `Bearer ${token}`,
                 },
             };
-			const result = await axios.post(`http://localhost:3000/user/sendFriendRequestByNickName/${nickName}`, config)
+			const result = await axios.post(`http://localhost:3000/v1/user/sendFriendRequestByNickName/${nickName}`, config)
 		} catch(error) {
 			console.log(error)
 		}
+
+		SearchUserByNickname()
 	}
 
 	const AcceptOrRefuseFriendRequest = async (friendRequestId, AcceptOrRefuse) => {
@@ -60,7 +61,7 @@ export default function RequestsTab() {
 		console.log(friendRequestId)
 
 		try {
-			const response = await axios.patch("http://localhost:3000/user/acceptOrRefuseFriendRequest", { friendRequestId, AcceptOrRefuse });
+			const response = await axios.patch("http://localhost:3000/v1/user/acceptOrRefuseFriendRequest", { friendRequestId, AcceptOrRefuse });
 		} catch(error) {
 			console.log(error)
 		}
@@ -72,7 +73,7 @@ export default function RequestsTab() {
 	const ShowFriendRequests = () => {
 		if (friendRequest && Object.keys(friendRequest).length > 0) {
 			return (
-				<div>
+				<div className={styles.friendResult__margin}>
 				{Object.keys(friendRequest).map((request, index) => {
 					const { avatar, nickName, userDescription } = friendRequest[request];
 					const descriptXcaracters = userDescription.slice(0, 30) + "...";
@@ -104,12 +105,14 @@ export default function RequestsTab() {
 			},
 		};
 		try {
-			const result = await axios.post(`http://localhost:3000/user/getFriendByNickname${searchFriend}`, config)
+			const result = await axios.post(`http://localhost:3000/v1/user/getFriendByNickname/${searchFriend}`, config)
 			console.log(result.data)
 			setSearchFriendResult(result.data)
 		} catch(error) {
 			console.log(error)
 		}
+
+		console.log("CHAMOU DENOVO")
 	}
 
 	const GenerateSearchedUsers = () => {
@@ -148,16 +151,16 @@ export default function RequestsTab() {
 		<div className={styles.FriendTab__main}>
 		<div className={styles.searchFriend}>
 			<div className={styles.createComment__div}>
-			<TextInput
-				type="text"
-				id={"SearchUser"}
-				maxLength={280}
-				onInput={(e) => setSearchFriend(e.target.value)}
-				placeholder="Procure por um usuário: "
-			/>
-			<div className={styles.createComment__div__icon} onClick={() => SearchUserByNickname(searchFriend)}>
-				<AiOutlineSend />
-			</div>
+				<TextInput
+					type="text"
+					id={"SearchUser"}
+					maxLength={280}
+					onInput={(e) => setSearchFriend(e.target.value)}
+					placeholder="Procure por um usuário: "
+				/>
+				<div className={styles.createComment__div__icon} onClick={() => SearchUserByNickname(searchFriend)}>
+					<AiOutlineSend />
+				</div>
 			</div>
 
 			{GenerateSearchedUsers()}

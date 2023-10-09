@@ -15,7 +15,7 @@ module.exports = (io) => {
 				id: userId,
 				rooms: [],
 			};
-			atualizarListaUsuariosConectados();
+			actualizeConnectedUsersList();
 		});
 
 		socket.on('disconnect', () => {
@@ -31,7 +31,7 @@ module.exports = (io) => {
 			//   delete connectedUsers[whoAmI];
 			// }
 		
-			atualizarListaUsuariosConectados();
+			actualizeConnectedUsersList();
 		});
 
 		socket.on('acceptRequest', (friendRequestId) => {
@@ -58,13 +58,19 @@ module.exports = (io) => {
 			// roomUsers tem como chave o id da sala que se refere ao id da Amizade no banco, dentro tem uma lista dos usuários conectados.
 
 			socket.join(roomName);
+
+			// const message = {
+            //     senderId: ObjectId("senderUserId"),
+            //     content: "Esta é a mensagem de exemplo.",
+            //     timestamp: new Date()
+            // };
 		  
 			console.log(`Usuário com ID ${socket.id} entrou na sala ${roomName}`);
 			
 			io.to(roomName).emit('user-joined', socket.id);
 		  });
   
-	  function atualizarListaUsuariosConectados() {
+	  function actualizeConnectedUsersList() {
 		io.emit('listaUsuariosConectados', connectedUsers);
 	  }
 	});

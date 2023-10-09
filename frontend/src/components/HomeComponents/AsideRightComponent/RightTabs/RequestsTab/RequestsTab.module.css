@@ -1,7 +1,7 @@
 .FriendTab__main {
     display: grid;
     gap: 2vw;
-    width: 18vw;
+    width: 100%;
     grid-template-rows: 40vh 40vh;
     grid-template-areas: 
     "searchFriend"
@@ -19,6 +19,7 @@
 .friendRequests {
     grid-area: friendRequests;
     min-width: 100%;
+    padding-bottom: 1vw;
     background-color: #4243456e;
     border-radius: 1vw;
 }
@@ -78,7 +79,9 @@
 }
 
 .searchFriend__result {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
 }
 
 .searchFriend__result h2, .friendRequest__result h2 {
@@ -92,7 +95,7 @@
 }
 
 .friendRequest__user__Icons div {
-    padding: 1vw;
+    padding: 0.5rem;
 }
 
 .friendRequest__user__Icons div svg {
@@ -132,4 +135,9 @@
 
 .divGrapping {
     display: flex;
+}
+
+.friendResult__margin {
+    margin: 0 auto;
+    padding-top: 0.5rem;
 }

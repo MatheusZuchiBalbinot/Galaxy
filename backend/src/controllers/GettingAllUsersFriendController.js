@@ -8,32 +8,30 @@ const GettingAllUsersFriend = async (client, req, res, jwtToken) => {
     try {
         const userId = await GetUserIdByToken(jwtToken)
 
-		const result = await friendshipCollection.find(
-			{
-				Status: "aceito",
-				$or: [
-					{ RecipientId: userId },
-					{ SenderId: userId }
-				]
-			},
-		).toArray();
+		const result = await userCollection.find(
+            {_id: new ObjectId(userId)},
+            {projection: {actualFriends: 1, _id: 0}}
+		).toArray()
 
-		const friendshipArray = result.map(({ RecipientId, SenderId, _id }) => ({ RecipientId, SenderId, friendshipId: _id }));
+        const actualFriendsArray = result.length > 0 ? result[0].actualFriends : [];
 
-        if (result.length > 0) {
+        if (result.length > 0 && JSON.stringify(result) !== '[{}]') {
 
             const usersData = {}
             
-			await Promise.all(friendshipArray.map(async (item) => {
+			await Promise.all(actualFriendsArray.map(async (item) => {
 
-                const userIdToQuery = item.SenderId === userId ? item.RecipientId : item.SenderId;
+                const friendData = await friendshipCollection.findOne({_id: new ObjectId(item)})
+
+                const userIdToQuery = friendData.SenderId === userId ? friendData.RecipientId : friendData.SenderId;
 
                 const response = await userCollection.findOne(
                     { _id: new ObjectId(userIdToQuery) },
                     { projection: { avatar: 1, nickName: 1, userDescription: 1, _id: 0}}    
                 );
-                usersData[item.friendshipId] = {
-                    friendshipId: item.friendshipId,
+
+                usersData[item] = {
+                    friendshipId: item,
                     ...response
                 };
             }));

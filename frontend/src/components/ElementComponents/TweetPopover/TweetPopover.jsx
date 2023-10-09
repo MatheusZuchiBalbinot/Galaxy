@@ -32,7 +32,7 @@ function Tweet({ nickName, tweetId }) {
                     'Authorization': `Bearer ${token}`,
                 },
             };
-			const result = await axios.post(`http://localhost:3000/user/friendrequest${tweetId}`, config)
+			const result = await axios.post(`http://localhost:3000/v1/user/friendrequest/${tweetId}`, config)
 
 			console.log(result)
 			
@@ -56,7 +56,7 @@ function Tweet({ nickName, tweetId }) {
 				},
 			};
 	
-			const getTweetUser = await axios.post(`http://localhost:3000/tweet/user${tweetId}`, config);
+			const getTweetUser = await axios.post(`http://localhost:3000/v1/tweet/user/${tweetId}`, config);
 	
 			console.log(getTweetUser)
 	

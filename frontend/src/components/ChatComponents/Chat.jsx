@@ -1,5 +1,7 @@
 import { useContext, useState, useEffect } from "react";
+
 import { userContext } from '../../context/userContext';
+import { useSocket } from "../../context/socketContext";
 
 import axios from 'axios'
 
@@ -14,11 +16,13 @@ import styles from './Chat.module.css'
 
 const Chat = () => {
 
+	const socket = useSocket();
+
 	const {actualOpenedChat, isLogged } = useContext(userContext);
 
-	const {token} = isLogged
+	console.log(actualOpenedChat)
 
-	const [currentConversationInfo, setCurrentConversationInfo] = useState()
+	const {token} = isLogged
 
 	useEffect(() => {
 

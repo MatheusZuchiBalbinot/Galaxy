@@ -123,7 +123,7 @@ export default function Login() {
 
         const creatingUser = async () => {
             try {
-                result = await axios.post("http://localhost:3000/user/register", data);
+                result = await axios.post("http://localhost:3000/v1/user/register", data);
             } 
             catch (err) {
                 handleErrorsResponse(err, "register");
@@ -144,7 +144,7 @@ export default function Login() {
                 userEmail: email,
                 userPassword: password,
             }
-            const result = await axios.post("http://localhost:3000/user/login", data);
+            const result = await axios.post("http://localhost:3000/v1/user/login", data);
             setIsLogged(result.data)
             return navigate('/home')
             

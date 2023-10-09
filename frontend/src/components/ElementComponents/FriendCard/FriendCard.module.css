@@ -1,6 +1,6 @@
 .friendRequest__user__div {
     display: flex;
-    margin: 1vw;
+    margin-inline: 0.5vw;
 }
 
 .friendRequest__user__userInfo {
@@ -10,11 +10,11 @@
 
 .friendRequest__user__userInfo p {
     color: rgb(153, 151, 151);
-    font-size: 1vw;
+    font-size: 0.7rem;
 }
 
 .friendRequest__user__userInfo h2 {
-    font-size: 1.4vw;
+    font-size: 0.9rem;
     text-align: left;
     color: white;
 }

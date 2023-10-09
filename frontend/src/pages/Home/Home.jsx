@@ -83,7 +83,7 @@ export default function Home() {
                     'Authorization': `Bearer ${token}`,
                 },
             };
-            const response = await axios.get('http://localhost:3000/user/profile', config);
+            const response = await axios.get('http://localhost:3000/v1/user/profile', config);
             setUserInfo(response.data.user);
         } catch (error) {
             console.error('Error:', error);
@@ -132,7 +132,7 @@ export default function Home() {
         try {
             if(tweetText.length > 0) {
                 try {
-                    const result = await axios.post("http://localhost:3000/user/InsertTweet", tweetData, config);
+                    const result = await axios.post("http://localhost:3000/v1/user/InsertTweet", tweetData, config);
                     if(result.status == 200) {
                         setUploadedFile({})
                         setTweetText('')
@@ -156,7 +156,7 @@ export default function Home() {
 
         try {
             const actualSelector = actualTweetSeletor.actualSeletor
-            const response = await axios.get(`http://localhost:3000/user/GetTweet/${actualSelector}`);
+            const response = await axios.get(`http://localhost:3000/v1/user/GetTweet/${actualSelector}`);
             setTweets(response.data.result);
         } catch (error) {
             console.error("Error fetching tweets:", error);
