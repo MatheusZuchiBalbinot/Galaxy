@@ -1,13 +1,11 @@
 module.exports = (io) => {
 	const connectedUsers = {};
-	const roomUsers = {}
+	const roomUsers = {};
+	const friendshipMessages = {}
   
 	io.on('connection', (socket) => {
 
-		console.log("Hou uma nova conecção de: ", socket.id)
-
-		// Por algum motivo quando eu abro o website no mínimo 8 conexões com o Socket são criadas na mesma sessão.
-		// Porém só uma é utilizada
+		console.log("Hou uma nova conecção de: ", socket.id);
 
 		socket.on('userId', (userId) => {
 
@@ -58,20 +56,37 @@ module.exports = (io) => {
 			// roomUsers tem como chave o id da sala que se refere ao id da Amizade no banco, dentro tem uma lista dos usuários conectados.
 
 			socket.join(roomName);
-
-			// const message = {
-            //     senderId: ObjectId("senderUserId"),
-            //     content: "Esta é a mensagem de exemplo.",
-            //     timestamp: new Date()
-            // };
 		  
 			console.log(`Usuário com ID ${socket.id} entrou na sala ${roomName}`);
 			
 			io.to(roomName).emit('user-joined', socket.id);
-		  });
+		});
+
+		socket.on('send-message', (data) => {
+			const {room, message, date} = data;
+
+			if (!friendshipMessages[room]) {
+				friendshipMessages[room] = [];
+			}
+
+			const userMessage = { sender: socket.id, message, date }
+
+			friendshipMessages[room].push(userMessage);
+
+			// console.log(userMessage)
+
+			// O input está funcionando com texto, porém, também quero que o usuário possa adicionar imagens e vídeos
+			// portanto irei utilizar o input de Tweet no lugar desse input, e tecer algumas modificações para poder
+			// utilizar. Também devo pensar em uma maneira mais eficiente de guardar as imagens no banco de dados,
+			// devo pensar em utilizar o pako ou o sharp.
+
+			console.log(friendshipMessages)
+		
+			io.to(room).emit('receive-message', userMessage)
+		})
   
-	  function actualizeConnectedUsersList() {
-		io.emit('listaUsuariosConectados', connectedUsers);
-	  }
+	function actualizeConnectedUsersList() {
+			io.emit('listaUsuariosConectados', connectedUsers);
+	}
 	});
 };
