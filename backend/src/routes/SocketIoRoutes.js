@@ -5,7 +5,11 @@ module.exports = (io) => {
   
 	io.on('connection', (socket) => {
 
-		console.log("Hou uma nova conecção de: ", socket.id);
+		console.log("Houve uma nova conexão de: ", socket.id);
+
+		function actualizeConnectedUsersList() {
+			io.emit('listaUsuariosConectados', connectedUsers);
+		}
 
 		socket.on('userId', (userId) => {
 
@@ -20,14 +24,6 @@ module.exports = (io) => {
 			console.log(`Usuário desconectado: ${socket.id}`);
 		
 			delete connectedUsers[socket.id];
-
-			// const whoAmI = socket.id;
-			// if (connectedUsers[whoAmI]) {
-			//   connectedUsers[whoAmI].rooms.forEach((roomName) => {
-			// 	io.to(roomName).emit('user-left', socket.id);
-			//   });
-			//   delete connectedUsers[whoAmI];
-			// }
 		
 			actualizeConnectedUsersList();
 		});
@@ -40,26 +36,21 @@ module.exports = (io) => {
 
 		socket.on('join-room', (roomName) => {
 
-			const whoAmI = socket.id;
-			connectedUsers[whoAmI].rooms.push(roomName)
+			// const whoAmI = socket.id;
+			// connectedUsers[whoAmI].rooms.push(roomName)
 
-			if (!roomUsers[roomName]) {
-				roomUsers[roomName] = [];
-			}
+			// if (!roomUsers[roomName]) {
+			// 	roomUsers[roomName] = [];
+			// }
 
-			if(!roomUsers[roomName].includes(socket.id)) {
-				roomUsers[roomName].push(socket.id)
-			}
+			// if(!roomUsers[roomName].includes(socket.id)) {
+			// 	roomUsers[roomName].push(socket.id)
+			// }
 
-			// Já estão ambos conectados na mesma sala perfeitamente bem.
-			// connectedUsers guarda o id do socket do usuário, o token do usuário e em que salas ele está conectado;
-			// roomUsers tem como chave o id da sala que se refere ao id da Amizade no banco, dentro tem uma lista dos usuários conectados.
-
-			socket.join(roomName);
-		  
-			console.log(`Usuário com ID ${socket.id} entrou na sala ${roomName}`);
+			socket.join(roomName);	
 			
 			io.to(roomName).emit('user-joined', socket.id);
+
 		});
 
 		socket.on('send-message', (data) => {
@@ -69,24 +60,20 @@ module.exports = (io) => {
 				friendshipMessages[room] = [];
 			}
 
-			const userMessage = { sender: socket.id, message, date }
+			const senderMessage = { sender: socket.id, message, date }
 
-			friendshipMessages[room].push(userMessage);
+			friendshipMessages[room].push(senderMessage);
 
-			// console.log(userMessage)
+			const roomsForSocket = io.sockets.adapter.rooms[socket.id];
 
-			// O input está funcionando com texto, porém, também quero que o usuário possa adicionar imagens e vídeos
-			// portanto irei utilizar o input de Tweet no lugar desse input, e tecer algumas modificações para poder
-			// utilizar. Também devo pensar em uma maneira mais eficiente de guardar as imagens no banco de dados,
-			// devo pensar em utilizar o pako ou o sharp.
+			if (!roomsForSocket || !roomsForSocket.includes(room)) {
+				socket.join(room);
+			}
 
-			console.log(friendshipMessages)
-		
-			io.to(room).emit('receive-message', userMessage)
+			io.to(room).emit('receive-message', senderMessage)
+
+			console.log(`Mensagem enviada para a sala: ${room}`);
 		})
-  
-	function actualizeConnectedUsersList() {
-			io.emit('listaUsuariosConectados', connectedUsers);
-	}
+
 	});
 };

@@ -21,9 +21,8 @@ const Chat = () => {
 	const {actualOpenedChat, isLogged } = useContext(userContext);
 
 	const [currentConversationInfo, setCurrentConversationInfo] = useState()
-	const [message, setMessage] = useState('')
 
-	console.log(actualOpenedChat)
+	// console.log(actualOpenedChat)
 
 	const {token} = isLogged
 
@@ -49,9 +48,6 @@ const Chat = () => {
 	}, [actualOpenedChat])
 
 	const sendMessage = (messageContent) => {
-
-		console.log("HOUVE CLICK")
-
 		const roomName = `friendship_${actualOpenedChat}`;
 		const actualDate = new Date()
 		socket.emit('send-message', { room: roomName, message: messageContent, date: actualDate});
@@ -68,7 +64,7 @@ const Chat = () => {
 					<Divider orientation='horizontal' />
 				</div>
 				<div className={styles.MessagesChat}>
-					<Messages />
+					<Messages room={`friendship_${actualOpenedChat}`}/>
 				</div>
 				<div className={styles.InputChat}>
 					<Divider orientation='horizontal' />

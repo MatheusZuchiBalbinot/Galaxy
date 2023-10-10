@@ -54,7 +54,7 @@ export default function FriendsTab () {
         socket.emit('join-room', friendshipId);
 
         socket.on('user-joined', (id) => {
-            console.log(`O usuário com ID ${id} entrou na sala.`);
+            console.log(`O usuário com ID ${id} entrou na sala CARALHO.`);
         });
 
         setActualOpenedChat(friendshipId);
@@ -63,7 +63,8 @@ export default function FriendsTab () {
 
     return (
         <div className={styles.mainDiv}>
-            {data && (
+            {data 
+            ? (
                 Object.values(data).map((item) => {
                     const { avatar, nickName, userDescription, friendshipId } = item;
                     const descriptXcaracters = userDescription.slice(0, 30) + "...";
@@ -77,7 +78,10 @@ export default function FriendsTab () {
                         openChat={() => openChat(friendshipId)}
                     />
                 })
-            )}
+            )
+        : (
+            <h2 className={styles.userWithoutFriends}> Você ainda não possui amigos ;)</h2>
+        )}
             {chatOpen && <Chat />}
         </div>
     )

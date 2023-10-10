@@ -10,3 +10,10 @@
 .asideSelectedItem {
     display: block;
 }
+
+.userWithoutFriends {
+    margin: auto;
+    text-align: center;
+    color: rgb(167, 159, 159);
+    font-size: 0.9rem;
+}
