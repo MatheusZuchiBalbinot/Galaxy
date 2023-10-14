@@ -9,15 +9,32 @@ module.exports = (io) => {
 
 		function actualizeConnectedUsersList() {
 			io.emit('listaUsuariosConectados', connectedUsers);
+
+			console.log(connectedUsers)
+		}
+		
+		const clearDisconnectedUserInfo = (id) => {
+			Object.keys(roomUsers).map((room) => {
+				if(roomUsers[room].includes(id)) {
+					roomUsers[room].splice(id, 1);
+				}
+			})
+
+			// Object.keys(connectedUsers).map((users) => {
+			// 	if(users == id) {
+			// 		connectedUsers.splice(users, 1)
+			// 	}
+			// })
 		}
 
 		socket.on('userId', (userId) => {
 
 			connectedUsers[socket.id] = {
 				id: userId,
-				rooms: [],
 			};
 			actualizeConnectedUsersList();
+
+			clearDisconnectedUserInfo(socket.id)
 		});
 
 		socket.on('disconnect', () => {
@@ -26,49 +43,54 @@ module.exports = (io) => {
 			delete connectedUsers[socket.id];
 		
 			actualizeConnectedUsersList();
-		});
 
-		socket.on('acceptRequest', (friendRequestId) => {
-			console.log(friendRequestId);
+			Object.keys(roomUsers).map((room) => {
+				if(roomUsers[room].includes(socket.id)) {
+					console.log(room)
+					const roomName = `friendship_${room}`
+					console.log("INCLUI MERMÃO. -> ", roomUsers[room], socket.id)
+					console.log(friendshipMessages[roomName])
+				}
+			})	
 		});
 
 		// LIDANDO COM ROOMS
 
 		socket.on('join-room', (roomName) => {
 
-			// const whoAmI = socket.id;
-			// connectedUsers[whoAmI].rooms.push(roomName)
-
-			// if (!roomUsers[roomName]) {
-			// 	roomUsers[roomName] = [];
-			// }
-
-			// if(!roomUsers[roomName].includes(socket.id)) {
-			// 	roomUsers[roomName].push(socket.id)
-			// }
-
 			socket.join(roomName);	
+
+			if (!roomUsers[roomName]) {
+				roomUsers[roomName] = [];
+			}
+
+			if(!roomUsers[roomName].includes(socket.id)) {
+				roomUsers[roomName].push(socket.id)
+			}
 			
 			io.to(roomName).emit('user-joined', socket.id);
+
+			const room = `friendship_${roomName}`
+
+			if(friendshipMessages[room]) {
+
+				io.to(socket.id).emit('alreadyHave-messages', friendshipMessages)
+			}
 
 		});
 
 		socket.on('send-message', (data) => {
-			const {room, message, date} = data;
+			const {room, message, date, sender} = data;
 
 			if (!friendshipMessages[room]) {
 				friendshipMessages[room] = [];
 			}
 
-			const senderMessage = { sender: socket.id, message, date }
+			const senderMessage = { sender, message, date }
 
 			friendshipMessages[room].push(senderMessage);
 
-			const roomsForSocket = io.sockets.adapter.rooms[socket.id];
-
-			if (!roomsForSocket || !roomsForSocket.includes(room)) {
-				socket.join(room);
-			}
+			socket.join(room);
 
 			io.to(room).emit('receive-message', senderMessage)
 

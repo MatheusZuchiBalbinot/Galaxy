@@ -1,14 +1,6 @@
 .sendMessage {
     display: flex;
     color: white;
-    height: 99%;
-}
-
-.sendMessage__div__icon {
-    display: flex;
-    margin: auto;
-    font-size: 2vw;
-    cursor: pointer;
 }
 
 .sendMessage__div__icon svg {

@@ -15,8 +15,8 @@ import styles from './Home.module.css'
 import UserRightComponents from '../../components/HomeComponents/AsideRightComponent/RightUserMenu/UserRightComponent'
 import Menu from '../../components/HomeComponents/AsideLeftComponent/Menu.jsx'
 
-import { TextInput } from '../../components/ElementComponents/Input/TextInput'
-import { TweetInput } from '../../components/ElementComponents/Input/TweetInput';
+import { TextInput } from '../../components/ElementComponents/Input/TextInput/TextInput'
+import { TweetInput } from '../../components/ElementComponents/Input/TweetInput/TweetInput';
 
 import ShowTimeDiff from '../../components/ElementComponents/ShowTimeDiff/ShowTimeDiff';
 import TweetPopover from '../../components/ElementComponents/TweetPopover/TweetPopover'
@@ -290,19 +290,19 @@ export default function Home() {
 
             <div className={styles.main}>
                 <div className={styles.postDiv}>
-                <TweetInput
-                    setUploadedFile={setUploadedFile}
-                    uploadedFile={uploadedFile}
-                    id={"makeTweet"}
-                    userInfo={userInfo}
-                    tweetText={tweetText}
-                    handleChange={handleChange}
-                    handleInput={handleInput}
-                    setShowEmojiScreen={setShowEmojiScreen}
-                    showEmojiScreen={showEmojiScreen}
-                    handleEmoji={handleEmoji}
-                    handleTweetSubmit={handleTweetSubmit}
-                />
+                    <TweetInput
+                        setUploadedFile={setUploadedFile}
+                        uploadedFile={uploadedFile}
+                        id={"makeTweet"}
+                        userInfo={userInfo}
+                        tweetText={tweetText}
+                        handleChange={handleChange}
+                        handleInput={handleInput}
+                        setShowEmojiScreen={setShowEmojiScreen}
+                        showEmojiScreen={showEmojiScreen}
+                        handleEmoji={handleEmoji}
+                        handleTweetSubmit={handleTweetSubmit}
+                    />
                 </div>
 
                 <div className={styles.tweetsDiv}>

@@ -1,43 +1,37 @@
-import Avatar from "../Avatar/Avatar"
-import FileUploadButton from "../FileUploadButton/FileUploadButton";
-import { TextAreaInput } from "./TextInput"
+import FileUploadButton from "../../FileUploadButton/FileUploadButton";
+import { TextAreaInput } from "../TextInput/TextInput"
+
 import EmojiPicker from 'emoji-picker-react';
 
 import {BsEmojiSmile} from 'react-icons/bs'
 
-import styles from './TweetInput.module.css'
+import styles from './ChatInput.module.css'
 
-export const TweetInput = ({
-        setUploadedFile,
-        uploadedFile,
-        userInfo, 
-        tweetText, 
-        handleChange, 
-        handleInput, 
-        setShowEmojiScreen, 
-        showEmojiScreen, 
-        handleEmoji,
-        handleTweetSubmit,
+export const ChatInput = ({
+    setUploadedFile,
+    uploadedFile, 
+    chatText, 
+    handleChange, 
+    handleInput, 
+    setShowEmojiScreen, 
+    showEmojiScreen, 
+    handleEmoji,
+    handleTweetSubmit,
 }) => {
     return (
         <>
-            <div className={styles.inputAvatar}>
-                {userInfo && (
-                    <Avatar userInfo={userInfo} size={'small'}/>
-                )}
-            </div>
             <div className={styles.mainInputDiv}>
                 <div className={styles.inpuItemsDiv}>
                     <div className={styles.inputBar}>
                         <div className={styles.inputBar__textarea}>
-                        <TextAreaInput 
-                            value={tweetText} 
-                            rows={8} 
-                            id={'tweetInput'}
-                            onChange={handleChange} 
-                            maxLength={280}
-                            onInput={handleInput}
-                        />
+                            <TextAreaInput 
+                                value={chatText} 
+                                rows={8} 
+                                id={'tweetInput'}
+                                onChange={handleChange} 
+                                maxLength={280}
+                                onInput={handleInput}
+                            />
                         </div>
                         <div className={styles.inputBar__videoAndImage}>
                             {uploadedFile.image && (
@@ -61,11 +55,10 @@ export const TweetInput = ({
                             <div className={styles.imageVideoEmojiIcons__div}>
                                 <BsEmojiSmile onClick={() => setShowEmojiScreen(true)}/>
                                 {showEmojiScreen && (
-                                    <div style={{position: 'absolute', margin: '3vw'}}>
+                                    <div className={styles.emojiPickerStyle__forChat}>
                                         <EmojiPicker 
                                             skinTonesDisabled={true} 
-                                            autoFocusSearch={true} 
-                                            className={styles.emojiPickerStyle}
+                                            autoFocusSearch={true}
                                             onEmojiClick={(emoji) => handleEmoji(emoji)}
                                         />
                                     </div>
@@ -78,7 +71,7 @@ export const TweetInput = ({
                             </div>
                         </div>
                         <div className={styles.tweetButton}>
-                            <button type='text' onClick={() => handleTweetSubmit()}>Tweetar</button>
+                            <button type='text' onClick={() => handleTweetSubmit()}>Enviar</button>
                         </div>
                     </div>
                 </div>

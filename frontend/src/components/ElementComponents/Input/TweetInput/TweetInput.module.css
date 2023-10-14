@@ -62,14 +62,14 @@
 }
 
 .imageVideoEmojiIcons__div svg {
-    margin: 1vw;
+    margin-inline: 1vw;
     cursor: pointer;
     font-size: 2vw;
 }
 
 .emojiPickerStyle {
     position: absolute;
-    margin: 3vw;
+    top: 3vw;
 }
 
 .tweetButton {
@@ -80,6 +80,6 @@
 }
 
 .tweetButton button {
-    padding: 1vw;
+    padding-inline: 1vw;
     font-size: 1rem;
 }

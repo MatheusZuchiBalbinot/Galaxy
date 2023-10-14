@@ -1,0 +1,23 @@
+.itsMyMessage__div {
+    display: flex;
+    padding: 0.5vw;
+    align-self: flex-end;
+    background-color: #5d5db8;
+}
+
+.isNotMyMessage__div {
+    display: flex;
+    padding: 0.5vw;
+    align-self: flex-start;
+    background-color: #3c405f;
+}
+
+.itsMyMessage__div__p {
+    display: flex;
+    justify-content: right;
+}
+
+.isNotMyMessage__div {
+    display: flex;
+    justify-content: left;
+}

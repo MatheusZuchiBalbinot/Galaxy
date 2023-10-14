@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import styles from './RequestsTab.module.css';
 
-import { TextInput } from '../../../../ElementComponents/Input/TextInput';
+import { TextInput } from '../../../../ElementComponents/Input/TextInput/TextInput';
 import {FriendCard} from '../../../../ElementComponents/FriendCard/FriendCard';
 
 import { FaUserFriends } from 'react-icons/fa';

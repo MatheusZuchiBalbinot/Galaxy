@@ -1,32 +1,42 @@
 import { useState } from 'react';
-import { TextInput } from '../../../ElementComponents/Input/TextInput';
-import { AiOutlineSend } from 'react-icons/ai';
+
+import { ChatInput } from '../../../ElementComponents/Input/ChatInput/ChatInput';
+
 import styles from './Footer.module.css';
 
 const Footer = ({ sendMessage }) => {
-  const [messageText, setMessageText] = useState('');
 
-  const handleSendMessage = () => {
-    if (messageText.trim() !== '') { 
-      sendMessage(messageText);
-      setMessageText('');
+	const [chatText, setChatText] = useState('')
+	const [showEmojiScreen, setShowEmojiScreen] = useState(false)
+    const [uploadedFile, setUploadedFile] = useState({});
+
+	const handleChange = (e) => {
+        setChatText(e.target.value);
+    };
+
+	const handleEmoji = (emoji) => {
+        setShowEmojiScreen(false)
+        setChatText((prevState) => prevState + String.fromCodePoint(`0x${emoji.unified}`));
     }
-  };
 
-  return (
-    <div className={styles.sendMessage}>
-      <TextInput
-        type={"text"}
-        maxLength={280}
-        placeholder={"Você viu o que está acontecendo na última semana?"}
-        value={messageText}
-        onChange={(e) => setMessageText(e.target.value)}
-      />
-      <div className={styles.sendMessage__div__icon} onClick={handleSendMessage}>
-        <AiOutlineSend />
-      </div>
-    </div>
-  );
+	const handleChatInputSubmit = () => {
+
+	}
+
+  	return (
+    	<div className={styles.sendMessage}>
+			<ChatInput
+				setUploadedFile={setUploadedFile}
+				uploadedFile={uploadedFile}
+				chatText={chatText}
+				handleChange={handleChange}
+				setShowEmojiScreen={setShowEmojiScreen}
+				showEmojiScreen={showEmojiScreen}
+				handleEmoji={handleEmoji}
+				handleTweetSubmit={handleChatInputSubmit}
+			/>
+    	</div>
+  	);
 };
 
 export default Footer;

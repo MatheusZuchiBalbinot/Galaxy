@@ -2,7 +2,8 @@
     position: fixed;
     bottom: 0vh;
     width: 60vw;
-    height: 60vh;
+    min-height: 60vh;
+    max-height: 65vh;
     right: 0vw;
     background-color: #1a1d26;
     display: grid;
@@ -16,8 +17,9 @@
     display: grid;
     margin: 1vw;
     border: 1px solid white;
+    max-height: 60vh;
     border-radius: 1vw;
-    grid-template-rows: auto 70% auto;
+    grid-template-rows: 10vh 30vh;
     grid-template-areas: 
     "Header"
     "MessagesChat"
@@ -37,6 +39,11 @@
 
 .MessagesChat {
     grid-area: MessagesChat;
+    overflow-y: auto;
+    display: flex;
+    margin: 1vw;
+    flex-direction: column;
+    row-gap: 0.5rem;
 }
 
 .InputChat {

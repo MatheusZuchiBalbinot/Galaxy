@@ -1,26 +1,64 @@
-import { useEffect } from "react";
+import { useEffect, useContext, useState } from "react";
+
+import { userContext } from '../../../../context/userContext';
 import { useSocket } from "../../../../context/socketContext";
 
-const Messages = ({ room }) => {
+import styles from './Messages.module.css'
 
-	const socket = useSocket()
+const Messages = ({ room }) => {
+	const socket = useSocket();
+	const [messages, setMessages] = useState({});
+
+	const {actualOpenedChat, isLogged } = useContext(userContext);
+	const {token} = isLogged
 
 	useEffect(() => {
 
-		console.log("INFINITO???????")
+		socket.on('alreadyHave-messages', (allLocalMessages) => {
+			console.log(allLocalMessages)
+			setMessages(allLocalMessages);
+		})
 
 		socket.on('receive-message', (senderMessage) => {
 
-			const {sender, message, date} = senderMessage
-
-			console.log(`Recebido uma mensagem na sala ${room}: ${message}, ${sender}`);
+			console.log(senderMessage)
+			
+			setMessages((prevMessages) => {
+				const updatedMessages = { ...prevMessages };
+				if (updatedMessages[room]) {
+					updatedMessages[room].push(senderMessage);
+				} else {
+					updatedMessages[room] = [senderMessage];
+				}
+				return updatedMessages;
+			});
 		});
-		  
-	}, [socket]);
+  	}, [socket, room]);
 
-	return (
-		<h2>Messages</h2>
-	);
+  	const generateChat = () => {
+    	if (Object.keys(messages).length !== 0) {
+      		return messages[room].map((oneMessage, index) => {
+        		const { message, date, sender } = oneMessage;
+				if(sender == token) {
+					return (
+						<div key={index} className={styles.itsMyMessage__div}>
+							<p className={styles.itsMyMessage__div__p} >{message}</p>
+						</div>
+					);
+				} else {
+					return (
+						<div key={index} className={styles.isNotMyMessage__div}>
+							<p className={styles.isNotMyMessage__div__p} >{message}</p>
+						</div>
+					);
+				}
+      		});
+		} else {
+			return <h2> Parece que não há um histórico de mensagens...</h2>;
+		}
+  	};
+
+  	return generateChat();
 };
 
 export default Messages;

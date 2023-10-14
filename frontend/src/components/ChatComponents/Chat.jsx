@@ -50,7 +50,7 @@ const Chat = () => {
 	const sendMessage = (messageContent) => {
 		const roomName = `friendship_${actualOpenedChat}`;
 		const actualDate = new Date()
-		socket.emit('send-message', { room: roomName, message: messageContent, date: actualDate});
+		socket.emit('send-message', { room: roomName, message: messageContent, date: actualDate, sender: token});
 	};
 
 	return (
