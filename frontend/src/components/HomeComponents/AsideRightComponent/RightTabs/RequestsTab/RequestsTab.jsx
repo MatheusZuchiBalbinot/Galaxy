@@ -106,17 +106,23 @@ export default function RequestsTab() {
 		};
 		try {
 			const result = await axios.post(`http://localhost:3000/v1/user/getFriendByNickname/${searchFriend}`, config)
-			console.log(result.data)
 			setSearchFriendResult(result.data)
 		} catch(error) {
 			console.log(error)
+			setSearchFriendResult("none")
 		}
-
-		console.log("CHAMOU DENOVO")
 	}
 
 	const GenerateSearchedUsers = () => {
-		if (searchFriendResult && searchFriendResult.users.length > 0) {
+
+		if(searchFriendResult == "none") {
+			return (
+				<div className={styles.withoutRequest}>
+					<h2> Nenhum usuário encontrado... </h2>
+				</div>
+			);
+		}
+		else if (searchFriendResult && searchFriendResult.users.length > 0) {
 			return (
 				<div className={styles.searchFriend__result}>
 					{searchFriendResult.users.map((friend, index) => {

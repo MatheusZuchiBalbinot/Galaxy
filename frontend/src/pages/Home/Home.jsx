@@ -133,6 +133,7 @@ export default function Home() {
             if(tweetText.length > 0) {
                 try {
                     const result = await axios.post("http://localhost:3000/v1/user/InsertTweet", tweetData, config);
+
                     if(result.status == 200) {
                         setUploadedFile({})
                         setTweetText('')

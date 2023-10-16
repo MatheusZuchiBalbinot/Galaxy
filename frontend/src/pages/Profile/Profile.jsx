@@ -52,7 +52,7 @@ export default function Profile() {
                     'Authorization': `Bearer ${token}`,
                 },
             };
-            const response = await axios.get('http://localhost:3000/user/profile', config);
+            const response = await axios.get('http://localhost:3000/v1/user/profile', config);
             setUserInfo(response.data.user);
         } catch (error) {
             console.error('Error:', error);

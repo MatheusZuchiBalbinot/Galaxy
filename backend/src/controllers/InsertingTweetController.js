@@ -29,6 +29,7 @@ const UserTweetController = async (client, req, res, userId) => {
 
         try {
             const addingTweet = await InsertTweetModel(client, tweetDocument);
+            res.status(200).json({message: "Tweet inserted with Sucess."})
         } catch(error) {
             console.error('Error when insert data:', error);
             res.status(500).json({ success: false, error: 'Internal Server Error' });

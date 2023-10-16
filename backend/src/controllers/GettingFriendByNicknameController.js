@@ -5,7 +5,6 @@ const ObjectId = require('mongodb').ObjectId;
 const GettingFriendByNickname = async (client, req, res, searchFriend, jwtToken) => {
     try {
         const usersCollection = client.db("cluster0").collection("users");
-        const friendshipCollection = client.db("cluster0").collection("friendship");
 
         const userId = GetUserIdByToken(jwtToken)
 
@@ -23,8 +22,10 @@ const GettingFriendByNickname = async (client, req, res, searchFriend, jwtToken)
             .project(projection)
             .toArray();
 
-        if (result.length === 0) {
-            res.status(200).json({ message: `Nenhum usuário com o ${searchFriend} encontrado` });
+        console.log(result)
+
+        if (result.length == 0 || Object.keys(result).length === 0) {
+            res.status(404).json({ message: `Nenhum usuário com o ${searchFriend} encontrado` });
         } else {
             res.status(200).json({ users: result });
         }

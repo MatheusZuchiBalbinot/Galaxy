@@ -11,7 +11,7 @@ export const TweetInput = ({
         setUploadedFile,
         uploadedFile,
         userInfo, 
-        chatText, 
+        tweetText, 
         handleChange, 
         handleInput, 
         setShowEmojiScreen, 
@@ -30,14 +30,14 @@ export const TweetInput = ({
                 <div className={styles.inpuItemsDiv}>
                     <div className={styles.inputBar}>
                         <div className={styles.inputBar__textarea}>
-                        <TextAreaInput 
-                            value={chatText} 
-                            rows={8} 
-                            id={'tweetInput'}
-                            onChange={handleChange} 
-                            maxLength={280}
-                            onInput={handleInput}
-                        />
+                            <TextAreaInput 
+                                value={tweetText} 
+                                rows={8} 
+                                id={'tweetInput'}
+                                onChange={handleChange} 
+                                maxLength={280}
+                                onInput={handleInput}
+                            />
                         </div>
                         <div className={styles.inputBar__videoAndImage}>
                             {uploadedFile.image && (
