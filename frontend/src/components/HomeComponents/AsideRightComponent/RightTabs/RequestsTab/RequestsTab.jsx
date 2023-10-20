@@ -71,6 +71,7 @@ export default function RequestsTab() {
 	}
 	
 	const ShowFriendRequests = () => {
+
 		if (friendRequest && Object.keys(friendRequest).length > 0) {
 			return (
 				<div className={styles.friendResult__margin}>

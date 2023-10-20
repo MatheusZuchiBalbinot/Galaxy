@@ -10,22 +10,22 @@ module.exports = (io) => {
 		function actualizeConnectedUsersList() {
 			io.emit('listaUsuariosConectados', connectedUsers);
 
-			console.log(connectedUsers)
+			// console.log(connectedUsers)
 		}
 		
-		const clearDisconnectedUserInfo = (id) => {
-			Object.keys(roomUsers).map((room) => {
-				if(roomUsers[room].includes(id)) {
-					roomUsers[room].splice(id, 1);
-				}
-			})
+		// const clearDisconnectedUserInfo = (id) => {
+		// 	Object.keys(roomUsers).map((room) => {
+		// 		if(roomUsers[room].includes(id)) {
+		// 			roomUsers[room].splice(id, 1);
+		// 		}
+		// 	})
 
-			// Object.keys(connectedUsers).map((users) => {
-			// 	if(users == id) {
-			// 		connectedUsers.splice(users, 1)
-			// 	}
-			// })
-		}
+		// 	// Object.keys(connectedUsers).map((users) => {
+		// 	// 	if(users == id) {
+		// 	// 		connectedUsers.splice(users, 1)
+		// 	// 	}
+		// 	// })
+		// }
 
 		socket.on('userId', (userId) => {
 
@@ -34,19 +34,27 @@ module.exports = (io) => {
 			};
 			actualizeConnectedUsersList();
 
-			clearDisconnectedUserInfo(socket.id)
+			// clearDisconnectedUserInfo(socket.id)
 		});
 
 		socket.on('disconnect', () => {
 			console.log(`Usuário desconectado: ${socket.id}`);
-		
+
+			let actualUserRooms = [];
+			
+			Object.keys(roomUsers).map((room) => {
+				console.log(roomUsers[room])
+				if(roomUsers[room].includes(socket.id)) {
+					actualUserRooms.push(room)
+				}
+			})
+
 			delete connectedUsers[socket.id];
 		
 			actualizeConnectedUsersList();
 
 			Object.keys(roomUsers).map((room) => {
 				if(roomUsers[room].includes(socket.id)) {
-					console.log(room)
 					const roomName = `friendship_${room}`
 					console.log("INCLUI MERMÃO. -> ", roomUsers[room], socket.id)
 					console.log(friendshipMessages[roomName])
@@ -88,7 +96,7 @@ module.exports = (io) => {
 
 			const senderMessage = { sender, message, date }
 
-			console.log(senderMessage)
+			// console.log(senderMessage)
 
 			friendshipMessages[room].push(senderMessage);
 
