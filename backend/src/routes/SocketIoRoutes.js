@@ -88,6 +88,8 @@ module.exports = (io) => {
 
 			const senderMessage = { sender, message, date }
 
+			console.log(senderMessage)
+
 			friendshipMessages[room].push(senderMessage);
 
 			socket.join(room);

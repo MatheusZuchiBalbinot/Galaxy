@@ -35,28 +35,49 @@ const Messages = ({ room }) => {
 		});
   	}, [socket, room]);
 
+	const handleImageOrVideoInChat = (messageVideoOrImageContent) => {
+		return (
+			messageVideoOrImageContent.image 
+				?
+					<img 
+						src={messageVideoOrImageContent.url}
+						className={styles.chatImageAndVideo}
+					/>
+				:
+					<video 
+						controls 
+						autoPlay 
+						src={messageVideoOrImageContent.url}
+						className={styles.chatImageAndVideo}
+					/>
+		)
+	}
+
   	const generateChat = () => {
-    	if (Object.keys(messages).length !== 0) {
-      		return messages[room].map((oneMessage, index) => {
-        		const { message, date, sender } = oneMessage;
-				if(sender == token) {
-					return (
-						<div key={index} className={styles.itsMyMessage__div}>
-							<p className={styles.itsMyMessage__div__p} >{message}</p>
-						</div>
-					);
-				} else {
-					return (
-						<div key={index} className={styles.isNotMyMessage__div}>
-							<p className={styles.isNotMyMessage__div__p} >{message}</p>
-						</div>
-					);
-				}
-      		});
-		} else {
-			return <h2> Parece que não há um histórico de mensagens...</h2>;
-		}
-  	};
+    	if (Object.keys(messages).length === 0) return <h2> Parece que não há um histórico de mensagens...</h2>;
+
+		return messages[room].map((oneMessage, index) => {
+
+			const { message, date, sender } = oneMessage;
+			const {text, messageVideoOrImageContent} = message
+
+			if(sender == token) {
+				return (
+					<div key={index} className={styles.itsMyMessage__div}>
+						<p className={styles.itsMyMessage__div__p} >{text}</p>
+						{ messageVideoOrImageContent && (handleImageOrVideoInChat(messageVideoOrImageContent))}
+					</div>
+				);
+			} else {
+				return (
+					<div key={index} className={styles.isNotMyMessage__div}>
+						<p className={styles.isNotMyMessage__div__p} >{text}</p>
+						{ messageVideoOrImageContent && (handleImageOrVideoInChat(messageVideoOrImageContent))}
+					</div>
+				);
+			}
+		});
+	};
 
   	return generateChat();
 };

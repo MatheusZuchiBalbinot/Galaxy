@@ -22,6 +22,8 @@ const Chat = () => {
 
 	const [currentConversationInfo, setCurrentConversationInfo] = useState()
 
+	const [chatInputContent, setChatInputContent] = useState()
+
 	// console.log(actualOpenedChat)
 
 	const {token} = isLogged
@@ -68,7 +70,7 @@ const Chat = () => {
 				</div>
 				<div className={styles.InputChat}>
 					<Divider orientation='horizontal' />
-					<Footer sendMessage={sendMessage}/>
+					<Footer sendMessage={sendMessage} />
 				</div>
 			</div>
 		</div>

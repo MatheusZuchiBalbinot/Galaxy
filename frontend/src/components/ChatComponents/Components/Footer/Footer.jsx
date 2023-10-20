@@ -21,6 +21,39 @@ const Footer = ({ sendMessage }) => {
 
 	const handleChatInputSubmit = () => {
 
+		const messageHasVideoOrImage = Object.keys(uploadedFile).length !== 0;
+
+		let messageVideoOrImageContent;
+
+		if(messageHasVideoOrImage) {
+			uploadedFile.video 
+				? 
+					messageVideoOrImageContent = {
+						video: true,
+						url: uploadedFile.url,
+					} 
+				: 
+					messageVideoOrImageContent = {
+						image: true,
+						url: uploadedFile.url,
+					}
+
+				const chatComment = {
+					text: chatText,
+					messageVideoOrImageContent
+				}
+
+				sendMessage(chatComment)
+		} else {
+			const chatComment = {
+				text: chatText,
+			}
+
+			sendMessage(chatComment)
+		}
+
+		setChatText('')
+		setUploadedFile({})
 	}
 
   	return (
