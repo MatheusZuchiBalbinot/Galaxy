@@ -27,7 +27,7 @@ const io = new Server(server, {
   },
 });
 
-require('./routes/SocketIoRoutes')(io);
+require('./routes/SocketIoRoutes')(client, io);
 
 (async () => {
   try {

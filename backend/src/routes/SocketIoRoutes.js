@@ -1,7 +1,12 @@
-module.exports = (io) => {
+const { ObjectId } = require("mongodb");
+const GetUserIdByTokenModel = require("../model/GetUserIdByTokenModel")
+
+module.exports = (client, io) => {
 	const connectedUsers = {};
 	const roomUsers = {};
 	const friendshipMessages = {}
+
+	const tweetCollection = client.db("cluster0").collection("friendship")
   
 	io.on('connection', (socket) => {
 
@@ -9,24 +14,8 @@ module.exports = (io) => {
 
 		function actualizeConnectedUsersList() {
 			io.emit('listaUsuariosConectados', connectedUsers);
-
-			// console.log(connectedUsers)
 		}
-		
-		// const clearDisconnectedUserInfo = (id) => {
-		// 	Object.keys(roomUsers).map((room) => {
-		// 		if(roomUsers[room].includes(id)) {
-		// 			roomUsers[room].splice(id, 1);
-		// 		}
-		// 	})
-
-		// 	// Object.keys(connectedUsers).map((users) => {
-		// 	// 	if(users == id) {
-		// 	// 		connectedUsers.splice(users, 1)
-		// 	// 	}
-		// 	// })
-		// }
-
+	
 		socket.on('userId', (userId) => {
 
 			connectedUsers[socket.id] = {
@@ -34,32 +23,59 @@ module.exports = (io) => {
 			};
 			actualizeConnectedUsersList();
 
-			// clearDisconnectedUserInfo(socket.id)
 		});
 
-		socket.on('disconnect', () => {
+		socket.on('disconnect', async () => {
 			console.log(`Usuário desconectado: ${socket.id}`);
 
 			let actualUserRooms = [];
 			
 			Object.keys(roomUsers).map((room) => {
-				console.log(roomUsers[room])
 				if(roomUsers[room].includes(socket.id)) {
 					actualUserRooms.push(room)
 				}
 			})
 
+			let usersInChat = {};
+
+			if(actualUserRooms.length > 0) {
+				await Promise.all(actualUserRooms.map(async (item) => {
+					// console.log(friendshipMessages[`friendship_${item}`])
+				
+					const friendshipChatMessage = friendshipMessages[`friendship_${item}`]
+
+					await Promise.all(friendshipChatMessage.map( async (message) => {
+						if (!usersInChat[message.sender]) {
+							const getUserId = await GetUserIdByTokenModel(`Bearer ${message.sender}`);
+							usersInChat[message.sender] = {
+								id: getUserId,
+							}; 
+						}
+						return message.sender = usersInChat[message.sender].id
+					}))
+
+					console.log(friendshipChatMessage)
+
+					// console.log(usersInChat)
+
+					// const addChatMessagesToFriendship = tweetCollection.updateOne(
+					// 	{ _id: new ObjectId(item)}, 
+					// 	{}
+					// )
+				}))
+			}
+
 			delete connectedUsers[socket.id];
 		
 			actualizeConnectedUsersList();
 
-			Object.keys(roomUsers).map((room) => {
-				if(roomUsers[room].includes(socket.id)) {
-					const roomName = `friendship_${room}`
-					console.log("INCLUI MERMÃO. -> ", roomUsers[room], socket.id)
-					console.log(friendshipMessages[roomName])
-				}
-			})	
+			// Object.keys(roomUsers).map((room) => {
+			// 	if(roomUsers[room].includes(socket.id)) {
+			// 		const roomName = `friendship_${room}`
+			// 		// console.log("INCLUI MERMÃO. -> ", roomUsers[room], socket.id)
+			// 		// console.log(friendshipMessages[roomName])
+			// 	}
+			// })	
 		});
 
 		// LIDANDO COM ROOMS
