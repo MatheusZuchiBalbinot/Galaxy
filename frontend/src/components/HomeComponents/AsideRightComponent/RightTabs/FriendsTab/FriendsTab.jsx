@@ -15,8 +15,7 @@ export default function FriendsTab () {
 
     const socket = useSocket();
 
-    const { isLogged, setActualOpenedChat } = useContext(userContext);
-	const { token } = isLogged;
+    const { token, setActualOpenedChat } = useContext(userContext);
     
     const [chatOpen, setChatOpen] = useState(false);
 

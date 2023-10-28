@@ -18,15 +18,13 @@ const Chat = () => {
 
 	const socket = useSocket();
 
-	const {actualOpenedChat, isLogged } = useContext(userContext);
+	const {actualOpenedChat, token } = useContext(userContext);
 
 	const [currentConversationInfo, setCurrentConversationInfo] = useState()
 
 	const [chatInputContent, setChatInputContent] = useState()
 
 	// console.log(actualOpenedChat)
-
-	const {token} = isLogged
 
 	useEffect(() => {
 

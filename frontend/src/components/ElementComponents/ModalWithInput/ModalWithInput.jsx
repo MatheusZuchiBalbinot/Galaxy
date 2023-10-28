@@ -23,12 +23,10 @@ import FileUploadButton from "../FileUploadButton/FileUploadButton";
 
 export default function  ModalWithInput({isOpen, onClose, newUserInfo, setNewUserInfo, getUserInfo, userInfo}) {
 
-    const {isLogged} = useContext(userContext)
+    const {token} = useContext(userContext)
 
     const initialRef = useRef();
     const finalRef = useRef();
-
-    const {token} = isLogged
 
     const [editErrors, setEditErros] = useState({})
     const [uploadedFile, setUploadedFile] = useState()

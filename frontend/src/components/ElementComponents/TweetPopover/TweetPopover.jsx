@@ -13,9 +13,7 @@ import {MdBlock} from 'react-icons/md'
 
 function Tweet({ nickName, tweetId }) {
 
-	const {isLogged} = useContext(userContext)
-
-	const {token} = isLogged
+	const {token} = useContext(userContext)
 
 	const [popoverContent, setPopoverContent] = useState(null);
 	const [succesFriendRequest, setSuccesFriendRequest] = useState(false);

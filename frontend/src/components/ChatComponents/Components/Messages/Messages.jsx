@@ -9,12 +9,15 @@ const Messages = ({ room }) => {
 	const socket = useSocket();
 	const [messages, setMessages] = useState({});
 
-	const {actualOpenedChat, isLogged } = useContext(userContext);
-	const {token} = isLogged
+	const {actualOpenedChat, token } = useContext(userContext);
 
 	useEffect(() => {
 
 		socket.on('alreadyHave-messages', (allLocalMessages) => {
+			// console.log("Esse é o token: ", token)
+
+			// console.log("\n Esse é o socket.id: ",socket.id)
+
 			console.log(allLocalMessages)
 			setMessages(allLocalMessages);
 		})

@@ -18,16 +18,16 @@ export default function Menu({userInfo}) {
 
     const navigate = useNavigate()
 
-    const {isLogged, setIsLogged} = useContext(userContext)
+    const {token} = useContext(userContext)
 
     const changePage = () => {
         return navigate("/user/profile")
     }
 
     const handleLogout = () => {
-        setIsLogged({passwordsMatch: false, token: ''})
-        console.log(isLogged)
-        return navigate("/");
+        if(token == null) {
+            return navigate("/");
+        }
     }
 
     return (

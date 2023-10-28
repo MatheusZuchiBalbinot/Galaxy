@@ -18,10 +18,8 @@ import Avatar from '../../components/ElementComponents/Avatar/Avatar';
 
 export default function Profile() {
 
-    const { isLogged, setIsLogged } = useContext(userContext);
+    const { token } = useContext(userContext);
     const navigate = useNavigate();
-
-    const {passwordsMatch, token} = isLogged;
 
     const [userInfo, setUserInfo] = useState();
     const [showEditUserInfo, setShowEditUserInfo] = useState();
@@ -30,19 +28,12 @@ export default function Profile() {
 
     useEffect(() => {
 
-        // const socket = io('http://localhost:3000');
-
-        if (passwordsMatch === false) {
-            setIsLogged({ passwordsMatch: false, token: ''});
+        if(token == null) {
             return navigate("/");
         }
 
-        // socket.on('change123', (data) => {
-        //     console.log('Evento change123 recebido:', data);
-        // });
-
         getUserInfo();
-    }, [isLogged, setIsLogged]);
+    }, [token]);
 
     const getUserInfo = async () => {
 

@@ -5,7 +5,7 @@ const MonitoringTweetsChangesController = (client, io) => {
     changeStream.on('change', (change) => {
       console.log('Change:', change);
   
-      io.emit('change123', change);
+      io.emit('monitoring-newTweets', change);
     });
   };
   

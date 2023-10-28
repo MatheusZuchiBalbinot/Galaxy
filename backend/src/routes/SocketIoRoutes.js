@@ -1,10 +1,13 @@
 const { ObjectId } = require("mongodb");
-const GetUserIdByTokenModel = require("../model/GetUserIdByTokenModel")
+
+const GetUserIdByTokenModel = require("../model/GetUserIdByTokenModel");
+
+const activeSessions = require("../activeSessions/activeSessions");
 
 module.exports = (client, io) => {
 	const connectedUsers = {};
 	const roomUsers = {};
-	const friendshipMessages = {}
+	let friendshipMessages = {}
 
 	const tweetCollection = client.db("cluster0").collection("friendship")
   
@@ -29,6 +32,15 @@ module.exports = (client, io) => {
 			console.log(`Usuário desconectado: ${socket.id}`);
 
 			let actualUserRooms = [];
+
+			if(connectedUsers[socket.id]) {
+				const userToken = connectedUsers[socket.id].id
+				const userId = await GetUserIdByTokenModel(`Bearer ${userToken}`)
+
+				delete activeSessions[userId]
+			}
+
+			console.log(activeSessions)
 			
 			Object.keys(roomUsers).map((room) => {
 				if(roomUsers[room].includes(socket.id)) {
@@ -38,15 +50,21 @@ module.exports = (client, io) => {
 
 			let usersInChat = {};
 
-			if(actualUserRooms.length > 0) {
+			if(actualUserRooms.length == 0) {
+
+				const minSizeOfToken = 36
+
 				await Promise.all(actualUserRooms.map(async (item) => {
-					// console.log(friendshipMessages[`friendship_${item}`])
 				
 					const friendshipChatMessage = friendshipMessages[`friendship_${item}`]
 
 					await Promise.all(friendshipChatMessage.map( async (message) => {
 						if (!usersInChat[message.sender]) {
-							const getUserId = await GetUserIdByTokenModel(`Bearer ${message.sender}`);
+
+							let getUserId
+
+							message.sender.length > minSizeOfToken ? getUserId = await GetUserIdByTokenModel(`Bearer ${message.sender}`) : getUserId = message.sender;
+
 							usersInChat[message.sender] = {
 								id: getUserId,
 							}; 
@@ -54,14 +72,12 @@ module.exports = (client, io) => {
 						return message.sender = usersInChat[message.sender].id
 					}))
 
-					console.log(friendshipChatMessage)
+					const addChatMessagesToFriendship = await tweetCollection.updateOne(
+						{ _id: new ObjectId(item) },
+						{ $addToSet: { messages: { $each: friendshipChatMessage } } }
+					);
 
-					// console.log(usersInChat)
-
-					// const addChatMessagesToFriendship = tweetCollection.updateOne(
-					// 	{ _id: new ObjectId(item)}, 
-					// 	{}
-					// )
+					console.log(addChatMessagesToFriendship)
 				}))
 			}
 
@@ -80,7 +96,7 @@ module.exports = (client, io) => {
 
 		// LIDANDO COM ROOMS
 
-		socket.on('join-room', (roomName) => {
+		socket.on('join-room', async (roomName) => {
 
 			socket.join(roomName);	
 
@@ -96,12 +112,29 @@ module.exports = (client, io) => {
 
 			const room = `friendship_${roomName}`
 
+			// const getOldMessages = await tweetCollection.findOne(
+			// 	{ _id: new ObjectId(roomName) },
+			// 	{ projection: {messages: 1, _id: 0}}
+			// );
+
+			// getOldMessages[room] = getOldMessages.messages;
+
+			// delete getOldMessages.messages;
+
+			// console.log(getOldMessages)
+
 			if(friendshipMessages[room]) {
+
+				// console.log(friendshipMessages[room].length)
+
+				// friendshipMessages = Object.assign({}, friendshipMessages, getOldMessages);
+
+				console.log(connectedUsers)
 
 				io.to(socket.id).emit('alreadyHave-messages', friendshipMessages)
 			}
 
-		});
+		}); 
 
 		socket.on('send-message', (data) => {
 			const {room, message, date, sender} = data;

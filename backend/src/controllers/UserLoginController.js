@@ -1,11 +1,13 @@
 const {CheckEmailModel} = require("../model/CheckExistingFields")
 const GenerateTokenModel = require("../model/GenerateTokenModel")
 
-const validator = require('validator');
+const { createSession } = require("../controllers/CreateSession")
 
+const validator = require('validator');
 const bcrypt = require('bcrypt');
 
-const UserLoginController = async (client, req, res) => {
+const UserLoginController = async (client, req, res, socketId) => {
+
     try {
         const {userEmail, userPassword} = req.body
 
@@ -70,15 +72,26 @@ const UserLoginController = async (client, req, res) => {
                     }})
                     return
                 }
+
                 const id = _id.toString()
                 const token = GenerateTokenModel(id)
         
-                res.status(200).json({
-                    passwordsMatch,
-                    token,
-                })
+                const sessionId = createSession(id, token, socketId);
+
+                if (sessionId) {
+                    console.log("Logged in user and created session:", sessionId);
+                    req.session.sessionId = []
+                    req.session.sessionId.append(sessionId)
+                    console.log(req.session)
+                    res.status(200).json({ token, sessionId });
+                  } else {
+                    console.log("Unable to create session. A session with the same token or userId already exists.");
+                    res.status(500).json({newErrorMessages: {
+                        mainError: "Um usuário já está logado na conta.",
+                    }})
+                  }
             }
-        }
+        }   
     } catch(error) {
         console.error(error);
         res.status(500).json({ message: 'Erro ao tentar logar usuário. ' });

@@ -15,8 +15,8 @@ import {GoPersonAdd} from 'react-icons/go'
 import {MdBlock} from 'react-icons/md'
 
 export default function RequestsTab() {
-	const { isLogged } = useContext(userContext);
-	const { token } = isLogged;
+	
+	const { token } = useContext(userContext);
 
 	const [friendRequest, setFriendRequest] = useState('');
 	const [searchFriend, setSearchFriend] = useState('');

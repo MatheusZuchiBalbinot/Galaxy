@@ -6,6 +6,8 @@ import axios from 'axios'
 import spaceCat from '../../assets/cat_in_space.svg'
 import styles from './Login.module.css'
 
+import { useSocket } from '../../context/socketContext';
+
 import {
     Alert,
     AlertIcon,
@@ -27,7 +29,9 @@ import FormInputs from '../../components/LoginComponents/FormInputs/FormInputs';
 
 export default function Login() {
 
-    const {setIsLogged} = useContext(userContext)
+    const {setToken} = useContext(userContext)
+
+    const socket = useSocket();
 
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
@@ -144,8 +148,9 @@ export default function Login() {
                 userEmail: email,
                 userPassword: password,
             }
-            const result = await axios.post("http://localhost:3000/v1/user/login", data);
-            setIsLogged(result.data)
+            const result = await axios.post(`http://localhost:3000/v1/user/login/${socket.id}`, data);
+            console.log(result)
+            setToken(result.data.token)
             return navigate('/home')
             
         } catch (error) {

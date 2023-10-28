@@ -27,9 +27,7 @@ export default function Home() {
 
     const [tweets, setTweets] = useState([]);
 
-    const {isLogged, setIsLogged, actualTweetSeletor} = useContext(userContext)
-
-    const {token, passwordsMatch} = isLogged
+    const {token, actualTweetSeletor} = useContext(userContext)
 
     const [tweetText, setTweetText] = useState('')
     const [tweetAnswers, setTweetAnswers]= useState([]);
@@ -44,26 +42,28 @@ export default function Home() {
 
     useEffect(() => {
 
-        if(passwordsMatch == false) {
-            setIsLogged({passwordsMatch: false, token: ''})
-            return navigate("/")
+        if(token == null) {
+            return navigate("/");
         }
 
         handleTweetGet()
         handleTweets()
         getUserInfo()
 
+        
         // SOCKET IO ROUTES
 
-        socket.on('listaUsuariosConectados', (usuarios) => {
-            console.log('Usuários conectados:', usuarios);
-        });
-
-        socket.on('change123', () => {
-            console.log("CHAMOU OUTRA VEZ")
+        socket.on('monitoring-newTweets', () => {
             handleTweetGet()
         });
 
+        socket.on('teste', (message) => {
+            console.log(message)
+        })
+
+        socket.on('testando', (socketId) => {
+            console.log("Me chamou: ", socketId)
+        })
 
         const sendUserData = () => {
             socket.emit('userId', token)
