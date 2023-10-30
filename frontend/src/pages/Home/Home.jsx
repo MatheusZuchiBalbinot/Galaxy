@@ -42,6 +42,8 @@ export default function Home() {
 
     useEffect(() => {
 
+        console.log(sessionStorage.getItem('jwt_token'))
+
         if(token == null) {
             return navigate("/");
         }

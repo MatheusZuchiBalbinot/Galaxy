@@ -150,7 +150,11 @@ export default function Login() {
             }
             const result = await axios.post(`http://localhost:3000/v1/user/login/${socket.id}`, data);
             console.log(result)
+
             setToken(result.data.token)
+
+            sessionStorage.setItem('jwt_token', result.data.sessionId)
+
             return navigate('/home')
             
         } catch (error) {

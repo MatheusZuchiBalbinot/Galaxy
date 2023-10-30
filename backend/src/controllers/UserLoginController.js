@@ -80,9 +80,6 @@ const UserLoginController = async (client, req, res, socketId) => {
 
                 if (sessionId) {
                     console.log("Logged in user and created session:", sessionId);
-                    req.session.sessionId = []
-                    req.session.sessionId.append(sessionId)
-                    console.log(req.session)
                     res.status(200).json({ token, sessionId });
                   } else {
                     console.log("Unable to create session. A session with the same token or userId already exists.");

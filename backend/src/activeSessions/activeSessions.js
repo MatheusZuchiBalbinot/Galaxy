@@ -1,3 +1,3 @@
-const activeSessions = {};
+const activeSessions = [];
 
 module.exports = activeSessions;

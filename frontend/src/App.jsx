@@ -14,19 +14,19 @@ import Profile from "./pages/Profile/Profile.jsx";
 
 function App() {
 
-  const [actualTweetSeletor, setActualTweetSeletor] = useState({ actualSeletor: 'orderByRecent' });
-  const [actualOpenedChat, setActualOpenedChat] = useState('');
+	const [actualTweetSeletor, setActualTweetSeletor] = useState({ actualSeletor: 'orderByRecent' });
+	const [actualOpenedChat, setActualOpenedChat] = useState('');
 
-  const sessionId = uuidv4();
+	const storedToken = sessionStorage.getItem(`jwt_token`);
 
-  const [token, setToken] = useState(localStorage.getItem(`jwt_token_${sessionId}`));
+	const [token, setToken] = useState(storedToken || null);
 
 	useEffect(() => {
 
 		if (token) {
-			localStorage.setItem(`jwt_token_${sessionId}`, token);
+			sessionStorage.setItem(`jwt_token`, token);
 		} else {
-			localStorage.removeItem(`jwt_token_${sessionId}`);
+			sessionStorage.removeItem(`jwt_token`);
 		}
 
 	}, [token]);

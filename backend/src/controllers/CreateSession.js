@@ -11,8 +11,9 @@ function createSession(userId, token, socketId) {
 
     const existingUserId = Object.keys(activeSessions).find((id) => {
         return id === userId;
-      });
+    });
     
+    console.log(existingSessionId, existingUserId)
 
     if (existingSessionId || existingUserId) {
         return null
@@ -23,8 +24,6 @@ function createSession(userId, token, socketId) {
         token,
         socketId,
     };
-
-    console.log(activeSessions)
 
     return sessionId; 
 }

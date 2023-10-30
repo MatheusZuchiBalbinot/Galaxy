@@ -1,5 +1,5 @@
 const express = require('express');
-const session = require('express-session');
+
 const cors = require('cors');
 const { Server } = require('socket.io');
 const http = require('http');
@@ -16,17 +16,6 @@ const port = 3000;
 
 app.use(express.json({ limit: '5mb' }));
 app.use(cors());
-
-app.use(
-  session({
-    secret: 'mySecretKey', // Chave secreta para assinar o cookie
-    resave: false, // Não salva a sessão a cada solicitação
-    saveUninitialized: true, // Salva sessões não inicializadas
-    cookie: {
-      sameSite: 'strict', // Restringe o compartilhamento de cookies entre sites
-    },
-  })
-);
 
 const server = http.createServer(app);
 
